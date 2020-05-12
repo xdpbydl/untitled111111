@@ -92,4 +92,24 @@ student = pd.read_excel('C:\\Users\\\Administrator\\Desktop\\student.xlsx', shee
 
 # df1 = student["联系人1手机"].count()
 
-print(student.loc[1:100, ['iID', '姓名']])
+# print(student.loc[[1, 10], ['iID', '学号', '姓名', '班级名称', '性别', '联系人1手机']])
+# print(student.iloc[[1, 2, 3, 5, 10], [0, 1, 2, 3, 8, 10]])
+# print(student.at[1, '联系人1手机'])
+
+# print(student.shape)
+# print(student.info)
+# print(student.isnull())
+# print(student.iloc[0].isnull())
+# print(student.loc[[1,2], ['姓名','联系人2']])
+# print(student.fillna(value=0))
+# print(student.sort_values(by=['卡号']))
+# print(student.loc[student['iID'].isin(['99', '999', '9'])])
+# print(student.query("姓名 == ['毛子谦', '陶小华', '陈兆健']"))
+# print(student.groupby('班级名称').count())
+
+new = student.groupby('班级名称').count()
+print(student.groupby(['班级名称',  '性别']).count())
+
+# new.to_excel('统计汇总.xlsx', sheet_name='all')
+
+# print(student[student['姓名'].str.contains('国')])
