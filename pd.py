@@ -106,10 +106,44 @@ student = pd.read_excel('C:\\Users\\\Administrator\\Desktop\\student.xlsx', shee
 # print(student.loc[student['iID'].isin(['99', '999', '9'])])
 # print(student.query("姓名 == ['毛子谦', '陶小华', '陈兆健']"))
 # print(student.groupby('班级名称').count())
-
-new = student.groupby('班级名称').count()
-print(student.groupby(['班级名称',  '性别']).count())
+#
+# new = student.groupby('班级名称').count()
+# print(student.groupby(['班级名称', '性别']).count())
 
 # new.to_excel('统计汇总.xlsx', sheet_name='all')
 
 # print(student[student['姓名'].str.contains('国')])
+
+# df = pd.DataFrame({'AAA': [4, 0, 6, 7],
+#                    'BBB': [10, 20, 30, 40],
+#                    'CCC': [100, 50, -30, -50]})
+# df.loc[df.AAA >= 5, ['BBB', 'CCC']] = 555
+# df.loc[df.AAA < 5, ['BBB', 'CCC']] = 2000
+#
+# ##################???
+# df_mask = pd.DataFrame({'AAA': [False] * 4,
+#                         'BBB': [True] * 4,
+#                         'CCC': [True, False] * 2})
+#
+# df.where(df_mask, -1000)
+#
+# print(df)
+# 利用pandas实现Excel的数据透视表功能
+student1 = pd.read_excel('C:\\Users\\\Administrator\\Desktop\\student.xlsx', sheet_name='bbbb')
+
+# print(student1)
+
+# !!对一个分组变量（Sex），一个数值变量（Height）作统计汇总
+# aa = pd.pivot_table(student1, values=['Height'], columns=['sex'])
+
+
+# !!对一个分组变量（Sex），两个数值变量（Height,Weight）作统计汇总
+# aa = pd.pivot_table(student1, values=['Height','Weight'], columns=['sex'])
+
+# !!对两个分组变量（Sex，Age)，两个数值变量（Height,Weight）作统计汇总
+# aa = pd.pivot_table(student1, values=['Height','Weight'], columns=['sex', 'age'])
+
+
+# !!很显然这样的结果并不像Excel中预期的那样，该如何变成列联表的形式的？很简单，只需将结果进行非堆叠操作（unstack）即可：
+aa = pd.pivot_table(student1, values=['Height', 'Weight'], columns=['sex', 'age']).unstack()
+print(aa)
