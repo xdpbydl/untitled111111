@@ -10,35 +10,34 @@ from time import sleep
 import re
 
  # 使用无头浏览器
-chrome_options = Options()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-gpu')
-chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])  # 以键值对的形式加入参数 ， 以开发者模式
-browser = webdriver.Chrome(chrome_options=chrome_options)
+# chrome_options = Options()
+# chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--disable-gpu')
+# chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])  # 以键值对的形式加入参数 ， 以开发者模式
+# browser = webdriver.Chrome(chrome_options=chrome_options)
 
 
 
-# browser = webdriver.Chrome()
+browser = webdriver.Chrome()
 browser.maximize_window()  # 最大化
 wait = WebDriverWait(browser, 10)
-WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx')
+WX = pd.read_excel('E:/Python/learning/untitled111111/WX_File.xlsx')
 
 
 def search(h):
     browser.get('https://weixin.sogou.com/')
     # 定位输入框
-    browser.save_screenshot("E:/TEMP/google/1.png")
+    browser.save_screenshot("d:/TEMP/google/1.png")
     input_box = browser.find_element_by_id('query')
     # 输入内容：
     input_box.send_keys(h)
-    browser.save_screenshot("E:/TEMP/google/2.png")
+    browser.save_screenshot("d:/TEMP/google/2.png")
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#searchForm > div > input.swz2'))).click()
     sleep(5)
-    browser.save_screenshot("E:/TEMP/google/3.png")
+    browser.save_screenshot("d:/TEMP/google/3.png")
     for i in range(8):  # 需要优化为根据出现条目循环
         tar = '#sogou_vr_11002301_box_{}'.format(i)
-        browser.save_screenshot("E:/TEMP/google/4.png")
-        # wx_en = browser.find_element(By.CSS_SELECTOR, tar + ' > div > div.txt-box > p.tit > a > em').text
+        browser.save_screenshot("d:/TEMP/google/4.png")
         wx_en = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.tit > a > em').text
         wx_en_1 = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.tit > a ').text
         wx_hao = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.info > label').text
@@ -68,8 +67,8 @@ def search(h):
                 browser.execute_script(js)
                 if num % 500 == 0:
                     sleep(2)
-                print(i,check_height)
-                if check_height < i:  # 滚动到底部退出
+                print(num,check_height)
+                if check_height < num:  # 滚动到底部退出
                     break
             name = wx_file + wx_file_1 + date.today().strftime("%Y-%m-%d")
             name = validateTitle(name)
