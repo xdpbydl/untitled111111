@@ -1,32 +1,66 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from selenium import webdriver
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.action_chains import ActionChains
-import pandas as pd
-import pyautogui
-from time import sleep
+
+chrome_option = webdriver.ChromeOptions()
+chrome_option.add_experimental_option('excludeSwitches', ['enable-automation'])  # 以开发者模式
+
+driver = webdriver.Chrome(options=chrome_option)
+wait = WebDriverWait(driver, 10)
 
 
-browser = webdriver.Chrome()
-browser.maximize_window()  # 最大化
-wait = WebDriverWait(browser, 10)
+def search():
+    driver.get('https://www.taobao.com')
+    try:
+        search_input = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '#q'))
+        )
+        search_submit = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '#J_TSearchForm > div.search-button > button'))
+        )
+        driver.save_screenshot("E:/TEMP/google/q1.png")
+    finally:
+        pass
+    search_input.send_keys('美食'.decode('utf-8'))
+    driver.save_screenshot("E:/TEMP/google/q2.png")
+    search_submit.click()
+    driver.save_screenshot("E:/TEMP/google/q3.png")
+    login()
 
-browser.get('https://mp.weixin.qq.com/s?src=11&timestamp=1592379358&ver=2405&signature=oeEmhqFpX9jhO511WgcnMDtejmMYjzarAc7ONHaFMCJfRfA2VR4isszW3kpGg2pmlIBX9sw1t12fdxHKNhA7rgUqL*6MfQb1JAa9wiIcCLKIAN4CqCBvzlI*dkY9wtKi&new=1')
-browser.refresh
-sleep(2)
-# 取任一点  #js_author_name
-img = browser.find_element(By.CSS_SELECTOR, '#meta_content > span.rich_media_meta.rich_media_meta_text')
-sleep(3)
-# 执行鼠标动作
-actions = ActionChains(img)
-# 找到元素后右键单击元素
-actions.context_click(img)
-actions.perform()
-# 发送键盘按键，根据不同的网页，
-# 右键之后按对应次数向下键，
-# 找到图片另存为菜单
-pyautogui.typewrite(['down', 'down', 'down', 'enter'])
-# 单击图片另存之后等1s敲回车
-sleep(3)
-pyautogui.typewrite(['enter'])
+
+def login():
+    try:
+        login_before = wait.until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, '#J_QRCodeLogin > div.login-links > a.forget-pwd.J_Quick2Static'))
+        )
+        login_before.click()
+
+        username = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '#TPL_username_1'))
+        )
+        password = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '#TPL_password_1'))
+        )
+        driver.save_screenshot("E:/TEMP/google/q4.png")
+        username.send_keys('xxxxx')  # 用户名
+        password.send_keys('xxxxx')  # 密码
+        driver.save_screenshot("E:/TEMP/google/q5.png")
+        login_submit = wait.until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, '#J_SubmitStatic'))
+        )
+        login_submit.click()
+    finally:
+        pass
+
+
+def main():
+    search()
+
+
+if __name__ == '__main__':
+    main()
