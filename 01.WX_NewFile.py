@@ -16,9 +16,8 @@ import re
 # chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])  # 以键值对的形式加入参数 ， 以开发者模式
 # browser = webdriver.Chrome(chrome_options=chrome_options)
 
-
 browser = webdriver.Chrome()
-# browser.maximize_window()  # 最大化
+browser.maximize_window()  # 最大化
 wait = WebDriverWait(browser, 10)
 WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx')
 
@@ -44,22 +43,22 @@ def search(h):
             wx_hao = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.info > label').text
             print("0--" * 10, wx_en, wx_en_1, wx_hao)
         except:
-            wx_en, wx_en_1, wx_hao = 'NULL', 'NULL', 'NULL'
+            wx_en, wx_en_1, wx_hao = '', '', ''
 
         # print("第{}条不存在".format(i+1))
         # 文章不存在
         try:
             wx_file = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a > em').text
         except:
-            wx_file = 'NULL'
+            wx_file = ''
         try:
             wx_file_1 = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a ').text
         except:
-            wx_time = 'NULL'
+            wx_time = ''
         try:
             wx_time = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > span').text
         except:
-            wx_file_1 = 'NULL'
+            wx_file_1 = ''
         # print(wx_hao)
 
         print(wx_en + wx_en_1, wx_hao, wx_file + wx_file_1, wx_time)
@@ -76,32 +75,77 @@ def search(h):
             scroll_width = browser.execute_script('return document.body.parentNode.scrollWidth')  # 设置宽高，便于截图
             scroll_height = browser.execute_script('return document.body.parentNode.scrollHeight')
 
-            # eles = browser.find_element_by_xpath('//html')
-            #
-            # width = int(eles.size['width'])
-            # height = int(eles.size['height'])
-            # print(scroll_width, scroll_height, type(scroll_height), "**" * 55)
-            # print(width, height, type(height))
-
-            check_height = browser.execute_script("return document.body.scrollHeight;")
             for num in range(0, 8000, 10):  # 缓慢滚动鼠标
                 js = 'window.scrollTo(0,{})'.format(num)
                 browser.execute_script(js)
                 if num % 500 == 0:
                     sleep(2)
-                print(num, check_height)
-                if check_height < num:  # 滚动到底部退出
+                print(num, scroll_height)
+                if scroll_height < num:  # 滚动到底部退出
                     break
             name = wx_file + wx_file_1 + date.today().strftime("%Y-%m-%d")
             name = validateTitle(name)
+            file = "E:/TEMP/google/{}.png".format(name)
 
             print(name, wx_file, wx_file_1, date.today().strftime("%Y-%m-%d"))
             browser.set_window_size(scroll_width, scroll_height)
-            browser.get_screenshot_as_file("E:/TEMP/google/{}.png".format(name))
-            browser.save_screenshot("E:/TEMP/google/{}_1.png".format(name))
+            browser.get_screenshot_as_file(file)
+
+            send_m(wx_file + wx_file_1, file)
 
             browser.close()  # 关闭当前窗口
             browser.switch_to.window(windows[0])  # 切换回窗口A
+
+def send_m(name, file):
+    import smtplib
+
+    from email.mime.text import MIMEText
+
+    from email.header import Header
+
+    # 第三方 SMTP 服务
+
+    mail_host = "smtp.qq.com"   # 设置服务器
+
+    mail_user = "46311295@qq.com"   # 用户名
+
+    mail_pass = "xefqwobdzspgbijb"  # 口令
+
+    sender = '46311295@qq.com'
+
+    receivers = ['46311295@qq.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
+
+    message = MIMEText('Python 邮件发送测试...', 'plain', 'utf-8')
+
+    message['From'] = Header(mail_user, 'utf-8')
+
+    message['To'] = Header(sender, 'utf-8')
+
+    subject = name
+
+    message['Subject'] = Header(subject, 'utf-8')
+
+
+
+    # smtpObj= smtplib.SMTP()
+
+    # smtpObj.connect(email_host,25)
+
+    # 抛出异常：smtplib.SMTPServerDisconnected: Connection unexpectedly closed
+
+    # QQ邮箱是支持安全邮件的，需要通过SSL发送的邮件，如下：
+
+    smtpObj = smtplib.SMTP_SSL(mail_host)
+
+    smtpObj.connect(mail_host, 465)  # 465 为 SMTP 端口号
+
+    smtpObj.login(mail_user, mail_pass)
+
+    smtpObj.sendmail(sender, receivers, message.as_string())
+
+    print("邮件发送成功")
+
+
 
 
 def validateTitle(title):  # 文件名合法的判断

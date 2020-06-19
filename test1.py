@@ -1,66 +1,16 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import SendMail
 
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
+username = "46311295@qq.com"  # 用户名（发件人的邮箱账号或用户名）
+passwd = "xefqwobdzspgbijb"  # 16位的SMTP授权码（不含空格）
+recv = ['46311295@qq.com']  # 收件人，多个要传list ['a @ qq.com','b @ qq.com]
+title = " 邮件标题"  # 邮件标题
+content = '''
+               <h1>邮件测试</h1>
+               <p>图片展示：</p>
+               <p><img src="cid:image1"></p>
+          '''  # 邮件正文
+file = r'E:\\TEMP\\google\\对有些人和行为,我只有一个“滚”2020-06-19.png'  # 绝对路径
+image = file  # 图片路径（绝对路径）
+email_host = 'smtp.qq.com'  # smtp服务器地址,默认为qq邮箱的服务器
 
-chrome_option = webdriver.ChromeOptions()
-chrome_option.add_experimental_option('excludeSwitches', ['enable-automation'])  # 以开发者模式
-
-driver = webdriver.Chrome(options=chrome_option)
-wait = WebDriverWait(driver, 10)
-
-
-def search():
-    driver.get('https://www.taobao.com')
-    try:
-        search_input = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '#q'))
-        )
-        search_submit = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '#J_TSearchForm > div.search-button > button'))
-        )
-        driver.save_screenshot("E:/TEMP/google/q1.png")
-    finally:
-        pass
-    search_input.send_keys('美食'.decode('utf-8'))
-    driver.save_screenshot("E:/TEMP/google/q2.png")
-    search_submit.click()
-    driver.save_screenshot("E:/TEMP/google/q3.png")
-    login()
-
-
-def login():
-    try:
-        login_before = wait.until(
-            EC.presence_of_element_located(
-                (By.CSS_SELECTOR, '#J_QRCodeLogin > div.login-links > a.forget-pwd.J_Quick2Static'))
-        )
-        login_before.click()
-
-        username = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '#TPL_username_1'))
-        )
-        password = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '#TPL_password_1'))
-        )
-        driver.save_screenshot("E:/TEMP/google/q4.png")
-        username.send_keys('xxxxx')  # 用户名
-        password.send_keys('xxxxx')  # 密码
-        driver.save_screenshot("E:/TEMP/google/q5.png")
-        login_submit = wait.until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, '#J_SubmitStatic'))
-        )
-        login_submit.click()
-    finally:
-        pass
-
-
-def main():
-    search()
-
-
-if __name__ == '__main__':
-    main()
+SendMail.SendMail(username=username, passwd=passwd, recv=recv, title=title, content=content, file=file, image=image)
