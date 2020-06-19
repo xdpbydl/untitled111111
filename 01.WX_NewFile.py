@@ -9,7 +9,7 @@ from datetime import date
 from time import sleep
 import re
 
- # 使用无头浏览器
+# 使用无头浏览器
 # chrome_options = Options()
 # chrome_options.add_argument('--headless')
 # chrome_options.add_argument('--disable-gpu')
@@ -17,70 +17,94 @@ import re
 # browser = webdriver.Chrome(chrome_options=chrome_options)
 
 
-
 browser = webdriver.Chrome()
-browser.maximize_window()  # 最大化
+# browser.maximize_window()  # 最大化
 wait = WebDriverWait(browser, 10)
-WX = pd.read_excel('E:/Python/learning/untitled111111/WX_File.xlsx')
+WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx')
 
 
 def search(h):
     browser.get('https://weixin.sogou.com/')
+    browser.save_screenshot("E:/TEMP/google/1.png")
     # 定位输入框
-    browser.save_screenshot("d:/TEMP/google/1.png")
     input_box = browser.find_element_by_id('query')
     # 输入内容：
     input_box.send_keys(h)
-    browser.save_screenshot("d:/TEMP/google/2.png")
+    browser.save_screenshot("E:/TEMP/google/2.png")
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#searchForm > div > input.swz2'))).click()
     sleep(5)
-    browser.save_screenshot("d:/TEMP/google/3.png")
+    browser.save_screenshot("E:/TEMP/google/3.png")
     for i in range(8):  # 需要优化为根据出现条目循环
-        tar = '#sogou_vr_11002301_box_{}'.format(i)
-        browser.save_screenshot("d:/TEMP/google/4.png")
-        wx_en = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.tit > a > em').text
-        wx_en_1 = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.tit > a ').text
-        wx_hao = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.info > label').text
-        print("0--" * 10, wx_en, wx_en_1, wx_hao)
+
+        try:
+            tar = '#sogou_vr_11002301_box_{}'.format(i)
+            browser.save_screenshot("E:/TEMP/google/4.png")
+            wx_en = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.tit > a > em').text
+            wx_en_1 = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.tit > a ').text
+            wx_hao = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.info > label').text
+            print("0--" * 10, wx_en, wx_en_1, wx_hao)
+        except:
+            wx_en, wx_en_1, wx_hao = 'NULL', 'NULL', 'NULL'
 
         # print("第{}条不存在".format(i+1))
         # 文章不存在
         try:
             wx_file = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a > em').text
-            wx_file_1 = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a ').text
-            wx_time = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > span').text
-            # print(wx_hao)
         except:
-            wx_file, wx_time, wx_file_1 = 'NULL', 'NULL', 'NULL'
+            wx_file = 'NULL'
+        try:
+            wx_file_1 = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a ').text
+        except:
+            wx_time = 'NULL'
+        try:
+            wx_time = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > span').text
+        except:
+            wx_file_1 = 'NULL'
+        # print(wx_hao)
 
-        if wx_hao in WX['微信号'].values.tolist() and wx_file != 'NULL':
-            print(wx_en + wx_en_1, wx_hao, wx_file + wx_file_1, wx_time)
+        print(wx_en + wx_en_1, wx_hao, wx_file + wx_file_1, wx_time)
+        if wx_hao in WX['微信号'].values.tolist():
+
             wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a'))).click()
 
             # 获取打开的多个窗口句柄
             windows = browser.window_handles
             # 切换到当前最新打开的窗口
             browser.switch_to.window(windows[-1])
+            sleep(2)
+
+            scroll_width = browser.execute_script('return document.body.parentNode.scrollWidth')  # 设置宽高，便于截图
+            scroll_height = browser.execute_script('return document.body.parentNode.scrollHeight')
+
+            # eles = browser.find_element_by_xpath('//html')
+            #
+            # width = int(eles.size['width'])
+            # height = int(eles.size['height'])
+            # print(scroll_width, scroll_height, type(scroll_height), "**" * 55)
+            # print(width, height, type(height))
+
             check_height = browser.execute_script("return document.body.scrollHeight;")
             for num in range(0, 8000, 10):  # 缓慢滚动鼠标
                 js = 'window.scrollTo(0,{})'.format(num)
                 browser.execute_script(js)
                 if num % 500 == 0:
                     sleep(2)
-                print(num,check_height)
+                print(num, check_height)
                 if check_height < num:  # 滚动到底部退出
                     break
             name = wx_file + wx_file_1 + date.today().strftime("%Y-%m-%d")
             name = validateTitle(name)
 
             print(name, wx_file, wx_file_1, date.today().strftime("%Y-%m-%d"))
-            browser.save_screenshot("E:/TEMP/google/{}.png".format(name))
+            browser.set_window_size(scroll_width, scroll_height)
+            browser.get_screenshot_as_file("E:/TEMP/google/{}.png".format(name))
+            browser.save_screenshot("E:/TEMP/google/{}_1.png".format(name))
 
             browser.close()  # 关闭当前窗口
             browser.switch_to.window(windows[0])  # 切换回窗口A
 
 
-def validateTitle(title):   # 文件名合法的判断
+def validateTitle(title):  # 文件名合法的判断
     rstr = r"[\/\\\:\*\?\"\<\>\|]"  # '/ \ : * ? " < > |'
     new_title = re.sub(rstr, "_", title)  # 替换为下划线
     return new_title
