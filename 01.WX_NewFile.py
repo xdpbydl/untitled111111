@@ -8,6 +8,13 @@ import pandas as pd
 from datetime import date
 from time import sleep
 import re
+from email.mime.image import MIMEImage
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+import smtplib
+from email.header import Header
 
 # 使用无头浏览器
 # chrome_options = Options()
@@ -96,7 +103,7 @@ def search(h):
             browser.close()  # 关闭当前窗口
             browser.switch_to.window(windows[0])  # 切换回窗口A
 
-def send_m(name, file):
+def send_m1(name, file):
     import smtplib
 
     from email.mime.text import MIMEText
@@ -144,6 +151,33 @@ def send_m(name, file):
     smtpObj.sendmail(sender, receivers, message.as_string())
 
     print("邮件发送成功")
+
+def send_m(name, file):
+    message = MIMEMultipart()  # 邮件主体
+
+    # 邮件加入文本内容
+    text = '<img src="cid:0">'  # html文本引入id为0的图片
+    m_text = MIMEText(text, 'html', 'utf-8')
+    message.attach(m_text)
+
+    # 邮件加入图片
+    m_img = MIMEBase('image', 'jpg')
+    m_img.add_header('Content-Disposition', 'attachment')
+    m_img.add_header('Content-ID', '<0>')  # 设置图片id为0
+    f = open(file, "rb")  # 读取本地图片
+    m_img.set_payload(f.read())
+    encoders.encode_base64(m_img)
+    message.attach(m_img)
+
+    message['From'] = Header('小爱')  # 邮件发送者名字
+    message['To'] = Header('小蓝枣')  # 邮件接收者名字
+    message['Subject'] = Header(name)  # 邮件主题
+
+    mail = smtplib.SMTP()
+    mail.connect("smtp.qq.com")  # 连接 qq 邮箱
+    mail.login("46311295@qq.com", "xefqwobdzspgbijb")  # 账号和授权码
+    mail.sendmail("46311295@qq.com", ["46311295@qq.com"], message.as_string())
+
 
 
 
