@@ -17,7 +17,7 @@ class Counter:
     def response(flow):
         """修改应答数据
         """
-        if '*.js' in flow.request.url:
+        if i in flow.request.url:
             # 屏蔽selenium检测
             for webdriver_key in ['webdriver', '__driver_evaluate', '__webdriver_evaluate', '__selenium_evaluate',
                                   '__fxdriver_evaluate', '__driver_unwrapped', '__webdriver_unwrapped',
