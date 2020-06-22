@@ -7,7 +7,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 from datetime import date
 from time import sleep
-import re
+import re,time
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -18,12 +18,12 @@ from email.header import Header
 from selenium.webdriver.common.proxy import Proxy
 from selenium.webdriver.common.proxy import ProxyType
 
-
 # 使用无头浏览器
 chrome_options = Options()
 chrome_options.add_argument('--headless')
 chrome_options.add_argument('--disable-gpu')
-chrome_options.add_argument('user-agent=:	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4098.3 Safari/537.36')
+chrome_options.add_argument(
+    'user-agent=:	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4098.3 Safari/537.36')
 chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])  # 以键值对的形式加入参数 ， 以开发者模式
 # 设置代理
 # chrome_options.add_argument("--proxy-server=http://127.0.0.1:8888")
@@ -32,15 +32,16 @@ browser = webdriver.Chrome(chrome_options=chrome_options)
 
 # 查看本机ip，查看代理是否起作用
 browser.get("http://httpbin.org/ip")
-print(browser.page_source)
-
+# print(browser.page_source)
 
 # browser = webdriver.Chrome()
 browser.maximize_window()  # 最大化
 wait = WebDriverWait(browser, 10)
 WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx')
+wx_num = 1   # 循环
+print("1" * 100)
 
-print("1"*100)
+
 def search(idex, row):
     browser.get('https://weixin.sogou.com/')
     browser.save_screenshot("E:/TEMP/google/1.png")
@@ -71,22 +72,24 @@ def search(idex, row):
             wx_file = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a > em').text
         except:
             wx_file = ''
-            print("网络访问不了，或者被屏蔽！")
+            # print("网络访问不了，或者被屏蔽！")
         try:
             wx_file_1 = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a ').text
         except:
-            wx_time = ''
+            wx_file_1 = ''
         try:
             wx_time = browser.find_element(By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > span').text
         except:
-            wx_file_1 = ''
+            wx_time = ''
         # print(wx_hao)
 
         # print(wx_en + wx_en_1, wx_hao, wx_file + wx_file_1, wx_time)
-        if wx_hao in WX['微信号'].values.tolist() and row['最新文章'] != wx_file + wx_file_1:
+        if wx_hao in WX['微信号'].values.tolist() and row['最新文章'] != wx_file + wx_file_1 and wx_time != '':
 
-
-            wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a'))).click()
+            try:
+                wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, tar + ' > dl:nth-child(3) > dd > a'))).click()
+            except:
+                print("文章不存在！")
 
             # 获取打开的多个窗口句柄
             windows = browser.window_handles
@@ -121,9 +124,10 @@ def search(idex, row):
 
             browser.close()  # 关闭当前窗口
             browser.switch_to.window(windows[0])  # 切换回窗口A
-            if idex+1 == len(WX):
-                print(idex, len(WX))
-                browser.quit()
+
+    # if idex + 1 == len(WX):
+    #     print(idex + 1, len(WX))
+    #     browser.quit()
 
 
 def send_m1(name, file):
@@ -191,14 +195,17 @@ def send_m(name, file):
     encoders.encode_base64(m_img)
     message.attach(m_img)
 
-    message['From'] = Header('小爱')  # 邮件发送者名字
+    message['From'] = Header('角度')  # 邮件发送者名字
     message['To'] = Header('小蓝枣')  # 邮件接收者名字
     message['Subject'] = Header(name)  # 邮件主题
 
-    mail = smtplib.SMTP()
-    mail.connect("smtp.qq.com")  # 连接 qq 邮箱
+    # mail = smtplib.SMTP()  # （win7可用，win2008R2报错）win2008R2修改为：smtplib.SMTP_SSL
+    # mail.connect("smtp.qq.com")  # 连接 qq 邮箱 # win2008R2去掉了这个
+
+    mail = smtplib.SMTP_SSL("smtp.qq.com", 465)  # win2008R2的 发送服务器的端口号 （win7下可用）
     mail.login("46311295@qq.com", "xefqwobdzspgbijb")  # 账号和授权码
     mail.sendmail("46311295@qq.com", ["46311295@qq.com"], message.as_string())
+    print("邮件发送成功" + "!" * 100)
 
 
 def validateTitle(title):  # 文件名合法的判断
@@ -207,21 +214,14 @@ def validateTitle(title):  # 文件名合法的判断
     return new_title
 
 
-# def html_to_file(page):
-#     get_html = "get_html.html"
-#     # 打开文件，准备写入
-#     f = open(get_html, 'wb')
-#     # 写入文件
-#     f.write(page.page_source.encode("gbk", "ignore"))  # 忽略非法字符
-#     print('写入成功')
-#     # 关闭文件
-#     f.close()
-
 
 if __name__ == '__main__':
+
     while True:
-        wx_num = 1
+
         for idex, row in WX.iterrows():
             # print(row['公众号'], row['微信号'])  # 输出每一行  序号	公众号	微信号	最新文章	发表时间	Email
             search(idex, row)
-        sleep(300)
+        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "循环次数为（{}）次！！".format(wx_num))
+        wx_num += 1
+        sleep(60)
