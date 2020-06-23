@@ -37,7 +37,7 @@ browser.get("http://httpbin.org/ip")
 # browser = webdriver.Chrome()
 browser.maximize_window()  # 最大化
 wait = WebDriverWait(browser, 10)
-WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx')
+
 wx_num = 1   # 循环
 print("1" * 100)
 
@@ -218,6 +218,7 @@ def validateTitle(title):  # 文件名合法的判断
 if __name__ == '__main__':
 
     while True:
+        WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx')   # 放入无限循环内，实时刷新
 
         for idex, row in WX.iterrows():
             # print(row['公众号'], row['微信号'])  # 输出每一行  序号	公众号	微信号	最新文章	发表时间	Email

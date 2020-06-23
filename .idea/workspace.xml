@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="48076e9e-b4dd-4ace-812e-5d4298bd0234" name="Default Changelist" comment="">
+    <list default="true" id="48076e9e-b4dd-4ace-812e-5d4298bd0234" name="Default Changelist" comment="ZCXX_T">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/01.WX_NewFile.py" beforeDir="false" afterPath="$PROJECT_DIR$/01.WX_NewFile.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/WX_File.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/WX_File.xlsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -11,86 +12,30 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+    <leaf>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/01.WX_NewFile.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="170" lean-forward="true" selection-start-line="170" selection-end-line="170" />
+            <state relative-caret-position="447">
+              <caret line="227" column="17" lean-forward="true" selection-start-line="227" selection-start-column="17" selection-end-line="227" selection-end-column="17" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
-                <element signature="e#868#3919#0" />
-                <element signature="e#3949#4914#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/SendMail.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="92">
-              <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mitm/modify_response.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="184">
-              <caret line="37" column="1" lean-forward="true" selection-start-line="37" selection-start-column="1" selection-end-line="37" selection-end-column="1" />
-              <folding>
-                <element signature="n#!!doc" />
-                <element signature="e#38#47#0" expanded="true" />
-                <element signature="e#177#189#0" />
-                <element signature="e#253#331#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mitm/addons.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="95">
-              <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-              <folding>
-                <element signature="e#0#14#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/mitm/counter.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="9" column="31" lean-forward="true" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-              <folding>
-                <element signature="e#0#21#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-133">
-              <caret line="11" column="41" lean-forward="true" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-              <folding>
-                <element signature="e#0#30#0" expanded="true" />
+                <element signature="e#6202#7204#0" />
               </folding>
             </state>
           </provider>
@@ -120,6 +65,9 @@
       <find>UNTITLE</find>
       <find>MIMEImage</find>
       <find>send_mail</find>
+      <find>len(WX['公众号'])</find>
+      <find>wx_num</find>
+      <find>host=</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -144,18 +92,18 @@
         <option value="$PROJECT_DIR$/mitm/joker.py" />
         <option value="$PROJECT_DIR$/mitm/counter.py" />
         <option value="$PROJECT_DIR$/mitm/addons.py" />
+        <option value="$PROJECT_DIR$/SendMail.py" />
         <option value="$PROJECT_DIR$/mitm/modify_response.py" />
         <option value="$PROJECT_DIR$/test1.py" />
-        <option value="$PROJECT_DIR$/SendMail.py" />
         <option value="$PROJECT_DIR$/01.WX_NewFile.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="121" />
-    <option name="y" value="83" />
-    <option name="width" value="1378" />
-    <option name="height" value="693" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1382" />
+    <option name="height" value="754" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -170,11 +118,6 @@
             <path>
               <item name="untitled111111" type="b2602c69:ProjectViewProjectNode" />
               <item name="untitled111111" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="untitled111111" type="b2602c69:ProjectViewProjectNode" />
-              <item name="untitled111111" type="462c0819:PsiDirectoryNode" />
-              <item name="mitm" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -379,7 +322,11 @@
       <workItem from="1592361539396" duration="20526000" />
       <workItem from="1592445368426" duration="19238000" />
       <workItem from="1592531256890" duration="15983000" />
-      <workItem from="1592568427728" duration="11451000" />
+      <workItem from="1592568427728" duration="11715000" />
+      <workItem from="1592630367196" duration="6493000" />
+      <workItem from="1592639577285" duration="16049000" />
+      <workItem from="1592799208554" duration="11129000" />
+      <workItem from="1592878550448" duration="2402000" />
     </task>
     <task id="LOCAL-00001" summary="ZCXX_T">
       <created>1589254050922</created>
@@ -465,38 +412,59 @@
       <option name="project" value="LOCAL" />
       <updated>1592578513310</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="ZCXX_T">
+      <created>1592579939485</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1592579939485</updated>
+    </task>
+    <task id="LOCAL-00014" summary="ZCXX_T">
+      <created>1592676940570</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1592676940570</updated>
+    </task>
+    <task id="LOCAL-00015" summary="ZCXX_T">
+      <created>1592808534385</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1592808534386</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="170675000" />
+    <option name="totallyTimeSpent" value="207012000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2322239" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.19894099" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3502455" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.54236007" visible="true" weight="0.32850242" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.51134646" weight="0.49436393" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4347826" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.494705" weight="0.32850242" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49394855" weight="0.32850242" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5030257" side_tool="true" weight="0.43961352" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.4969743" weight="0.43961352" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.48865354" side_tool="true" visible="true" weight="0.09178744" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49394855" weight="0.33816424" />
       <window_info anchor="bottom" id="Python Console" order="12" />
+      <window_info anchor="bottom" id="Messages" order="13" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="SciView" order="3" />
-      <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="Database" order="4" weight="0.32980332" />
     </layout>
     <layout-to-restore>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2322239" />
@@ -577,15 +545,20 @@
           <line>16</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/01.WX_NewFile.py</url>
+          <line>132</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/untitled111111$pd11.coverage" NAME="pd11 Coverage Results" MODIFIED="1589018215158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/untitled111111$WX_NewFile.coverage" NAME="WX_NewFile Coverage Results" MODIFIED="1591845828375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/untitled111111$01_WX_NewFile.coverage" NAME="01.WX_NewFile Coverage Results" MODIFIED="1592579916155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/untitled111111$01_WX_NewFile.coverage" NAME="01.WX_NewFile Coverage Results" MODIFIED="1592808300886" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/untitled111111$pd.coverage" NAME="pd Coverage Results" MODIFIED="1590052897609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/untitled111111$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1592577412020" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/untitled111111$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1592803501241" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/untitled111111$test.coverage" NAME="test Coverage Results" MODIFIED="1592471690713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/untitled111111$04__1.coverage" NAME="04.批量改名_教育局1 Coverage Results" MODIFIED="1591954319484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../S/Python3/0000" />
     <SUITE FILE_PATH="coverage/untitled111111$04__.coverage" NAME="04.批量改名_教育局 Coverage Results" MODIFIED="1591866484068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../S/Python3/0000" />
@@ -643,13 +616,6 @@
           <folding>
             <element signature="e#35#56#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/software/Python/Python37/Lib/site-packages/pandas/core/generic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="2148" column="13" selection-start-line="2148" selection-start-column="8" selection-end-line="2148" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -788,50 +754,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-304793141/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="80028">
-          <caret line="4212" column="8" selection-start-line="4212" selection-start-column="8" selection-end-line="4212" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/software/Python/Python37/Lib/site-packages/selenium/webdriver/remote/webdriver.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
           <caret line="727" column="8" selection-start-line="727" selection-start-column="8" selection-end-line="727" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mitm/counter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="9" column="31" lean-forward="true" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#21#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mitm/addons.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/mitm/modify_response.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="37" column="1" lean-forward="true" selection-start-line="37" selection-start-column="1" selection-end-line="37" selection-end-column="1" />
-          <folding>
-            <element signature="n#!!doc" />
-            <element signature="e#38#47#0" expanded="true" />
-            <element signature="e#177#189#0" />
-            <element signature="e#253#331#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -849,27 +775,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-133">
-          <caret line="11" column="41" lean-forward="true" selection-start-line="11" selection-start-column="41" selection-end-line="11" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/software/Python/Python37/Lib/smtplib.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-103">
           <caret line="347" column="34" lean-forward="true" selection-start-line="347" selection-start-column="34" selection-end-line="347" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" column="28" lean-forward="true" selection-start-line="7" selection-start-column="28" selection-end-line="7" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -896,19 +805,90 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/SendMail.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="92">
+        <state relative-caret-position="95">
           <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mitm/addons.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="5" column="18" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mitm/counter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2019.1/system/python_stubs/-304793141/builtins.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="227">
+          <caret line="2880" column="8" selection-start-line="2880" selection-start-column="8" selection-end-line="2880" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://D:/software/Python/Python37/Lib/site-packages/selenium/webdriver/chrome/options.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1577">
+          <caret line="88" column="8" selection-start-line="88" selection-start-column="8" selection-end-line="88" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mitm/modify_response.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+          <folding>
+            <element signature="n#!!doc" />
+            <element signature="e#38#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/software/Python/Python37/Lib/site-packages/pandas/core/generic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="38893">
+          <caret line="2148" column="13" selection-start-line="2148" selection-start-column="8" selection-end-line="2148" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="21" column="84" lean-forward="true" selection-start-line="21" selection-start-column="84" selection-end-line="21" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="228">
+          <caret line="12" lean-forward="true" selection-start-line="12" selection-end-line="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/01.WX_NewFile.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="170" lean-forward="true" selection-start-line="170" selection-end-line="170" />
+        <state relative-caret-position="447">
+          <caret line="227" column="17" lean-forward="true" selection-start-line="227" selection-start-column="17" selection-end-line="227" selection-end-column="17" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
-            <element signature="e#868#3919#0" />
-            <element signature="e#3949#4914#0" />
+            <element signature="e#6202#7204#0" />
           </folding>
         </state>
       </provider>
