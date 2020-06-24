@@ -132,7 +132,7 @@ def search(idex, row):
             # WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='history', index=False)
             # WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='Sheet1', index=False)
 
-            send_m(wx_en + "__" + wx_file + wx_file_1, file, row['公众号'])
+            send_m(wx_en + "__" + wx_file + wx_file_1, file, row['Email'])
 
             browser.close()  # 关闭当前窗口
             browser.switch_to.window(windows[0])  # 切换回窗口A
@@ -190,7 +190,10 @@ def send_m1(name, file):
     print("邮件发送成功")
 
 
-def send_m(name, file,):
+def send_m(name, file, email):
+    if email == '' or "@" not in email:
+        email = "46311295@qq.com"
+
     message = MIMEMultipart()  # 邮件主体
 
     # 邮件加入文本内容
@@ -216,7 +219,7 @@ def send_m(name, file,):
 
     mail = smtplib.SMTP_SSL("smtp.qq.com", 465)  # win2008R2的 发送服务器的端口号 （win7下可用）
     mail.login("46311295@qq.com", "xefqwobdzspgbijb")  # 账号和授权码
-    mail.sendmail("46311295@qq.com", ["46311295@qq.com"], message.as_string())
+    mail.sendmail("46311295@qq.com", [email], message.as_string())
     print("邮件发送成功" + "!" * 100)
 
 
