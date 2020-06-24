@@ -1,12 +1,4 @@
-print(("1" * 55))
+import time
 
 
-def test():
-    print(("2" * 55))
-
-
-print(("3" * 55))
-if __name__ == '__main__':
-    print(("4" * 55))
-    test()
-print(("5" * 55))
+print(time.strftime("%Y-%m-%d %H:%M:%S"))

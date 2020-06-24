@@ -7,7 +7,7 @@ from selenium.webdriver.common.action_chains import ActionChains
 import pandas as pd
 from datetime import date
 from time import sleep
-import re,time
+import re, time
 from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -38,7 +38,7 @@ browser.get("http://httpbin.org/ip")
 browser.maximize_window()  # 最大化
 wait = WebDriverWait(browser, 10)
 
-wx_num = 1   # 循环
+wx_num = 1  # 循环
 print("1" * 100)
 
 
@@ -118,9 +118,21 @@ def search(idex, row):
 
             row['最新文章'] = wx_file + wx_file_1
             WX.iloc[idex] = pd.Series(row)
-            WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', index=False)
+            WX_h = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='history')
+            WX_h = WX_h.append([{'序号': len(WX_h) + 1, '公众号': row['公众号'], '微信号': row['微信号'], '最新文章': wx_file + wx_file_1,
+                                 '发表时间': time.strftime("%Y-%m-%d %H:%M:%S")}], ignore_index=True)
 
-            send_m(wx_file + wx_file_1, file)
+            writer = pd.ExcelWriter('E:/TEMP/untitled111111/WX_File.xlsx')
+            WX.to_excel(writer, "Sheet1", index=False)
+            WX_h.to_excel(writer, "history", index=False)
+
+            writer.save()
+
+            # 会覆盖sheet表
+            # WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='history', index=False)
+            # WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='Sheet1', index=False)
+
+            # send_m(wx_file + wx_file_1, file)
 
             browser.close()  # 关闭当前窗口
             browser.switch_to.window(windows[0])  # 切换回窗口A
@@ -214,15 +226,15 @@ def validateTitle(title):  # 文件名合法的判断
     return new_title
 
 
-
 if __name__ == '__main__':
 
     while True:
-        WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx')   # 放入无限循环内，实时刷新
+        WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='Sheet1')  # 放入无限循环内，实时刷新
 
         for idex, row in WX.iterrows():
             # print(row['公众号'], row['微信号'])  # 输出每一行  序号	公众号	微信号	最新文章	发表时间	Email
             search(idex, row)
-        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), "循环次数为（{}）次！！".format(wx_num))
+        print(time.strftime("%Y-%m-%d %H:%M:%S"), "循环次数为（{}）次！！".format(wx_num))
+
         wx_num += 1
         sleep(60)
