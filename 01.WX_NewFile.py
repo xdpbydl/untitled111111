@@ -17,7 +17,8 @@ import smtplib
 from email.header import Header
 from selenium.webdriver.common.proxy import Proxy
 from selenium.webdriver.common.proxy import ProxyType
-import  private as pv
+import private as pv
+import SendMail
 
 # 使用无头浏览器
 chrome_options = Options()
@@ -120,8 +121,9 @@ def search(idex, row):
             row['最新文章'] = wx_file + wx_file_1
             WX.iloc[idex] = pd.Series(row)
             WX_h = pd.read_excel(pv.file, sheet_name='history')
-            WX_h = WX_h.append([{'序号': len(WX_h) + 1, '公众号': row['公众号'], '微信号': row['微信号'], '最新文章': wx_en + wx_file + wx_file_1,
-                                 '发表时间': time.strftime("%Y-%m-%d %H:%M:%S")}], ignore_index=True)
+            WX_h = WX_h.append(
+                [{'序号': len(WX_h) + 1, '公众号': row['公众号'], '微信号': row['微信号'], '最新文章': wx_en + wx_file + wx_file_1,
+                  '发表时间': time.strftime("%Y-%m-%d %H:%M:%S")}], ignore_index=True)
 
             writer = pd.ExcelWriter(pv.file)
             WX.to_excel(writer, "Sheet1", index=False)
@@ -133,95 +135,59 @@ def search(idex, row):
             # WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='history', index=False)
             # WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='Sheet1', index=False)
 
-            send_m(wx_en + "__" + wx_file + wx_file_1, file, row['Email'])
+            #  发送邮件
+            # send_m(wx_en + "__" + wx_file + wx_file_1, file, row['Email'])
+            title = wx_en + "__" + wx_file + wx_file_1
+            content = '''
+            <p>{}</p>
+            <p><img src="cid:image1"></p>
+             '''.format(title)
+            print(type(row['Email']))
+            email = str(row['Email'])
+            if email == '' or "@" not in email:
+                recv = pv.jieshou
+            else:
+                recv = email.split(',')
+            print(type(recv))
+            m = SendMail.SendMail(username=pv.fasong, passwd=pv.key, title=title, recv=recv, content=content,image=file)
+            m.send_mail()
 
             browser.close()  # 关闭当前窗口
             browser.switch_to.window(windows[0])  # 切换回窗口A
 
-    # if idex + 1 == len(WX):
-    #     print(idex + 1, len(WX))
-    #     browser.quit()
 
 
-def send_m1(name, file):
-    import smtplib
-
-    from email.mime.text import MIMEText
-
-    from email.header import Header
-
-    # 第三方 SMTP 服务
-
-    mail_host = "smtp.qq.com"  # 设置服务器
-
-    mail_user = "46311295@qq.com"  # 用户名
-
-    mail_pass = "xefqwobdzspgbijb"  # 口令
-
-    sender = '46311295@qq.com'
-
-    receivers = ['46311295@qq.com']  # 接收邮件，可设置为你的QQ邮箱或者其他邮箱
-
-    message = MIMEText('Python 邮件发送测试...', 'plain', 'utf-8')
-
-    message['From'] = Header(mail_user, 'utf-8')
-
-    message['To'] = Header(sender, 'utf-8')
-
-    subject = name
-
-    message['Subject'] = Header(subject, 'utf-8')
-
-    # smtpObj= smtplib.SMTP()
-
-    # smtpObj.connect(email_host,25)
-
-    # 抛出异常：smtplib.SMTPServerDisconnected: Connection unexpectedly closed
-
-    # QQ邮箱是支持安全邮件的，需要通过SSL发送的邮件，如下：
-
-    smtpObj = smtplib.SMTP_SSL(mail_host)
-
-    smtpObj.connect(mail_host, 465)  # 465 为 SMTP 端口号
-
-    smtpObj.login(mail_user, mail_pass)
-
-    smtpObj.sendmail(sender, receivers, message.as_string())
-
-    print("邮件发送成功")
-
-
-def send_m(name, file, email):
-    if email == '' or "@" not in email:
-        email = pv.jieshou
-
-    message = MIMEMultipart()  # 邮件主体
-
-    # 邮件加入文本内容
-    text = '<img src="cid:0">'  # html文本引入id为0的图片
-    m_text = MIMEText(text, 'html', 'utf-8')
-    message.attach(m_text)
-
-    # 邮件加入图片
-    m_img = MIMEBase('image', 'jpg')
-    m_img.add_header('Content-Disposition', 'attachment')
-    m_img.add_header('Content-ID', '<0>')  # 设置图片id为0
-    f = open(file, "rb")  # 读取本地图片
-    m_img.set_payload(f.read())
-    encoders.encode_base64(m_img)
-    message.attach(m_img)
-
-    message['From'] = Header('角度')  # 邮件发送者名字
-    message['To'] = Header('小蓝枣')  # 邮件接收者名字
-    message['Subject'] = Header(name)  # 邮件主题
-
-    # mail = smtplib.SMTP()  # （win7可用，win2008R2报错）win2008R2修改为：smtplib.SMTP_SSL
-    # mail.connect("smtp.qq.com")  # 连接 qq 邮箱 # win2008R2去掉了这个
-
-    mail = smtplib.SMTP_SSL("smtp.qq.com", 465)  # win2008R2的 发送服务器的端口号 （win7下可用）
-    mail.login(pv.accout, pv.key)  # 账号和授权码
-    mail.sendmail(pv.fasong, [email], message.as_string())
-    print("邮件发送成功" + "!" * 100)
+# def send_m(name, file, email):
+#     if email == '' or "@" not in email:
+#         email = pv.jieshou
+#
+#     message = MIMEMultipart()  # 邮件主体
+#
+#     # 邮件加入文本内容
+#     text = '<img src="cid:0">'  # html文本引入id为0的图片
+#     m_text = MIMEText(text, 'html', 'utf-8')
+#     message.attach(m_text)
+#
+#     # 邮件加入图片
+#     m_img = MIMEBase('image', 'jpg')
+#     m_img.add_header('Content-Disposition', 'attachment')
+#     m_img.add_header('Content-ID', '<0>')  # 设置图片id为0
+#     f = open(file, "rb")  # 读取本地图片
+#     m_img.set_payload(f.read())
+#     encoders.encode_base64(m_img)
+#     message.attach(m_img)
+#
+#     message['From'] = Header('角度')  # 邮件发送者名字
+#     message['To'] = Header('小蓝枣')  # 邮件接收者名字
+#     message['Subject'] = Header(name)  # 邮件主题
+#
+#     # mail = smtplib.SMTP()  # （win7可用，win2008R2报错）win2008R2修改为：smtplib.SMTP_SSL
+#     # mail.connect("smtp.qq.com")  # 连接 qq 邮箱 # win2008R2去掉了这个
+#
+#     mail = smtplib.SMTP_SSL("smtp.qq.com", 465)  # win2008R2的 发送服务器的端口号 （win7下可用）
+#     mail.login(pv.accout, pv.key)  # 账号和授权码
+#     mail.sendmail(pv.fasong, [email], message.as_string())
+#     print("邮件发送成功" + "!" * 100)
 
 
 def validateTitle(title):  # 文件名合法的判断

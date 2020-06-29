@@ -80,7 +80,8 @@ class SendMail(object):
 
     def send_mail(self):
         self.message.attach(MIMEText(self.content, 'html', 'utf-8'))  # 正文内容   plain代表纯文本,html代表支持html文本
-        self.message['From'] = self.username  # 发件人
+        # self.message['From'] = self.username  # 发件人
+        self.message['From'] = Header('角度')   # 邮件发送者名字
         self.message['To'] = ','.join(self.recv)  # 收件人
         self.message['Subject'] = self.title  # 邮件标题
         self.smtp = smtplib.SMTP_SSL(self.email_host, port=self.ssl_port)
