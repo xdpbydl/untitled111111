@@ -134,7 +134,6 @@ def search(idex, row):
             # 会覆盖sheet表
             # WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='history', index=False)
             # WX.to_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='Sheet1', index=False)
-
             #  发送邮件
             # send_m(wx_en + "__" + wx_file + wx_file_1, file, row['Email'])
             title = wx_en + "__" + wx_file + wx_file_1
