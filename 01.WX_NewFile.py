@@ -17,6 +17,7 @@ import smtplib
 from email.header import Header
 from selenium.webdriver.common.proxy import Proxy
 from selenium.webdriver.common.proxy import ProxyType
+import  private as pv
 
 # 使用无头浏览器
 chrome_options = Options()
@@ -44,21 +45,21 @@ print("1" * 100)
 
 def search(idex, row):
     browser.get('https://weixin.sogou.com/')
-    browser.save_screenshot("E:/TEMP/google/1.png")
+    browser.save_screenshot(pv.poto_dir + "1.png")
     # 定位输入框
     input_box = browser.find_element_by_id('query')
     # 输入内容：
     input_box.send_keys(row['公众号'])
-    browser.save_screenshot("E:/TEMP/google/2.png")
+    browser.save_screenshot(pv.poto_dir + "2.png")
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, '#searchForm > div > input.swz2'))).click()
     sleep(5)
-    browser.save_screenshot("E:/TEMP/google/3.png")
+    browser.save_screenshot(pv.poto_dir + "3.png")
     print("2" * 100)
     for i in range(8):  # 需要优化为根据出现条目循环
 
         try:
             tar = '#sogou_vr_11002301_box_{}'.format(i)
-            browser.save_screenshot("E:/TEMP/google/4.png")
+            browser.save_screenshot(pv.poto_dir + "4.png")
             wx_en = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.tit > a > em').text
             wx_en_1 = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.tit > a ').text
             wx_hao = browser.find_element_by_css_selector(tar + ' > div > div.txt-box > p.info > label').text
@@ -110,7 +111,7 @@ def search(idex, row):
                     break
             name = wx_file + wx_file_1 + date.today().strftime("%Y-%m-%d")
             name = validateTitle(name)
-            file = "E:/TEMP/google/{}.png".format(name)
+            file = pv.poto_dir + "{}.png".format(name)
             # pd.
             print(name, wx_file, wx_file_1, date.today().strftime("%Y-%m-%d"))
             browser.set_window_size(scroll_width, scroll_height)
@@ -118,11 +119,11 @@ def search(idex, row):
 
             row['最新文章'] = wx_file + wx_file_1
             WX.iloc[idex] = pd.Series(row)
-            WX_h = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='history')
-            WX_h = WX_h.append([{'序号': len(WX_h) + 1, '公众号': row['公众号'], '微信号': row['微信号'], '最新文章': wx_file + wx_file_1,
+            WX_h = pd.read_excel(pv.file, sheet_name='history')
+            WX_h = WX_h.append([{'序号': len(WX_h) + 1, '公众号': row['公众号'], '微信号': row['微信号'], '最新文章': wx_en + wx_file + wx_file_1,
                                  '发表时间': time.strftime("%Y-%m-%d %H:%M:%S")}], ignore_index=True)
 
-            writer = pd.ExcelWriter('E:/TEMP/untitled111111/WX_File.xlsx')
+            writer = pd.ExcelWriter(pv.file)
             WX.to_excel(writer, "Sheet1", index=False)
             WX_h.to_excel(writer, "history", index=False)
 
@@ -192,7 +193,7 @@ def send_m1(name, file):
 
 def send_m(name, file, email):
     if email == '' or "@" not in email:
-        email = "46311295@qq.com"
+        email = pv.jieshou
 
     message = MIMEMultipart()  # 邮件主体
 
@@ -218,8 +219,8 @@ def send_m(name, file, email):
     # mail.connect("smtp.qq.com")  # 连接 qq 邮箱 # win2008R2去掉了这个
 
     mail = smtplib.SMTP_SSL("smtp.qq.com", 465)  # win2008R2的 发送服务器的端口号 （win7下可用）
-    mail.login("46311295@qq.com", "xefqwobdzspgbijb")  # 账号和授权码
-    mail.sendmail("46311295@qq.com", [email], message.as_string())
+    mail.login(pv.accout, pv.key)  # 账号和授权码
+    mail.sendmail(pv.fasong, [email], message.as_string())
     print("邮件发送成功" + "!" * 100)
 
 
@@ -232,7 +233,7 @@ def validateTitle(title):  # 文件名合法的判断
 if __name__ == '__main__':
 
     while True:
-        WX = pd.read_excel('E:/TEMP/untitled111111/WX_File.xlsx', sheet_name='Sheet1')  # 放入无限循环内，实时刷新
+        WX = pd.read_excel(pv.file, sheet_name='Sheet1')  # 放入无限循环内，实时刷新
 
         for idex, row in WX.iterrows():
             # print(row['公众号'], row['微信号'])  # 输出每一行  序号	公众号	微信号	最新文章	发表时间	Email
