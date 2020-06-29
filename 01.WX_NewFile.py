@@ -141,13 +141,11 @@ def search(idex, row):
             <p>{}</p>
             <p><img src="cid:image1"></p>
              '''.format(title)
-            print(type(row['Email']))
             email = str(row['Email'])
             if email == '' or "@" not in email:
                 recv = pv.jieshou
             else:
                 recv = email.split(',')
-            print(type(recv))
             m = SendMail.SendMail(username=pv.fasong, passwd=pv.key, title=title, recv=recv, content=content,image=file)
             m.send_mail()
 
