@@ -23,6 +23,8 @@ for page in pdf.pages:
         #         print(rowlist)
         #         ws.append(rowlist)
         # print('---------- 分割线 ----------')
+        break
+    break
 pdf.close()
 # 保存Excel表
 # wb.save('11.xlsx')
