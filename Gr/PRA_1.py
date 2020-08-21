@@ -11,7 +11,7 @@ file2 = r'E:\TEMP\02GR\model\2020-7-11供应商分配第一批.xlsx'
 file3 = r'E:\TEMP\02GR\2020-7-11供应商分配第一批_new.xlsx'
 
 
-df = pd.read_excel(songhuodan)
+df = pd.read_excel(songhuodan, index=False)
 #  删除无效列
 df = df.loc[:, ~df.columns.str.contains('Unnamed')]
 
@@ -66,18 +66,18 @@ def guige(x):
 
 
 guige_df["备注"] = guige_df["备注"].apply(guige)
-print("___________"*20)
+# print("___________"*20)
 
-print(str(guige_df["备注"]))
+# print(str(guige_df["备注"]))
 
-guige_df.to_excel(r"E:\TEMP\02GR\00.xlsx", index=False)
+# guige_df.to_excel(r"E:\TEMP\02GR\00.xlsx", index=False)
 
 # 转换为字符串
 guige_df = guige_df.applymap(str)
 
 guige_df["备注"] = guige_df["备注"]+'='+ guige_df["数量"]
-guige_df.to_excel(r"E:\TEMP\02GR\01.xlsx", index=False)
-print(str(guige_df["备注"]))
+# guige_df.to_excel(r"E:\TEMP\02GR\01.xlsx", index=False)
+# print(str(guige_df["备注"]))
 guige_1 = guige_df[['工号', '备注']]
 # print(guige_1)
 # group = guige_1 .groupby('工号').sum()
@@ -107,9 +107,14 @@ df2 = pd.read_excel(file2, index=False)
 
 
 # # 插入空行\文件名\行数
-# line_no = len(df1)
-# file_name = '2020-7-11供应商分配第一批_new'
-# df2_no = len(df2)
+line_no = len(df1)
+file_name = '2020-7-11供应商分配第一批_new'
+df2_no = len(df2)
+for i in range(5):      # 5行
+    df2.loc[df2_no+i] = ['' for n in range(21)]   # 21列
+df2.iloc[df2_no+4, 1] = file_name
+df2.iloc[df2_no+4, 2] = line_no
+
 # print(df2)
 # for i in range(4):
 #     df.loc[df2_no+i] = [np.NaN, np.NaN, np.NaN, np.NaN, np.NaN,np.NaN, np.NaN, np.NaN, np.NaN, np.NaN,np.NaN, np.NaN, np.NaN, np.NaN, np.NaN,np.NaN, np.NaN, np.NaN, np.NaN, np.NaN]
