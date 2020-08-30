@@ -1,7 +1,6 @@
-import time
+import re
 
-
-ss = '2020-08-20'
-
-aa = ss.replace('-','')
-print(aa)
+string = "GRFⅡ35.12-100"
+aa = re.findall(r"(\d+\.?\d*)-", string)
+print(type(str(aa)))
+print(aa[0])
