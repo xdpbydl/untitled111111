@@ -7,6 +7,7 @@ file = r'E:\TEMP\02GR\kefahuo\可发货通知单报表.xls'
 model_file = r'E:\TEMP\02GR\kefahuo\model\可发货通知书(代运）2020——导入2.0_1.xlsx'
 im_file = r'E:\TEMP\02GR\kefahuo\可发货通知书(代运）2020——导入2.0______1.xlsx'
 save_file = r'E:\TEMP\02GR\kefahuo\11.xls'
+zhiqian_file = r'E:\TEMP\02GR\kefahuo\物流直签.xlsx'
 
 if os.path.exists(im_file):
     os.remove(im_file)
@@ -34,11 +35,20 @@ df.drop(['层/站/门/高'], axis=1, inplace=True)
 
 # 以下修改,不提示警告
 pd.set_option('mode.chained_assignment', None)
-# 以'广远物流'开始的,'运输商'列值改为'自运'
-df.送货方式[df['运输商'].str.contains('^广远物流')] = '自运'
+# # '运输商'列值为'客户自理'开始的,'送货方式'列值改为'自提'
+# df.送货方式[df['运输商'].str.contains('^客户自理')] = '自提'
+# # '运输商'列值为  非（ '客户自理',‘广州广日物流有限公司’），'送货方式'列值改为'自运'
+# yunshus = ['广州广日物流有限公司', '客户自理']
+# df.送货方式[~df['运输商'].str.contains('|'.join(yunshus))] = '自运'
 
-# 筛选"送货方式"非'自运'的
-df = df[df['送货方式'].str.contains('送货')]
+
+
+# 筛选"运输商" ,为'广州广日物流有限公司'的
+df = df[df['运输商'].str.contains('广州广日物流有限公司')]
+
+
+
+
 # print(df.电梯工号)
 df = df.applymap(str)
 # print(im_df.总工号)
@@ -50,6 +60,7 @@ col_d = {"型号": "电梯型号",
          "层": "层",
          "站": "站",
          "门": "门",
+         "提升高度": "高",
          "订货单位": "签订单位",
          "使用单位": "项目名称",
          "营业员": "业务员",
@@ -60,7 +71,7 @@ for key in col_d:
     # print(key)
     # print(col_d[key])
 
-col_e = {"交货要求": "整体",
+col_e = {"交货要求": "整梯",
          "合同库运费": 0,
          "实收运费": 0,
          "广日合同标准价": 0,
@@ -89,6 +100,8 @@ print(im_df.倾角)
 im_df.倾角 = np.where((im_df[u'层'] == '0') & (im_df[u'站'] == '0') & (im_df[u'门'] == '0'), im_df.型号, '0')
 
 print(im_df.倾角)
+
+
 def re_1(i):
     if i != 0 and i != '0':
         res = re.findall(r"(\d+\.?\d*)-", i)[0]
@@ -111,6 +124,16 @@ im_df.层站门 = im_df.层 + "/" + im_df.站 + "/" + im_df.门
 
 # "型号"\"层"\"站"\"门"\"订货单位"\"使用单位"\"营业员"\"安装地址" = "电梯型号"\"层"\"站"\"门"\"签订单位"\"项目名称"\"业务员"\"送货地址"
 
+
+# 筛选【签订单位】为'广州广日电梯工程有限公司'的，把【收支状态】改为"物流直签"；
+im_df.收支状态[im_df['订货单位'].str.contains('广州广日电梯工程有限公司')] = '物流直签'
+#  把“物流直签”的，另存为一张表。
+wuliuzhiqian = im_df[im_df['订货单位'].str.contains('广州广日电梯工程有限公司')]
+
+# 把导出表，【订货单位】为“广州广日电梯工程有限公司”的，剔除。
+im_df = im_df[~im_df['订货单位'].str.contains('广州广日电梯工程有限公司')]
+
 df.to_excel(save_file, index=False)
 im_df.to_excel(im_file, index=False)
+wuliuzhiqian.to_excel(zhiqian_file, index=False)
 # print(df)

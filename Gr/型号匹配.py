@@ -30,10 +30,17 @@ for i in range(len(df)):
 
         if count == ix + 1:
             # 曾和高统一按照 层 取 如要区分列  拿types最后一位区分按曾或者高
-            if df["层"][i] <= types[2]:  # 在标准价格方位内
-                df.loc[i, "金额"] = types[1]
+            if types[-1] == 0:
+                if df["层"][i] <= types[2]:  # 在标准价格方位内
+                    df.loc[i, "保险货值万元"] = types[1]
+                else:
+                    df.loc[i, "保险货值万元"] = types[1] + (df["层"][i] - types[2]) * 10000
             else:
-                df.loc[i, "金额"] = types[1] + (df["层"][i] - types[2]) * 10000
+                if int(df["提升高度"][i]) <= types[2]:  # 在标准价格方位内
+                    df.loc[i, "保险货值万元"] = types[1]
+                else:
+                    df.loc[i, "保险货值万元"] = types[1] + (int(df["提升高度"][i])  - types[2]) * 10000
             types = []
+
 
 df.to_excel(r'new可发货通知书.xlsx')
