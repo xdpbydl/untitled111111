@@ -42,12 +42,8 @@ pd.set_option('mode.chained_assignment', None)
 # df.送货方式[~df['运输商'].str.contains('|'.join(yunshus))] = '自运'
 
 
-
 # 筛选"运输商" ,为'广州广日物流有限公司'的
 df = df[df['运输商'].str.contains('广州广日物流有限公司')]
-
-
-
 
 # print(df.电梯工号)
 df = df.applymap(str)
@@ -60,9 +56,9 @@ col_d = {"型号": "电梯型号",
          "层": "层",
          "站": "站",
          "门": "门",
-         "提升高度": "高",
          "订货单位": "签订单位",
          "使用单位": "项目名称",
+         "提升高度": "高",
          "营业员": "业务员",
          "安装地址": "送货地点",
          "总工号": "电梯工号"}
@@ -99,6 +95,8 @@ print(im_df.倾角)
 # 层站门均为0时把型号字段中-前面的数字（数字可能有整数，有小数点）填充到倾角字段中
 im_df.倾角 = np.where((im_df[u'层'] == '0') & (im_df[u'站'] == '0') & (im_df[u'门'] == '0'), im_df.型号, '0')
 
+
+
 print(im_df.倾角)
 
 
@@ -109,8 +107,21 @@ def re_1(i):
     else:
         return 0
 
-
 im_df.倾角 = im_df.倾角.apply(re_1)
+
+#  ，把旧值的层 站 门 ，都为0，df高赋值给新值, 不为0的，赋值空
+im_df.提升高度 = np.where((im_df[u'层'] == '0') & (im_df[u'站'] == '0') & (im_df[u'门'] == '0'), im_df.提升高度, '')
+
+
+# if (df.层 == '0' & df.站 == '0' & df.门 == '0'):
+#     im_df.提升高度 = df.高
+# else:
+#     im_df.提升高度 = ''
+
+# im_df.提升高度 = df.apply(lambda x: x.高 if (x.层 == '0' & x.站 == '0' & x.门 == '0') else '')
+# where(df.层 == '0' & df.站 == '0' & df.门 == '0')
+# df['ExtraScore'] = df['Nationality'].apply(lambda x: 5 if x != '汉' else 0)
+
 print(im_df.倾角)
 im_df.合同号 = im_df.总工号.str[:6]
 im_df.工号 = im_df.总工号.str[-5:]
