@@ -1,18 +1,18 @@
 import openpyxl
 import pandas as pd
-from win32com.client import Dispatch
+
+# from win32com.client import Dispatch
 
 excel_file = r'E:\TEMP\02GR\kefahuo\HANG\可发货通知书(代运）2020——导入2.0_1.xlsx'  # 格式文件
 save_file = r'E:\TEMP\02GR\kefahuo\geshi\new_save.xlsx'  # 保存的新文件
 data_fiel = r'E:\TEMP\02GR\kefahuo\geshi\0903.xlsx'  # 数据文件
 
-
-def just_open(filename):
-    xlApp = Dispatch("Excel.Application")
-    xlApp.Visible = False
-    xlBook = xlApp.Workbooks.Open(filename)
-    xlBook.Save()
-    xlBook.Close()
+# def just_open(filename):
+#     xlApp = Dispatch("Excel.Application")
+#     xlApp.Visible = False
+#     xlBook = xlApp.Workbooks.Open(filename)
+#     xlBook.Save()
+#     xlBook.Close()
 
 
 wb_yuan = openpyxl.load_workbook(excel_file, data_only=False)
@@ -22,19 +22,24 @@ df_data = pd.read_excel(data_fiel, index=False, keep_default_na=False)
 sheet = wb_yuan["Sheet1"]
 fille = openpyxl.styles.PatternFill('solid', fgColor='FFBB02')
 
+
 # print (list(sheet.rows), list(sheet.columns))
-for i in range(len(df_data)):  # 列
-    for r in range(len(df_data.columns)):  # 行
-        # print(df_data.iloc[i, r], type(df_data.iloc[i, r]))
-        # print(sheet.cell(row=r + 1, column=i + 2).value)
-        # if x for x in ("")
-        if openpyxl.utils.get_column_letter(r + 1) not in ["C", "D", "AG"]:  # 这三列存在公式避免写入
-            sheet.cell(row=i + 2, column=r + 1, value=str(df_data.iloc[i, r]))
-        if i + 1 == len(df_data):  # 最后一行填充颜色
-            sheet.cell(row=i + 2, column=r + 1).fill = fille
-# print (sheet['d4'].value)
-# sheet = sheet[2:len(df_data)]
-sheet.delete_rows((len(df_data) + 2), 500)  # 删除模版，复制过来多余的行
+def filegeshi(df_data, sheet):
+    for i in range(len(df_data)):  # 列
+        for r in range(len(df_data.columns)):  # 行
+            # print(df_data.iloc[i, r], type(df_data.iloc[i, r]))
+            # print(sheet.cell(row=r + 1, column=i + 2).value)
+            # if x for x in ("")
+            if openpyxl.utils.get_column_letter(r + 1) not in ["C", "D", "AG"]:  # 这三列存在公式避免写入
+                sheet.cell(row=i + 2, column=r + 1, value=str(df_data.iloc[i, r]))
+            if i + 1 == len(df_data):  # 最后一行填充颜色
+                sheet.cell(row=i + 2, column=r + 1).fill = fille
+    # print (sheet['d4'].value)
+    # sheet = sheet[2:len(df_data)]
+    sheet.delete_rows((len(df_data) + 2), 500)  # 删除模版，复制过来多余的行
+
+
+filegeshi(df_data, sheet)
 wb_yuan.save(save_file)
 
 # just_open(save_file)

@@ -25,9 +25,11 @@ count = len(diqu)
 for i in range(len(df)):
     for n in range(len(diqu)):
 
-        if (diqu.iloc[n].名称) in df.iloc[i].安装地址:
+        if (diqu.iloc[n].名称) in df.iloc[i].安装地址[:5]:        # [:5] 为地址前5个字中包含省份
             print(diqu.iloc[n].编号, diqu.iloc[n].名称, df.iloc[i].安装地址)
             no_list = [i, n, diqu.iloc[n].编号, diqu.iloc[n].名称]
+
+
             # print(no_list)
         elif df.iloc[i].安装地址.split("市")[0] in str(diqu.iloc[n].包含城市):  # 部分地址没有填写省份，只有城市。
             print(df.iloc[i].安装地址.split("市")[0], diqu.iloc[n].包含城市)

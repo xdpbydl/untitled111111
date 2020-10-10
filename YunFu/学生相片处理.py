@@ -3,9 +3,9 @@
 import shutil, os
 import pandas as pd
 
-srcFile = r'E:\TEMP\01YZ\图片\高二级学生相片'
+srcFile = r'E:\TEMP\01YZ\0927\all_合一_转换素后'
 # dstFile = r'E:\TEMP\01YZ\改后的'
-excel_fiel = r'E:\TEMP\01YZ\车牌对应\s\excel\云浮中学门禁卡师生基本信息（原高二）.xlsx'
+excel_fiel = r'E:\ZCXX\1.2方辰\3. 云中\2.1实施 过程\1. 录入\20200925_高一\高一级云浮中学学生基础信息录入.xlsx'
 # excel_save_log = r'E:\TEMP\01YZ\车牌对应\t\部分老师没有头像.xlsx'
 
 
