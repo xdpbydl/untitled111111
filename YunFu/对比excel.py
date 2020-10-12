@@ -1,9 +1,9 @@
 import pandas as pd
 import os
 
-poto_file = r'E:\ZCXX\1.2方辰\3. 云中\2.1实施 过程\1. 录入\20201009\1 （附小二年级）2020年7月云浮中学小车牌、摩托车登记表\（附小二年级）2020年7月云浮中学小车牌、摩托车登记表\人面识别照(附小二年级)'
+poto_file = r'E:\TEMP\01YZ\20201012\POTO_ALL'
 excel_web = r'C:\Users\Administrator\Desktop\老师信息_20201009.xlsx'
-excel_fie = r'E:\ZCXX\1.2方辰\3. 云中\2.1实施 过程\1. 录入\20201009\1 （附小二年级）2020年7月云浮中学小车牌、摩托车登记表\（附小二年级）2020年7月云浮中学小车牌、摩托车登记表\2020年7月云浮中学小车牌、摩托车登记表.xls'
+excel_fie = r'E:\TEMP\01YZ\20201012\20201012_all.xls'
 
 
 df = pd.read_excel(excel_fie, index=False, keep_default_na=False)
@@ -33,7 +33,8 @@ def shifoucunzai(a, b, c):
                 index = df[a == i].index.tolist()
                 print(index)
                 df.loc[index[0], [c]] = '存在'
-                pass
+            elif str(i) == str(m) and str(i) == '':
+                df.loc[index[0], [c]] = '无车牌'
 
 shifoucunzai(df["姓名"], df_web["姓名"], "是否有姓名")
 shifoucunzai(df["电话号码"], df_web["手机"], "是否有手机")
