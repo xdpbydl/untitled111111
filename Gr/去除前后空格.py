@@ -1,12 +1,12 @@
 import pandas as pd
 
-file = r"E:\TEMP\02GR\JobNuberInfo\20200902\装箱1.xls"
-file1 = r"E:\TEMP\02GR\JobNuberInfo\20200902\装箱2.xls"
+file = r"C:\Users\Administrator\Desktop\GRWL_202010\装箱清单.xls"
+file1 = r"C:\Users\Administrator\Desktop\GRWL_202010\装箱清单_11.xls"
 # df = pd.read_html(file, header=0, keep_default_na=False, encoding='utf-8')[0]      # html格式excel
 
 def move_nan(file,file1):
     try:
-        df = pd.read_excel(file, index=False, keep_default_na=False)
+        df = pd.read_excel(file, index=False, keep_default_na=False, engine='openpyxl')
     except:
         df = pd.read_html(file, header=0, keep_default_na=False)[0]  # html格式excel
 
@@ -28,6 +28,6 @@ def move_nan(file,file1):
         df[i] = df[i].str.strip()  # 去掉前后空格
 
     df.fillna('', inplace=True)  # 替换nan空值
-    df.to_excel(file1, index=False)
+    df.to_excel(file1, index=False, engine='openpyxl')
 
 move_nan(file,file1)

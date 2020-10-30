@@ -4,10 +4,10 @@ import shutil, os
 import pandas as pd
 import numpy as np
 
-srcFile = r'E:\TEMP\01YZ\0903'
-dstFile = r'E:\TEMP\01YZ\改后的'
-excel_fiel = r'E:\ZCXX\1.2方辰\3. 云中\2.1实施 过程\第二次所发\导入\老师信息——20200903.xlsx'
-excel_save_log = r'E:\ZCXX\1.2方辰\3. 云中\2.1实施 过程\第二次所发\导入\111.xlsx'
+srcFile = r'E:\TEMP\01YZ\20201012\POTO_ALL'
+dstFile = r'E:\TEMP\01YZ\20201012\处理好的'
+excel_fiel = r'E:\TEMP\01YZ\20201012\导入.xlsx'
+excel_save_log = r'E:\TEMP\01YZ\20201012\111.xlsx'
 
 df = pd.read_excel(excel_fiel, index=False)
 file_list = sorted(os.listdir(srcFile))
@@ -31,7 +31,7 @@ m = 1
 
 for i in range(len(df)):
     for x in file_name:
-        print(df.iloc[i].姓名, x)
+        # print(df.iloc[i].姓名, x)
         if df.iloc[i].姓名 in x:
             tu_no = df.iloc[i].编号
             # print(df.iloc[i].姓名, x, tu_no)
