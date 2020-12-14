@@ -5,7 +5,7 @@ df_file = r'E:\TEMP\02GR\kefahuo\可发货通知书(代运）2020——导入2.0
 diqu_1 = pd.read_excel(diqu_file, sheet_name="省内区级")
 diqu_2 = pd.read_excel(diqu_file, sheet_name="省内市级")
 diqu_3 = pd.read_excel(diqu_file, sheet_name="省外")
-df = pd.read_excel(df_file)
+df = pd.read_excel(df_file, keep_default_na=False)   # 20201204 增加
 
 # diqu = diqu_1.append(diqu_2, diqu_3, ignore_index=False)
 diqu = pd.concat([diqu_1, diqu_2, diqu_3])
@@ -25,15 +25,18 @@ count = len(diqu)
 for i in range(len(df)):
     for n in range(len(diqu)):
 
-        if (diqu.iloc[n].名称) in df.iloc[i].安装地址[:5]:        # [:5] 为地址前5个字中包含省份
-            print(diqu.iloc[n].编号, diqu.iloc[n].名称, df.iloc[i].安装地址)
-            no_list = [i, n, diqu.iloc[n].编号, diqu.iloc[n].名称]
+        if (df.iloc[i].安装地址) != '': # 20201204 增加
+            if (diqu.iloc[n].名称) in df.iloc[i].安装地址:
+                # print(diqu.iloc[n].编号, diqu.iloc[n].名称, df.iloc[i].安装地址)
 
-
-            # print(no_list)
-        elif df.iloc[i].安装地址.split("市")[0] in str(diqu.iloc[n].包含城市):  # 部分地址没有填写省份，只有城市。
-            print(df.iloc[i].安装地址.split("市")[0], diqu.iloc[n].包含城市)
-            no_list = [i, n, diqu.iloc[n].编号, diqu.iloc[n].名称]
+                # [:5] 为安装地址前5个字中包含省份，
+                if diqu.iloc[n].编号 >= 300 and (diqu.iloc[n].名称) in df.iloc[i].安装地址[:5]:
+                    no_list = [i, n, diqu.iloc[n].编号, diqu.iloc[n].名称]
+                elif diqu.iloc[n].编号 < 300:
+                    no_list = [i, n, diqu.iloc[n].编号, diqu.iloc[n].名称]
+            # 20201204 增加
+            elif df.iloc[i].安装地址.split("区")[0].split("市")[0] in str(diqu.iloc[n].包含城市):  # 部分地址没有填写省份，只有区或市
+                no_list = [i, n, diqu.iloc[n].编号, diqu.iloc[n].名称]
 
 
         if count == n + 1:
