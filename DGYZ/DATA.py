@@ -5,25 +5,33 @@ import openpyxl
 from win32com.client import Dispatch
 
 file_path = 'E:\\ZCXX\\东莞邮政\\1.需求\给开发-\\'
-jieju_file = f'{file_path}result2020-12-10----08-51-07(1).xls'
+jieju_file1 = f'{file_path}result2020-12-10----08-51-07(1).xls'
+jieju_file = f'{file_path}temp\\result2020-12-10----08-51-07(1).xlsx'
 renyuan_file = f'{file_path}全行人员花名册.xls'
-model_file = f'{file_path}model\小企业贷款日报模版.xls'
+model_file = f'{file_path}model\\小企业贷款日报模版.xls'
 temp_file = f'{file_path}model\\temp.xls'
 geishi_file = f'{file_path}model\\小企业贷款日报模版格式.xlsx'
 
 last_file = f'{file_path}2020年12月8日小企业贷款日报.xls'  # 上一版本
 
 
-def Save_Format_xls(filename):
+def Save_Format_xls(filename1, filename):
     xlApp = Dispatch("Excel.Application")
     xlApp.Visible = False  # 后台运行
     xlApp.DisplayAlerts = False  # 不警报
-    xlBook = xlApp.Workbooks.Open(filename)
-    xlBook.SaveAs(filename, 56)  # 56   xls    51 xlsx
+    xlBook = xlApp.Workbooks.Open(filename1)
+    xlBook.SaveAs(filename, 51)  # 56   xls    51 xlsx
     xlBook.Close()
 
 
-Save_Format_xls(jieju_file)
+for n in range(5):
+    try:
+        Save_Format_xls(jieju_file1, jieju_file)      # 转换时，小概率会报错
+        print('***'*8)
+        break
+    except:
+        print(f'重新转换{n}次')
+
 jieju_df = pd.read_excel(jieju_file, keep_default_na=False)
 
 renyuan_df = pd.read_excel(renyuan_file, keep_default_na=False)
@@ -100,12 +108,10 @@ fk_month = df1[month].groupby('工作部门')["借据金额"].agg({('本月放�
 fk_year = df1[year].groupby('工作部门')["借据金额"].agg({('本年放款笔数', 'count'), ('本年放款金额', 'sum')})
 
 # jy_df 贷款结余 为计算 结余余额
-jy_df = df1[df1.借据状态.isin(['正常', '逾期', '部分逾期'])]  # 只取这些状态
-jy_all = jy_df.groupby('工作部门')["借据余额"].agg({('贷款结余笔数', 'count'), ('贷款结余金额', 'sum')})
+jy_all = df1[df1.借据状态.isin(['正常', '逾期', '部分逾期'])].groupby('工作部门')["借据余额"].agg({('贷款结余笔数', 'count'), ('贷款结余金额', 'sum')})
 
 # yq_df 逾期   取数—台账：借据状态—逾期、部分逾期     借据余额
-yq_df = df1[df1.借据状态.isin(['逾期', '部分逾期'])]  # 只取这些状态
-yq_all = yq_df.groupby('工作部门')["借据余额"].agg({('逾期金额', 'sum')})
+yq_all = df1[df1.借据状态.isin(['逾期', '部分逾期'])].groupby('工作部门')["借据余额"].agg({('逾期金额', 'sum')})
 
 # bl_df 不良  不良取数—台账：风险分类—次级、可疑、损失
 bl_df = df1[df1.风险分类.isin(['次级', '可疑', '损失']) & (df1.借据状态.isin(['正常', '逾期', '部分逾期']))]  # 只取这些状态

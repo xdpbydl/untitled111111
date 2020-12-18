@@ -1,18 +1,14 @@
-class Car:
-    def __init__(self, color, mileage):
-        self.color = color
-        self.mileage = mileage
 
-    def __repr__(self):
-        return '__repr__ for Car'
+import pandas as pd
 
-    def __str__(self):
-        return '__str__ for Car'
+file_path = 'E:\\ZCXX\\东莞邮政\\1.需求\给开发-\\'
+jieju_file1 = f'{file_path}result2020-12-10----08-51-07(1).xls'
+
+jieju_df = pd.read_html(jieju_file1, keep_default_na=False)
 
 
-my_car = Car('red', 37281)
-# print(my_car)
-# print(my_car.color, my_car.mileage)
-# print(type(my_car.color), type(my_car.mileage))
-print(str(my_car))
-print(repr(my_car))
+jieju_df = pd.DataFrame(jieju_df[0])
+# print(df.iloc[3])
+# jieju_df.columns=jieju_df.iloc[0]
+
+print(jieju_df)
