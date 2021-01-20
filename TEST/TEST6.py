@@ -10,7 +10,7 @@ if not os.path.exists(target_path):
     os.makedirs(target_path)
 
 else:
-    trg_file = trg_file + r'_{n}'.fromat(str(n)
+    trg_file = trg_file + r'_{n}'.fromat(str(n))
     target_path = os.path.abspath(trg_file)
 
 
