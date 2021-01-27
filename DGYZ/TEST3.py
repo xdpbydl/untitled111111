@@ -11,7 +11,7 @@ r_col = ['A', 'B', 'C', 'D']  # 读取的，列名
 
 
 def r_s_excel(file, s_row, s_col, save_file, r_header, r_row, r_col):
-    df = pd.read_excel(file, header=r_header)
+    df = pd.read_excel(file, header=r_header, keep_default_na=False)
     s_df = df.loc[0:r_row, r_col]
 
     oxl_excel = openpyxl.load_workbook(save_file, data_only=False)

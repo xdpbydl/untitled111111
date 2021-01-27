@@ -3,9 +3,14 @@ import datetime
 from datetime import timedelta
 
 now = datetime.datetime.now()
+# 获取上月第一天和最后一天
 last_month_end = datetime.date(now.year, now.month, 1) - timedelta(1)
 last_month_start = datetime.date(last_month_end.year, last_month_end.month, 1)
 print(last_month_start, last_month_end)
+
+# 获取本月第一天和最后一天：
+this_month_start = datetime.datetime(now.year, now.month, 1)
+this_month_end = datetime.datetime(now.year, now.month, calendar.monthrange(now.year, now.month)[1])
 
 test_dict = {1: last_month_start, 2: last_month_end}
 print(test_dict[1])
