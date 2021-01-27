@@ -80,3 +80,7 @@ for c in range(10):
 
 df = pd.DataFrame(title_all, columns=['位置', 'title', '是否点击', 'URL'])
 df.to_excel(excel_writer=save_file, index=False)
+
+
+
+
