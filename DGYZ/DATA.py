@@ -4,7 +4,7 @@ import datetime
 import openpyxl
 from win32com.client import Dispatch
 
-file_path = 'E:\\ZCXX\\东莞邮政\\1.需求\给开发-\\'
+file_path = 'E:\\ZCXX\\东莞邮政\\1.需求\\给开发-\\'
 jieju_file1 = f'{file_path}result2020-12-10----08-51-07(1).xls'
 jieju_file = f'{file_path}temp\\result2020-12-10----08-51-07(1).xlsx'
 renyuan_file = f'{file_path}全行人员花名册.xls'
@@ -26,8 +26,8 @@ def Save_Format_xls(filename1, filename):
 
 for n in range(5):
     try:
-        Save_Format_xls(jieju_file1, jieju_file)      # 转换时，小概率会报错
-        print('***'*8)
+        Save_Format_xls(jieju_file1, jieju_file)  # 转换时，小概率会报错
+        print('***' * 8)
         break
     except:
         print(f'重新转换{n}次')
@@ -169,7 +169,6 @@ model_df.比去年逾期率 = model_df.逾期率 - ((last_df.逾期金额 - last
 # 不良率 同逾期率
 model_df.比上月不良 = model_df.不良金额 - (last_df.不良金额 - last_df.比上月不良)
 model_df.比去年不良 = model_df.不良金额 - (last_df.不良金额 - last_df.比去年不良)
-
 
 model_df.不良率 = model_df.不良金额 / model_df.贷款结余金额
 model_df.比上月不良率 = model_df.不良率 - ((last_df.不良金额 - last_df.比上月不良) / (last_df.贷款结余金额 - last_df.本月净增金额))
