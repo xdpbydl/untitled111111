@@ -22,10 +22,14 @@ excel_dict = {
     4: {'name': 'SF6301-201-大中小微型企业贷款情况表-2020年12月月报（第一批次）.xlsx', 'daily_name': daily_name,
         'data': {'s_row': 6, 's_col': 3, 's_sheel': 'SF6301', 'r_header': 4, 'r_row_len': 37, 'r_col': 'C:I',
                  'r_sheel': 'S6301'}},
+    5: {'name': 'GF0101-161-表外业务情况表-2020年12月月报（第一批次）.xlsx', 'daily_name': daily_name,
+        'data': {'s_row': 6, 's_col': 4, 's_sheel': 'GF0101', 'r_header': 3, 'r_row_len': 39, 'r_col': 'D:E',
+                 'r_sheel': '附注'}},
 }
 
 
 def r_s_excel(file, s_col, s_row, s_sheel, model_file, r_header, r_row_len, r_col, r_sheel, save_file):
+    print(model_file)
     df = pd.read_excel(file, header=r_header, keep_default_na=False, sheet_name=r_sheel, usecols=r_col)
     s_df = df.loc[0:r_row_len - 1]
 
