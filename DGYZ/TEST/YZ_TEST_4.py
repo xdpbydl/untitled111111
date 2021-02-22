@@ -14,7 +14,7 @@ excel_dict = {
         'source_file': f'{file_path}存贷增减草稿2019.xlsx',
         'save_file': f'{save_path}2020年11月金融统计信息（业务）.xlsx',
         'type': 'pd_data', 'data': {'s_row': 5, 's_col': 4, 's_sheel': '全市存贷增长',
-                                    'r_header': 0, 'r_row_len': 43, 'r_col': 'C:F', 'r_sheel': '202011'}},
+                                    'r_header': 0, 'r_row_len': 42, 'r_col': 'C:F', 'r_sheel': '202011'}},
     1: {'model_file': f'{save_path}2020年11月金融统计信息（业务）.xlsx',  # 空白.xlsx    2020年11月金融统计信息（业务）.xlsx
         'source_file': f'{file_path}存贷增减草稿2019.xlsx',
         'save_file': f'{save_path}2020年11月金融统计信息（业务）.xlsx',
@@ -50,16 +50,20 @@ def flag_no(i):
         df = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
                            sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'], index_col=None)
         df = df.reindex(columns=['本月各项存', '排名1', '本月个人', '排名2', '本月单位', '排名3', '本月各项贷款', '排名4'], fill_value='')
+        print(df)
         model_df = pd.read_excel(excel_dict[i]['model_file'], header=3, keep_default_na=False,
-                                 sheet_name=data['s_sheel'], usecols='L:R', nrows=data['r_row_len'], index_col=None)
-        print(model_df.info())
+                                 sheet_name=data['s_sheel'], usecols='D:K', nrows=data['r_row_len'], index_col=None)    # usecols='L:R'
+        print('------df', df.info())
+        print('------model_df', model_df.info())
         model_df = model_df.reindex(columns=['本年各项存', '排名5', '本年个人存款', '排名6', '本年单位存款', '排名7', '本年各项贷款', '排名8'],
                                     fill_value='')
+        print(model_df)
+        input()
         df0 = df.join(model_df)
         # df0 = df0.astype('float')
-        print(df0.info())
+        print('-1-----df0', df0.info())
         df0['本年各项存'] = df0['本年各项存'].astype('float64')
-        print(df0.info())
+        print('-2-----df0', df0.info())
 
         df0['本年各项存'] = df0['本月各项存'] + df0['本年各项存']
         df0['本年个人存款'] = df0['本月个人'] + df0['本年个人存款']
