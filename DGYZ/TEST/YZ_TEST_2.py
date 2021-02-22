@@ -2,8 +2,8 @@ import openpyxl
 import pandas as pd
 
 file_path = 'D:\\ZCXX\\3.1 DGYC\\1. 文档\整理文档\\1、监管月报一批(8份)\\'
-save_path = 'E:\\TEMP\\6TEST\\'
-model_path = 'E:\\TEMP\\6TEST\\model\\'
+save_path = 'E:\\TEMP\\6TEST\\DGYC1\\'
+model_path = 'E:\\TEMP\\6TEST\\DGYC1\\model\\'
 daily_name = '202006-监管报表.xlsx'
 
 excel_dict = {
@@ -51,7 +51,7 @@ for i, v in excel_dict.items():
     # print(i, v['data'])
     source_file = f"{file_path}{v['source_file']}"
     model_file = f"{model_path}{v['model_file']}"
-    save_file = f"{save_path}{v['source_file']}"
+    save_file = f"{save_path}{v['model_file']}"
     data = v['data']
     r_s_excel(source_file, data['s_row'], data['s_col'], data['s_sheel'], model_file, data['r_header'],
               data['r_row_len'], data['r_col'], data['r_sheel'], save_file)
