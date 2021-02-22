@@ -52,14 +52,15 @@ def flag_no(i):
         df = df.reindex(columns=['本月各项存', '排名1', '本月个人', '排名2', '本月单位', '排名3', '本月各项贷款', '排名4'], fill_value='')
         model_df = pd.read_excel(excel_dict[i]['model_file'], header=3, keep_default_na=False,
                                  sheet_name=data['s_sheel'], usecols='L:R', nrows=data['r_row_len'], index_col=None)
-        print(model_df.info())
+        print('------df', df.info())
+        print('------model_df', model_df.info())
         model_df = model_df.reindex(columns=['本年各项存', '排名5', '本年个人存款', '排名6', '本年单位存款', '排名7', '本年各项贷款', '排名8'],
                                     fill_value='')
         df0 = df.join(model_df)
         # df0 = df0.astype('float')
-        print(df0.info())
+        print('-1-----df0', df0.info())
         df0['本年各项存'] = df0['本年各项存'].astype('float64')
-        print(df0.info())
+        print('-2-----df0', df0.info())
 
         df0['本年各项存'] = df0['本月各项存'] + df0['本年各项存']
         df0['本年个人存款'] = df0['本月个人'] + df0['本年个人存款']
