@@ -2,22 +2,58 @@ import openpyxl
 import pandas as pd
 from win32com.client import Dispatch
 
-file_path = 'E:\\TEMP\\6TEST\\DGYC4\\源文件\\'
-save_path = 'E:\\TEMP\\6TEST\\DGYC4\\'
-model_path = 'E:\\TEMP\\6TEST\\DGYC4\\model\\'
+file_path_1 = 'D:\\ZCXX\\3.1 DGYC\\1. 文档\整理文档\\1、监管月报一批(8份)\\'
+save_path_1 = 'E:\\TEMP\\6TEST\\DGYC1\\'
+model_path_1 = 'E:\\TEMP\\6TEST\\DGYC1\\model\\'
+daily_name = '202006-监管报表.xlsx'
+test = r'E:\TEMP\Desktop\111\test1.xlsx'
 
-"""参数说明'type'为 'copy': r_row_len为总共需要取行数，r_col 为源数据取数的列名字符； 
+file_path_4 = 'E:\\TEMP\\6TEST\\DGYC4\\源文件\\'
+save_path_4 = 'E:\\TEMP\\6TEST\\DGYC4\\'
+model_path_4 = 'E:\\TEMP\\6TEST\\DGYC4\\model\\'
+
+"""参数说明'type'为 'pd_data': r_row_len为总共需要取行数，r_col 为源数据取数的列名字符； 
 'type'为 'openpyxl' 可以取公式代表的值。其中 r_row_len为总共需要取【开始行，结束行+1】，r_col【开始列，结束列+1】；
 s_row, s_col都为保存的开始行列"""
 excel_dict = {
-    0: {'model_file': f'{save_path}2020年11月金融统计信息（业务）.xlsx',  # 空白.xlsx    2020年11月金融统计信息（业务）.xlsx
-        'source_file': f'{file_path}存贷增减草稿2019.xlsx',
-        'save_file': f'{save_path}2020年11月金融统计信息（业务）.xlsx',
+    100: {'model_file': f'{model_path_1}GF0103-191-存贷款明细报表-2020年12月月报（第一批次）.xlsx',
+          'source_file': f'{file_path_1}202006-监管报表.xlsx',
+          'save_file': f'{save_path_1}GF0103-191-存贷款明细报表-2020年12月月报（第一批次）.xlsx',
+        'type': 'pd_data', 'data': {'s_row': 6, 's_col': 3, 's_sheel': 'GF0103', 'r_header': 4, 'r_row_len': 32, 'r_col': 'C:E',
+                 'r_sheel': '存贷明细'}},
+    101: {'model_file': f'{model_path_1}GF0100-181-资产负债项目统计表-2020年12月月报（第一批次）.xlsx',
+          'source_file': f'{file_path_1}202006-监管报表.xlsx',
+          'save_file': f'{save_path_1}GF0100-181-资产负债项目统计表-2020年12月月报（第一批次）.xlsx',
+        'type': 'pd_data', 'data': {'s_row': 5, 's_col': 3, 's_sheel': 'GF0100', 'r_header': 3, 'r_row_len': 130, 'r_col': 'C:E',
+                 'r_sheel': 'G01'}},
+    102: {'model_file': f'{model_path_1}GF0102-201-贷款质量五级分类情况简表-2020年12月月报（第一批次）.xlsx',
+          'source_file': f'{file_path_1}202006-监管报表.xlsx',
+          'save_file': f'{save_path_1}GF0102-201-贷款质量五级分类情况简表-2020年12月月报（第一批次）.xlsx',
+        'type': 'pd_data', 'data': {'s_row': 6, 's_col': 3, 's_sheel': 'GF0102', 'r_header': 4, 'r_row_len': 11, 'r_col': 'C',
+                 'r_sheel': '小五级'}},
+    103: {'model_file': f'{model_path_1}GF0109-161-存贷款月日均情况表-2020年12月月报（第一批次）.xlsx',
+          'source_file': f'{file_path_1}202006-监管报表.xlsx',
+          'save_file': f'{save_path_1}GF0109-161-存贷款月日均情况表-2020年12月月报（第一批次）.xlsx',
+        'type': 'pd_data', 'data': {'s_row': 6, 's_col': 3, 's_sheel': 'GF0109', 'r_header': 4, 'r_row_len': 11, 'r_col': 'C:E',
+                 'r_sheel': '日均'}},
+    104: {'model_file': f'{model_path_1}SF6301-201-大中小微型企业贷款情况表-2020年12月月报（第一批次）.xlsx',
+          'source_file': f'{file_path_1}202006-监管报表.xlsx',
+          'save_file': f'{save_path_1}SF6301-201-大中小微型企业贷款情况表-2020年12月月报（第一批次）.xlsx',
+        'type': 'pd_data', 'data': {'s_row': 6, 's_col': 3, 's_sheel': 'SF6301', 'r_header': 4, 'r_row_len': 37, 'r_col': 'C:I',
+                 'r_sheel': 'S6301'}},
+    105: {'model_file': f'{model_path_1}GF0101-161-表外业务情况表-2020年12月月报（第一批次）.xlsx',
+          'source_file': f'{file_path_1}202006-监管报表.xlsx',
+          'save_file': f'{save_path_1}GF0101-161-表外业务情况表-2020年12月月报（第一批次）.xlsx',
+        'type': 'pd_data', 'data': {'s_row': 6, 's_col': 4, 's_sheel': 'GF0101', 'r_header': 3, 'r_row_len': 39, 'r_col': 'D:E',
+                 'r_sheel': '附注'}},
+    0: {'model_file': f'{save_path_4}2020年11月金融统计信息（业务）.xlsx',  # 空白.xlsx    2020年11月金融统计信息（业务）.xlsx
+        'source_file': f'{file_path_4}存贷增减草稿2019.xlsx',
+        'save_file': f'{save_path_4}2020年11月金融统计信息（业务）.xlsx',
         'type': 'pd_data', 'data': {'s_row': 5, 's_col': 4, 's_sheel': '全市存贷增长',
                                     'r_header': 0, 'r_row_len': 43, 'r_col': 'C:F', 'r_sheel': '202011'}},
-    1: {'model_file': f'{save_path}2020年11月金融统计信息（业务）.xlsx',  # 空白.xlsx    2020年11月金融统计信息（业务）.xlsx
-        'source_file': f'{file_path}存贷增减草稿2019.xlsx',
-        'save_file': f'{save_path}2020年11月金融统计信息（业务）.xlsx',
+    1: {'model_file': f'{save_path_4}2020年11月金融统计信息（业务）.xlsx',  # 空白.xlsx    2020年11月金融统计信息（业务）.xlsx
+        'source_file': f'{file_path_4}存贷增减草稿2019.xlsx',
+        'save_file': f'{save_path_4}2020年11月金融统计信息（业务）.xlsx',
         'type': 'pd_data', 'data': {'s_row': 5, 's_col': 4, 's_sheel': '全市存贷增长',
                                     'r_header': 0, 'r_row_len': 43, 'r_col': 'C:F', 'r_sheel': '202011'}},
 }
@@ -52,21 +88,20 @@ def flag_no(i):
         df = df.reindex(columns=['本月各项存', '排名1', '本月个人', '排名2', '本月单位', '排名3', '本月各项贷款', '排名4'], fill_value='')
         model_df = pd.read_excel(excel_dict[i]['model_file'], header=3, keep_default_na=False,
                                  sheet_name=data['s_sheel'], usecols='L:R', nrows=data['r_row_len'], index_col=None)
-        print(model_df.info())
-        model_df = model_df.reindex(columns=['本年各项存', '排名5', '本年个人存款', '排名6', '本年单位存款', '排名7', '本年各项贷款', '排名8'],
-                                    fill_value='')
+
+        model_df = model_df.reindex(columns=['本年各项存', '排名5', '本年个人存款', '排名6', '本年单位存款', '排名7', '本年各项贷款', '排名8'])
+        model_df.to_excel(test)
         df0 = df.join(model_df)
         # df0 = df0.astype('float')
-        print(df0.info())
-        df0['本年各项存'] = df0['本年各项存'].astype('float64')
-        print(df0.info())
 
+        # df0['本年各项存'] = df0['本年各项存'].astype('float64')
+        df0.to_excel(test)
         df0['本年各项存'] = df0['本月各项存'] + df0['本年各项存']
         df0['本年个人存款'] = df0['本月个人'] + df0['本年个人存款']
         df0['本年单位存款'] = df0['本月单位'] + df0['本年单位存款']
         df0['本年各项贷款'] = df0['本月各项存'] + df0['本年各项贷款']
-        input()
 
+        input()
         return df0
     elif i == 1:
         df1 = pd.read_excel(excel_dict[i]['source_file'], header=3, keep_default_na=False,
@@ -77,7 +112,9 @@ def flag_no(i):
                           txt_list=['AA370137002', 'AA370136025', 'AA370136031'])
         return df3
     else:
-        return 0
+        df = pd.read_excel(source_file, header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'], usecols=data['r_col'])
+        df = df.loc[0:data['r_row_len'] - 1]
+        return df
 
 
 def just_open(filename):
@@ -91,7 +128,9 @@ def just_open(filename):
 
 def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_len, r_col, r_sheel, save_file, type, df):
     """从源文件 复制数据到 模板格式文件，再保存到结果文件"""
-    print(f'--处理文件为：{source_file}-----')
+    print(f'--处理源文件文件为：{source_file}-----')
+    print(f'--模板文件文件为：{model_file}-----')
+    print(f'--保存文件为：{save_file}-----')
     if type == 'openpyxl':
         just_open(source_file)
         source_excel = openpyxl.load_workbook(source_file, data_only=True)
@@ -118,12 +157,13 @@ def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_le
                 else:
                     print(f'-----222---------{df.iloc[i, r]}---')
                     sheet.cell(row=i + s_row, column=r + s_col, value=df.iloc[i, r])
+
     model_excel.save(save_file)
     model_excel.close()
 
 
 for i, v in excel_dict.items():
-    if i != 0:
+    if i < 100:
         continue
     print(f'--处理序号为：{i}-----')
     source_file = v['source_file']
