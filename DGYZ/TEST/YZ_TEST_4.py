@@ -112,7 +112,7 @@ excel_dict = {
     406: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
           'source_file': f'{save_path_d2}各镇街统计工具202011.xlsx',
           'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）_____.xlsx',
-          'type': 'pd_data', 'data': {'s_row': 5, 's_col': 3, 's_sheel': '外币存款',
+          'type': 'pd_data', 'data': {'s_row': 5, 's_col': 5, 's_sheel': '外币存款',
                                       'r_header': 0, 'r_row_len': 127, 'r_col': 'B,E,P,Q', 'r_sheel': '引用'}},
 }
 
@@ -128,14 +128,31 @@ def source_data(source_file, header, cols, txt_list):
     return df1
 
 
-def add_fixed_cols(df, up_cols, add_col, fill_value):
+def add_fixed_cols(df, up_cols, add_col, fill_value, axist=1):
     """
     在up_cols列，后面增加固定的一列，add_col,设置默认值为fill_value
     """
-    df_columns = df.columns.tolist()
-    df_columns.insert(df_columns.index(up_cols) + 1, add_col)  # 在 '一级支行' 列后面插入'客户数量'
-    # df.insert(up_cols, add_col)  # 在 up_cols 索引列后面插入add_col列
-    df = df.reindex(columns=df_columns, fill_value=fill_value)  # fill_value 为默认值
+    if axist == 1:
+        df_columns = df.columns.tolist()
+        df_columns.insert(df_columns.index(up_cols) + 1, add_col)  # 在 '一级支行' 列后面插入'客户数量'
+        # df.insert(up_cols, add_col)  # 在 up_cols 索引列后面插入add_col列
+        df = df.reindex(columns=df_columns, fill_value=fill_value)  # fill_value 为默认值
+    elif axist == 0:#TODO: 重构 add_col 为多列
+        df_list = df.index.tolist()
+        df_len = len(df_list)
+        df.to_excel(test.format(aa='aaa'))
+        df.loc[df_len] = [fill_value for _ in df.columns]
+        print(df.index)
+
+        df_list.append(df_len)  , print(df_len)
+        df['change'] = df_list
+        print(df['change'])
+        df['change'] = df['change'].apply(lambda x: x + 1 if x >= up_cols else x)
+        df.loc[df_len, ['change']] = up_cols
+
+        df = df.sort_values(by='change')
+        # df.drop(columns='change', inplace=True)
+        df.to_excel(test.format(aa='bbb'))
     return df
 
 
@@ -145,7 +162,7 @@ def flag_no(i):
     """
     source_file = excel_dict[i]['source_file']
     data = excel_dict[i]['data']
-    if i == 201:    # openpyxl
+    if i == 201:  # openpyxl
         df = 0
     elif i == 202:
         df = source_data(source_file=source_file, header=data['r_header'], cols='指标代码',
@@ -158,13 +175,14 @@ def flag_no(i):
                            sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
     elif i == 400:
         df_s = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
-                           sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'], index_col=None)
+                             sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'], index_col=None)
+        print(f'---------400----{df_s.columns}')
         df_s = df_s.reindex(columns=['本月各项存', '排名1', '本月个人', '排名2', '本月单位', '排名3', '本月各项贷款', '排名4'], fill_value='')
         df_s1 = pd.read_excel(excel_dict[i]['source_file_1'], header=3, keep_default_na=False,
-                            sheet_name=data['s_sheel'], usecols='L:R', nrows=data['r_row_len'],
-                            index_col=None)  # usecols='L:R'
+                              sheet_name=data['s_sheel'], usecols='L:R', nrows=data['r_row_len'],
+                              index_col=None)  # usecols='L:R'
         df_s1.rename(columns={'各项存款.1': '本年各项存', '排名.4': '排名5', '个人存款.1': '本年个人存款', '排名.5': '排名6',
-                            '单位存款.1': '本年单位存款', '排名.6': '排名7', '各项贷款.1': '本年各项贷款'}, inplace=True)
+                              '单位存款.1': '本年单位存款', '排名.6': '排名7', '各项贷款.1': '本年各项贷款'}, inplace=True)
         df_s1['排名5'] = ''
         df_s1['排名6'] = ''
         df_s1['排名7'] = ''
@@ -179,26 +197,41 @@ def flag_no(i):
         df.to_excel(test.format(aa=3))
     elif i == 405:
         df = pd.read_excel(excel_dict[i]['source_file'], header=3, keep_default_na=False,
-                            sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
+                           sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
         df = df.loc[0:data['r_row_len'] - 1]
-        df.drop(index=[31], inplace=True)    # 删除第32行数据， ‘省行清分’
+        df.drop(index=[31], inplace=True)  # 删除第32行数据， ‘省行清分’
 
     elif i == 406:
         df_source = pd.read_excel(excel_dict[i]['source_file'], header=0, keep_default_na=False,
-                            sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
+                                  sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
         df_model = pd.read_excel(excel_dict[i]['model_file'], header=3, keep_default_na=False,
-                            sheet_name=data['s_sheel'], usecols='C,E,L', nrows=36, skiprows=[24])
-
-        # print(df_source.info())~
-        print(df_model.info())
-        # df_model['机构代码'] = df_model['机构代码'].astype('int')
-        df_source.to_excel(test.format(aa=111))
-        df_model.to_excel(test.format(aa=222))
+                                 sheet_name=data['s_sheel'], usecols='C,E,L', nrows=36, skiprows=[24])
         df_source["各项贷款"] = pd.to_numeric(df_source["各项贷款"], errors='coerce')  # 字符转浮点类型
         df_source["个人外币"] = pd.to_numeric(df_source["个人外币"], errors='coerce')  # 字符转浮点类型
-        print(df_model.info())
         # print(df_source.info())
+        # print(df_model.info())
+
+        df = df_model.merge(df_source, on=['机构代码'])
+        # df['个人存款'] = df['个人外币']
+        # df['单位存款'] = df['单位外币']
+
+        df['排名1'] = df['个人存款'].rank(method='first', numeric_only=True, ascending=False)
+        df['排名2'] = df['单位存款'].rank(method='first', numeric_only=True, ascending=False)
+        df['排名3'] = df['各项贷款'].rank(method='first', numeric_only=True, ascending=False)
+        # df.drop(columns=['机构代码', '各项贷款', '单位外币', '个人外币'], inplace=True)
+        print(f'------406-----{df.columns}')
+
+        df = df.reindex(columns=['个人存款', '上月余额', '本月新增', '排名1', '年初余额', '本年新增', '排名2', '单位存款', '上月余额', '本月增长', '排名3'],
+                        fill_value='')
+        # df['排名1'] = df['个人存款'].apply(lambda x: x if x != '' or x != 0 else '')
+        # df['排名2'] = df['单位存款'].apply(lambda x: x if x != '' or x != 0 else '')
+
+        df.to_excel(test.format(aa=111))
+        add_fixed_cols(df, 20, 1, '', axist=0)
         input("#@（）#@）")
+
+        # print(df_source.info())
+
 
     else:
         df = pd.read_excel(source_file, header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'],

@@ -2,6 +2,7 @@ import openpyxl
 
 from openpyxl.styles import PatternFill
 
+dir(openpyxl)
 file = r'E:\TEMP\6TEST\test{}.xlsx'
 print(file.format(1))
 workbook = openpyxl.Workbook()
