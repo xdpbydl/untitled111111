@@ -110,10 +110,10 @@ excel_dict = {
           'type': 'pd_data', 'data': {'s_row': 5, 's_col': 3, 's_sheel': '公司余额',
                                       'r_header': 3, 'r_row_len': 33, 'r_col': 'C:H', 'r_sheel': 0}},
     406: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
-          'source_file': f'{file_path_d2}各镇街统计工具202011.xlsx',
-          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{save_path_d2}各镇街统计工具202011.xlsx',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）_____.xlsx',
           'type': 'pd_data', 'data': {'s_row': 5, 's_col': 3, 's_sheel': '外币存款',
-                                      'r_header': 3, 'r_row_len': 33, 'r_col': 'C:H', 'r_sheel': '引用'}},
+                                      'r_header': 0, 'r_row_len': 127, 'r_col': 'B,E,P,Q', 'r_sheel': '引用'}},
 }
 
 
@@ -145,63 +145,66 @@ def flag_no(i):
     """
     source_file = excel_dict[i]['source_file']
     data = excel_dict[i]['data']
-    if i == 202:
+    if i == 201:    # openpyxl
+        df = 0
+    elif i == 202:
         df = source_data(source_file=source_file, header=data['r_header'], cols='指标代码',
                          txt_list=['AA241122MG2', 'AA241122MG3', 'AA241122MI1'])
-        return df
     elif i == 203:
         df = source_data(source_file=source_file, header=data['r_header'], cols='指标代码',
                          txt_list=['AA370137002', 'AA370136025', 'AA370136031'])
-        return df
     elif i == 200:
         df = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
                            sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
-        return df
-    elif i == 201:
-        return 0
     elif i == 400:
-        df = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
+        df_s = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
                            sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'], index_col=None)
-        df = df.reindex(columns=['本月各项存', '排名1', '本月个人', '排名2', '本月单位', '排名3', '本月各项贷款', '排名4'], fill_value='')
-        df1 = pd.read_excel(excel_dict[i]['source_file_1'], header=3, keep_default_na=False,
+        df_s = df_s.reindex(columns=['本月各项存', '排名1', '本月个人', '排名2', '本月单位', '排名3', '本月各项贷款', '排名4'], fill_value='')
+        df_s1 = pd.read_excel(excel_dict[i]['source_file_1'], header=3, keep_default_na=False,
                             sheet_name=data['s_sheel'], usecols='L:R', nrows=data['r_row_len'],
                             index_col=None)  # usecols='L:R'
-        model_df = pd.read_excel(excel_dict[i]['model_file'], header=3, keep_default_na=False,
-                                 sheet_name=data['s_sheel'], usecols='L:R', nrows=data['r_row_len'], index_col=None)
-
-        df1.rename(columns={'各项存款.1': '本年各项存', '排名.4': '排名5', '个人存款.1': '本年个人存款', '排名.5': '排名6',
+        df_s1.rename(columns={'各项存款.1': '本年各项存', '排名.4': '排名5', '个人存款.1': '本年个人存款', '排名.5': '排名6',
                             '单位存款.1': '本年单位存款', '排名.6': '排名7', '各项贷款.1': '本年各项贷款'}, inplace=True)
-        df1['排名5'] = ''
-        df1['排名6'] = ''
-        df1['排名7'] = ''
+        df_s1['排名5'] = ''
+        df_s1['排名6'] = ''
+        df_s1['排名7'] = ''
         # df.to_excel(test.format(aa=0))
         # df1.to_excel(test.format(aa=1))
-        df1["本年各项贷款"] = pd.to_numeric(df1["本年各项贷款"], errors='coerce')  # 字符转浮点类型
-        df0 = df.join(df1)
-        # input("#@（）#@）")
-        df0['本年各项存'] = df0['本月各项存'] + df0['本年各项存']
-        df0['本年个人存款'] = df0['本月个人'] + df0['本年个人存款']
-        df0['本年单位存款'] = df0['本月单位'] + df0['本年单位存款']
-        df0['本年各项贷款'] = df0['本月各项存'] + df0['本年各项贷款']
-        df0.to_excel(test.format(aa=3))
-
-        return df0
+        df_s1["本年各项贷款"] = pd.to_numeric(df_s1["本年各项贷款"], errors='coerce')  # 字符转浮点类型
+        df = df_s.join(df_s1)
+        df['本年各项存'] = df['本月各项存'] + df['本年各项存']
+        df['本年个人存款'] = df['本月个人'] + df['本年个人存款']
+        df['本年单位存款'] = df['本月单位'] + df['本年单位存款']
+        df['本年各项贷款'] = df['本月各项存'] + df['本年各项贷款']
+        df.to_excel(test.format(aa=3))
     elif i == 405:
-        df1 = pd.read_excel(excel_dict[i]['source_file'], header=3, keep_default_na=False,
+        df = pd.read_excel(excel_dict[i]['source_file'], header=3, keep_default_na=False,
                             sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
-        df1 = df1.loc[0:data['r_row_len'] - 1]
-        df1.drop(index=[31], inplace=True)    # 删除第32行数据， ‘省行清分’
-        print(df1)
-        return df1
-    elif i == 3:
-        df = source_data(source_file=source_file, header=data['r_header'], cols='指标代码',
-                         txt_list=['AA370137002', 'AA370136025', 'AA370136031'])
-        return df
+        df = df.loc[0:data['r_row_len'] - 1]
+        df.drop(index=[31], inplace=True)    # 删除第32行数据， ‘省行清分’
+
+    elif i == 406:
+        df_source = pd.read_excel(excel_dict[i]['source_file'], header=0, keep_default_na=False,
+                            sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
+        df_model = pd.read_excel(excel_dict[i]['model_file'], header=3, keep_default_na=False,
+                            sheet_name=data['s_sheel'], usecols='C,E,L', nrows=36, skiprows=[24])
+
+        # print(df_source.info())~
+        print(df_model.info())
+        # df_model['机构代码'] = df_model['机构代码'].astype('int')
+        df_source.to_excel(test.format(aa=111))
+        df_model.to_excel(test.format(aa=222))
+        df_source["各项贷款"] = pd.to_numeric(df_source["各项贷款"], errors='coerce')  # 字符转浮点类型
+        df_source["个人外币"] = pd.to_numeric(df_source["个人外币"], errors='coerce')  # 字符转浮点类型
+        print(df_model.info())
+        # print(df_source.info())
+        input("#@（）#@）")
+
     else:
         df = pd.read_excel(source_file, header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'],
                            usecols=data['r_col'])
         df = df.loc[0:data['r_row_len'] - 1]
-        return df
+    return df
 
 
 def just_open(filename):
@@ -236,8 +239,6 @@ def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_le
                 model_sheet.cell(row=i + dif_row, column=r + dif_col).value = source_sheet.cell(row=i, column=r).value
     elif type == 'pd_data':
         df = df
-        # print(df)
-        # input()
         model_excel = openpyxl.load_workbook(model_file, data_only=False)
         sheet = model_excel[s_sheel]
         for i in range(len(df)):  # 行
@@ -254,8 +255,8 @@ def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_le
 
 
 for i, v in excel_dict.items():
-    # if i < 100:
-    if i != 405:
+    # # if i < 100:
+    if i != 406:
         continue
     print(f'--处理序号为：{i}-----')
     source_file = v['source_file']

@@ -1,6 +1,5 @@
 import win32com.client
 
-
 # win32com.client.Dispatch("ket.Application")
 
 from selenium import webdriver
@@ -23,3 +22,8 @@ driver.execute_script(js0)
 
 js2 = '''document.querySelector("#\\31  > h3 > a").click();'''
 driver.execute_script(js2)
+
+test = {1: 'ww', 2: '112', 3: 'dfdfd', 45: 'dfdfd', 55: 'dfdfd'}
+# test = [1, 2, 3, 4, 55, 6]
+for i, v in test.items():
+    print(i, v)
