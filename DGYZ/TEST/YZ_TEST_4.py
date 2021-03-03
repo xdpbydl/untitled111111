@@ -112,7 +112,7 @@ excel_dict = {
     406: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
           'source_file': f'{save_path_d2}各镇街统计工具202011.xlsx',
           'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）_____.xlsx',
-          'type': 'pd_data', 'data': {'s_row': 5, 's_col': 5, 's_sheel': '外币存款',
+          'type': 'pd_data', 'is_sort': ['H', 'K', 'O', 'P'],'data': {'s_row': 5, 's_col': 5, 's_sheel': '外币存款',
                                       'r_header': 0, 'r_row_len': 127, 'r_col': 'B,E,P,Q', 'r_sheel': '引用'}},
 }
 
@@ -128,29 +128,32 @@ def source_data(source_file, header, cols, txt_list):
     return df1
 
 
-def add_fixed_cols(df, up_cols, add_col, fill_value, axist=1):
+def add_fixed_cols_rows(df, up_cols, add_col, fill_value, axis=1):
     """
-    在up_cols列，后面增加固定的一列，add_col,设置默认值为fill_value
+    增加列：在up_cols（字符串）列，后面增加固定的add_col（列list）列，,设置默认值为fill_value。注：列名重复会报错误
+    增加行：在up_cols（数字）行，后面增加固定的add_col（数字）个数行，设置默认值为fill_value
     """
-    if axist == 1:
+    if axis == 1:
         df_columns = df.columns.tolist()
-        df_columns.insert(df_columns.index(up_cols) + 1, add_col)  # 在 '一级支行' 列后面插入'客户数量'
-        # df.insert(up_cols, add_col)  # 在 up_cols 索引列后面插入add_col列
-        df = df.reindex(columns=df_columns, fill_value=fill_value)  # fill_value 为默认值
-    elif axist == 0:#TODO: 重构 add_col 为多列
+        print(df.columns)
+        for no, val in enumerate(add_col):
+            df_columns.insert(df_columns.index(up_cols) + 1 + no, val)
+        print(df.columns.tolist())
+        print(df_columns)
+        print(df.index)
+        df = df.reindex(columns=df_columns, fill_value=fill_value)
+    elif axis == 0:
         df_list = df.index.tolist()
         df_len = len(df_list)
-        df.to_excel(test.format(aa='aaa'))
-        df.loc[df_len] = [fill_value for _ in df.columns]
-        print(df.index)
-
-        df_list.append(df_len)  , print(df_len)
+        # df.to_excel(test.format(aa='aaa'))
         df['change'] = df_list
-        print(df['change'])
-        df['change'] = df['change'].apply(lambda x: x + 1 if x >= up_cols else x)
-        df.loc[df_len, ['change']] = up_cols
-
+        df['change'] = df['change'].apply(lambda x: x + add_col if x >= up_cols else x)
+        for i in range(add_col):
+            df.loc[df_len + i] = [fill_value for _ in df.columns]
+            df_list.append(df_len + i)
+            df.loc[df_len + i, ['change']] = up_cols + i
         df = df.sort_values(by='change')
+        df = df.set_index('change')
         # df.drop(columns='change', inplace=True)
         df.to_excel(test.format(aa='bbb'))
     return df
@@ -208,9 +211,6 @@ def flag_no(i):
                                  sheet_name=data['s_sheel'], usecols='C,E,L', nrows=36, skiprows=[24])
         df_source["各项贷款"] = pd.to_numeric(df_source["各项贷款"], errors='coerce')  # 字符转浮点类型
         df_source["个人外币"] = pd.to_numeric(df_source["个人外币"], errors='coerce')  # 字符转浮点类型
-        # print(df_source.info())
-        # print(df_model.info())
-
         df = df_model.merge(df_source, on=['机构代码'])
         # df['个人存款'] = df['个人外币']
         # df['单位存款'] = df['单位外币']
@@ -221,17 +221,15 @@ def flag_no(i):
         # df.drop(columns=['机构代码', '各项贷款', '单位外币', '个人外币'], inplace=True)
         print(f'------406-----{df.columns}')
 
-        df = df.reindex(columns=['个人存款', '上月余额', '本月新增', '排名1', '年初余额', '本年新增', '排名2', '单位存款', '上月余额', '本月增长', '排名3'],
+        df = df.reindex(columns=['个人存款', '上月余额', '本月新增', '排名1', '年初余额', '本年新增', '排名2', '单位存款', '单位上月余额', '本月增长', '排名3'],
                         fill_value='')
         # df['排名1'] = df['个人存款'].apply(lambda x: x if x != '' or x != 0 else '')
         # df['排名2'] = df['单位存款'].apply(lambda x: x if x != '' or x != 0 else '')
 
-        df.to_excel(test.format(aa=111))
-        add_fixed_cols(df, 20, 1, '', axist=0)
-        input("#@（）#@）")
-
-        # print(df_source.info())
-
+        # df.to_excel(test.format(aa=111))
+        df = add_fixed_cols_rows(df, 20, 1, '', axis=0)
+        # df = add_fixed_cols_rows(df, '本月新增', ['aa23', '本月232', '本月3333'], '', axis=1)
+        # df.to_excel(test.format(aa=222))
 
     else:
         df = pd.read_excel(source_file, header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'],
@@ -280,6 +278,8 @@ def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_le
                     print(f'-----111---------{df.iloc[i, r]}---')
                     continue
                 else:
+                    if
+                    if openpyxl.utils.get_column_letter(r + 1) not in ["C", "D", "AG"]:  # 这三列存在公式避免写入
                     print(f'-----222---------{df.iloc[i, r]}---')
                     sheet.cell(row=i + s_row, column=r + s_col, value=df.iloc[i, r])
 
@@ -289,7 +289,7 @@ def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_le
 
 for i, v in excel_dict.items():
     # # if i < 100:
-    if i != 406:
+    if i < 400:
         continue
     print(f'--处理序号为：{i}-----')
     source_file = v['source_file']

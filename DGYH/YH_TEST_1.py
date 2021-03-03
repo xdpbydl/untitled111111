@@ -32,8 +32,7 @@ print(is_same)
 print(im_txt)
 print(type(im_txt))
 
-#TODO: LIST ALAL
-# print(file_txt.to_string)
+
 
 cc = datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")
 print(cc)
