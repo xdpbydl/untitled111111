@@ -1,4 +1,5 @@
 import openpyxl
+from openpyxl.styles import PatternFill
 import pandas as pd
 from win32com.client import Dispatch
 
@@ -109,10 +110,10 @@ excel_dict = {
           'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
           'type': 'pd_data', 'data': {'s_row': 5, 's_col': 3, 's_sheel': '公司余额',
                                       'r_header': 3, 'r_row_len': 33, 'r_col': 'C:H', 'r_sheel': 0}},
-    406: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+    406: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',  # 未完成！
           'source_file': f'{save_path_d2}各镇街统计工具202011.xlsx',
-          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）_____.xlsx',
-          'type': 'pd_data', 'is_sort': ['H', 'K', 'O', 'P'],'data': {'s_row': 5, 's_col': 5, 's_sheel': '外币存款',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）_____.xlsx', 'is_sort': ['H', 'K', 'O', 'R'],
+          'type': 'pd_data', 'data': {'s_row': 5, 's_col': 5, 's_sheel': '外币存款',
                                       'r_header': 0, 'r_row_len': 127, 'r_col': 'B,E,P,Q', 'r_sheel': '引用'}},
 }
 
@@ -215,11 +216,12 @@ def flag_no(i):
         # df['个人存款'] = df['个人外币']
         # df['单位存款'] = df['单位外币']
 
-        df['排名1'] = df['个人存款'].rank(method='first', numeric_only=True, ascending=False)
-        df['排名2'] = df['单位存款'].rank(method='first', numeric_only=True, ascending=False)
-        df['排名3'] = df['各项贷款'].rank(method='first', numeric_only=True, ascending=False)
+        sort_dict = {'个人存款': '排名1', '单位存款': '排名2', '各项贷款': '排名3'}
+        for key, val in sort_dict.items():
+            df[val] = df[key].rank(method='first', numeric_only=True, ascending=False)
+            df.loc[df[key] == 0, [val]] = ''
+
         # df.drop(columns=['机构代码', '各项贷款', '单位外币', '个人外币'], inplace=True)
-        print(f'------406-----{df.columns}')
 
         df = df.reindex(columns=['个人存款', '上月余额', '本月新增', '排名1', '年初余额', '本年新增', '排名2', '单位存款', '单位上月余额', '本月增长', '排名3'],
                         fill_value='')
@@ -249,10 +251,24 @@ def just_open(filename):
     xlBook.Close()
 
 
-def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_len, r_col, r_sheel, save_file, type, df):
+def r_s_excel(dict_val, df):
     """
     从源文件 复制数据到 模板格式文件，再保存到结果文件
+    (source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_len, r_col, r_sheel, save_file, type, df)
     """
+    source_file = dict_val['source_file']
+    model_file = dict_val['model_file']
+    save_file = dict_val['save_file']
+    s_row = dict_val['data']['s_row']
+    s_col = dict_val['data']['s_col']
+    s_sheel = dict_val['data']['s_sheel']
+    r_header = dict_val['data']['r_header']
+    r_row_len = dict_val['data']['r_row_len']
+    r_row_len = dict_val['data']['r_row_len']
+    r_col = dict_val['data']['r_col']
+    r_sheel = dict_val['data']['r_sheel']
+    type = dict_val['type']
+
     print(f'--处理源文件文件为：{source_file}-----')
     print(f'--模板文件文件为：{model_file}-----')
     print(f'--保存文件为：{save_file}-----')
@@ -278,10 +294,18 @@ def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_le
                     print(f'-----111---------{df.iloc[i, r]}---')
                     continue
                 else:
-                    if
-                    if openpyxl.utils.get_column_letter(r + 1) not in ["C", "D", "AG"]:  # 这三列存在公式避免写入
-                    print(f'-----222---------{df.iloc[i, r]}---')
-                    sheet.cell(row=i + s_row, column=r + s_col, value=df.iloc[i, r])
+                    try:
+                        if openpyxl.utils.get_column_letter(r + s_col) in dict_val['is_sort'] and 0 < df.iloc[i, r] <= 5:
+                            print(f'-----333---------{df.iloc[i, r]}---')
+                            sheet.cell(row=i + s_row, column=r + s_col, value=df.iloc[i, r])
+                            orange_fill = PatternFill(fill_type='solid', fgColor='FCE4D6')
+                            sheet.cell(row=i + s_row, column=r + s_col).fill = orange_fill
+                        else:
+                            print(f'-----444---------{df.iloc[i, r]}---')
+                            sheet.cell(row=i + s_row, column=r + s_col, value=df.iloc[i, r])
+                    except:
+                        print(f'-----222---------{df.iloc[i, r]}---')
+                        sheet.cell(row=i + s_row, column=r + s_col, value=df.iloc[i, r])
 
     model_excel.save(save_file)
     model_excel.close()
@@ -289,12 +313,7 @@ def r_s_excel(source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_le
 
 for i, v in excel_dict.items():
     # # if i < 100:
-    if i < 400:
-        continue
+    # if i != 406:
+    #     continue
     print(f'--处理序号为：{i}-----')
-    source_file = v['source_file']
-    model_file = v['model_file']
-    save_file = v['save_file']
-    data = v['data']
-    r_s_excel(source_file, data['s_row'], data['s_col'], data['s_sheel'], model_file, data['r_header'],
-              data['r_row_len'], data['r_col'], data['r_sheel'], save_file, v['type'], df=flag_no(i))
+    r_s_excel(v, df=flag_no(i))
