@@ -1,15 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ea00511b-e12e-4294-a5a1-cf0ae8710e5c" name="Default Changelist" comment="Default Changelist">
-      <change afterPath="$PROJECT_DIR$/.idea/other.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_3.py" afterDir="false" />
+    <list default="true" id="415ce1d2-45b0-4d49-bfee-beef34a3947a" name="默认的" comment="ZCXX_T">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/untitled111111.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/untitled111111.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DGYZ/filepath.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_4.py" beforeDir="false" afterPath="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_4.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +45,21 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="hiddenUrls">
+      <set>
+        <option value="https://github.com/xdpbydl/untitled111111" />
+      </set>
+    </option>
+  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/DGYZ/TEST/TEST6.py" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/DGYH/YH_TEST_4.py" root0="SKIP_INSPECTION" />
@@ -83,6 +94,7 @@
     <option name="width" value="1378" />
     <option name="height" value="693" />
   </component>
+  <component name="ProjectId" id="1orZN2rnCY73nPg4AfInWnvax5S" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -108,15 +120,22 @@
       </pane>
     </panes>
   </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ChangesTree.GroupingKeys" value="directory" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/DGYZ/TEST" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
+    <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -127,52 +146,8 @@
       <recent name="E:\TEMP\untitled111111\mitm" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.YZ_TEST_2">
-    <configuration name="01.WX_NewFile" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="untitled111111" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/01.WX_NewFile.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="04.批量改名_教育局1" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="untitled111111" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../S/Python3/0000" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../S/Python3/0000/04.批量改名_教育局1.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="YZ_TEST_2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="Python.YZ_TEST_4">
+    <configuration name="YZ_TEST_1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="untitled111111" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -185,7 +160,95 @@
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_2.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="YZ_TEST_1_1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="untitled111111" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DGYZ/TEST" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_1_1.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="YZ_TEST_1_2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="untitled111111" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DGYZ/TEST" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_1_2.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="YZ_TEST_3" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="untitled111111" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DGYZ/TEST" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_3.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="YZ_TEST_4" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="untitled111111" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/DGYZ/TEST" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/DGYZ/TEST/YZ_TEST_4.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -216,74 +279,31 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="untitled111111" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="test1" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="untitled111111" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test1.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <list>
       <item itemvalue="Python.pd" />
-      <item itemvalue="Python.01.WX_NewFile" />
-      <item itemvalue="Python.04.批量改名_教育局1" />
-      <item itemvalue="Python.test" />
-      <item itemvalue="Python.test1" />
-      <item itemvalue="Python.YZ_TEST_2" />
+      <item itemvalue="Python.YZ_TEST_4" />
+      <item itemvalue="Python.YZ_TEST_1" />
+      <item itemvalue="Python.YZ_TEST_3" />
+      <item itemvalue="Python.YZ_TEST_1_1" />
+      <item itemvalue="Python.YZ_TEST_1_2" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.YZ_TEST_2" />
-        <item itemvalue="Python.01.WX_NewFile" />
-        <item itemvalue="Python.test1" />
-        <item itemvalue="Python.test" />
-        <item itemvalue="Python.04.批量改名_教育局1" />
+        <item itemvalue="Python.YZ_TEST_4" />
+        <item itemvalue="Python.YZ_TEST_1_2" />
+        <item itemvalue="Python.YZ_TEST_1" />
+        <item itemvalue="Python.YZ_TEST_1_1" />
+        <item itemvalue="Python.YZ_TEST_3" />
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>C:\Users\admin\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="48076e9e-b4dd-4ace-812e-5d4298bd0234" name="Default Changelist" comment="" />
+      <changelist id="415ce1d2-45b0-4d49-bfee-beef34a3947a" name="默认的" comment="ZCXX_T" />
       <created>1589012602157</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -304,6 +324,18 @@
       <workItem from="1592445368426" duration="19238000" />
       <workItem from="1592531256890" duration="15983000" />
       <workItem from="1592568427728" duration="11451000" />
+      <workItem from="1614046631202" duration="1717000" />
+      <workItem from="1614048362775" duration="9355000" />
+      <workItem from="1614130413271" duration="7439000" />
+      <workItem from="1614154742504" duration="8630000" />
+      <workItem from="1614217216618" duration="21642000" />
+      <workItem from="1614304247972" duration="15513000" />
+      <workItem from="1614570982294" duration="9032000" />
+      <workItem from="1614650992493" duration="18391000" />
+      <workItem from="1614735295948" duration="19434000" />
+      <workItem from="1614766159873" duration="1330000" />
+      <workItem from="1614821977687" duration="23195000" />
+      <workItem from="1614851765895" duration="2284000" />
     </task>
     <task id="LOCAL-00001" summary="ZCXX_T">
       <created>1589254050922</created>
@@ -389,7 +421,70 @@
       <option name="project" value="LOCAL" />
       <updated>1592578513310</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="ZCXX_T">
+      <created>1613977017397</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1613977017397</updated>
+    </task>
+    <task id="LOCAL-00014" summary="test">
+      <created>1614048458306</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1614048458306</updated>
+    </task>
+    <task id="LOCAL-00015" summary="ZCXX_T">
+      <created>1614078910218</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1614078910218</updated>
+    </task>
+    <task id="LOCAL-00016" summary="ZCXX_T">
+      <created>1614160154967</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1614160154967</updated>
+    </task>
+    <task id="LOCAL-00017" summary="ZCXX_T">
+      <created>1614249872492</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1614249872492</updated>
+    </task>
+    <task id="LOCAL-00018" summary="ZCXX_T">
+      <created>1614249887903</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1614249887903</updated>
+    </task>
+    <task id="LOCAL-00019" summary="ZCXX_T">
+      <created>1614651081071</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1614651081071</updated>
+    </task>
+    <task id="LOCAL-00020" summary="ZCXX_T">
+      <created>1614681975465</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1614681975465</updated>
+    </task>
+    <task id="LOCAL-00021" summary="ZCXX_T">
+      <created>1614745356484</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1614745356484</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -447,7 +542,7 @@
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -493,6 +588,8 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_CLEANUP_BEFORE_PROJECT_COMMIT" value="true" />
+    <MESSAGE value="test" />
     <MESSAGE value="ZCXX_T" />
     <option name="LAST_COMMIT_MESSAGE" value="ZCXX_T" />
   </component>
@@ -512,25 +609,29 @@
     <SUITE FILE_PATH="coverage/untitled111111$test2.coverage" NAME="test2 Coverage Results" MODIFIED="1610852151905" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TEST/thread" />
     <SUITE FILE_PATH="coverage/untitled111111$test5.coverage" NAME="test5 Coverage Results" MODIFIED="1611134939499" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ" />
     <SUITE FILE_PATH="coverage/untitled111111$01_WX_NewFile.coverage" NAME="01.WX_NewFile Coverage Results" MODIFIED="1592579916155" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/untitled111111$YZ_TEST_4.coverage" NAME="YZ_TEST_4 覆盖结果" MODIFIED="1614853975853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
     <SUITE FILE_PATH="coverage/untitled111111$TEST6.coverage" NAME="TEST6 覆盖结果" MODIFIED="1611827171749" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ" />
     <SUITE FILE_PATH="coverage/untitled111111$YH_TEST_2.coverage" NAME="YH_TEST_2 Coverage Results" MODIFIED="1609721834551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYH" />
-    <SUITE FILE_PATH="coverage/untitled111111$YZ_TEST_1.coverage" NAME="YZ_TEST_1 Coverage Results" MODIFIED="1610701661169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ" />
+    <SUITE FILE_PATH="coverage/untitled111111$YZ_TEST_1_2.coverage" NAME="YZ_TEST_1_2 覆盖结果" MODIFIED="1614657488772" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
+    <SUITE FILE_PATH="coverage/untitled111111$YZ_TEST_1.coverage" NAME="YZ_TEST_1 覆盖结果" MODIFIED="1614589678965" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
     <SUITE FILE_PATH="coverage/untitled111111$YH_TEST_5.coverage" NAME="YH_TEST_5 Coverage Results" MODIFIED="1610337399512" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYH" />
     <SUITE FILE_PATH="coverage/untitled111111$pd11.coverage" NAME="pd11 Coverage Results" MODIFIED="1589018215158" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/untitled111111$TEST4.coverage" NAME="TEST4 覆盖结果" MODIFIED="1611721767510" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ" />
     <SUITE FILE_PATH="coverage/untitled111111$TEST11.coverage" NAME="TEST11 Coverage Results" MODIFIED="1610851817163" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TEST" />
     <SUITE FILE_PATH="coverage/untitled111111$test.coverage" NAME="test Coverage Results" MODIFIED="1592471690713" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/untitled111111$YH_TEST_4.coverage" NAME="YH_TEST_4 Coverage Results" MODIFIED="1609843765201" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYH" />
-    <SUITE FILE_PATH="coverage/untitled111111$YZ_TEST_2.coverage" NAME="YZ_TEST_2 覆盖结果" MODIFIED="1612172158345" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
-    <SUITE FILE_PATH="coverage/untitled111111$TEST8.coverage" NAME="TEST8 覆盖结果" MODIFIED="1611907638780" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
+    <SUITE FILE_PATH="coverage/untitled111111$YZ_TEST_2.coverage" NAME="YZ_TEST_2 覆盖结果" MODIFIED="1613984048867" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
+    <SUITE FILE_PATH="coverage/untitled111111$TEST8.coverage" NAME="TEST8 覆盖结果" MODIFIED="1612343773151" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
     <SUITE FILE_PATH="coverage/untitled111111$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1610034215816" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYH" />
     <SUITE FILE_PATH="coverage/untitled111111$test4.coverage" NAME="test4 Coverage Results" MODIFIED="1610853579101" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TEST/thread" />
     <SUITE FILE_PATH="coverage/untitled111111$test1__1_.coverage" NAME="test1 (1) Coverage Results" MODIFIED="1610852085845" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TEST/thread" />
+    <SUITE FILE_PATH="coverage/untitled111111$YZ_TEST_1_1.coverage" NAME="YZ_TEST_1_1 覆盖结果" MODIFIED="1614324982704" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
     <SUITE FILE_PATH="coverage/untitled111111$YH_TEST_1.coverage" NAME="YH_TEST_1 Coverage Results" MODIFIED="1610027819892" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYH" />
     <SUITE FILE_PATH="coverage/untitled111111$TEST5.coverage" NAME="TEST5 Coverage Results" MODIFIED="1610956066902" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TEST/thread" />
     <SUITE FILE_PATH="coverage/untitled111111$test2__1_.coverage" NAME="test2 (1) Coverage Results" MODIFIED="1611203328696" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ" />
     <SUITE FILE_PATH="coverage/untitled111111$YH_TEST_3.coverage" NAME="YH_TEST_3 Coverage Results" MODIFIED="1609767899249" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYH" />
     <SUITE FILE_PATH="coverage/untitled111111$WX_NewFile.coverage" NAME="WX_NewFile Coverage Results" MODIFIED="1591845828375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/untitled111111$YZ_TEST_3.coverage" NAME="YZ_TEST_3 覆盖结果" MODIFIED="1614156797470" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ/TEST" />
     <SUITE FILE_PATH="coverage/untitled111111$TEST3__1_.coverage" NAME="TEST3 (1) Coverage Results" MODIFIED="1611036544119" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/DGYZ" />
     <SUITE FILE_PATH="coverage/untitled111111$04__1_.coverage" NAME="04.批量改名_教育局1_改性别 Coverage Results" MODIFIED="1591878686034" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../S/Python3/0000" />
     <SUITE FILE_PATH="coverage/untitled111111$TEST3.coverage" NAME="TEST3 Coverage Results" MODIFIED="1610853078500" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/TEST/thread" />

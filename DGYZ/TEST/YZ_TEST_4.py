@@ -115,6 +115,38 @@ excel_dict = {
           'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）_____.xlsx', 'is_sort': ['H', 'K', 'O', 'R'],
           'type': 'pd_data', 'data': {'s_row': 5, 's_col': 5, 's_sheel': '外币存款',
                                       'r_header': 0, 'r_row_len': 127, 'r_col': 'B,E,P,Q', 'r_sheel': '引用'}},
+    407: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{file_path_d4}2020年11月审查审批登记统计表（三农）.xls',
+          'source_file_1': f'{file_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'type': 'pd_data', 'data': {'s_row': 7, 's_col': 2, 's_sheel': '授信情况',
+                                      'r_header': 2, 'r_row_len': 9, 'r_col': 'C:F,O:V,AE:AH', 'r_sheel': '汇总'}},
+    408: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{file_path_d4}11月票据统计（发宝平）支行.xlsx',
+          'source_file_1': f'{file_path_d4}2020年11月金融统计信息（业务）.xlsx',  # 同比，取上月金额
+          'source_file_2': f'{file_path_d4}20——年11月金融统计信息（业务）.xlsx',  # 环比，取去年相同月份的金额？
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'type': 'pd_data', 'data': {'s_row': 7, 's_col': 4, 's_sheel': '贴现业务',
+                                      'r_header': 6, 'r_row_len': 10, 'r_col': 'C:G', 'r_sheel': 0}},
+    409: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{file_path_d4}2020年11月重点业务报表-业务类（标色）.xls',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx', 'type': 'pd_data',
+          'data': {'s_row': 6, 's_col': 5, 's_sheel': '代理业务', 'r_header': 4, 'r_row_len': 51, 'r_col': 'E:N', 'r_sheel': 0}},
+
+    410: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{file_path_d4}11月信用卡数据（陈宝平）.xls',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx', 'type': 'pd_data',
+          'data': {'s_row': 6, 's_col': 3, 's_sheel': '信用卡', 'r_header': 4, 'r_row_len': 52, 'r_col': 'C:S', 'r_sheel': 0}},
+
+    411: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{file_path_d4}2020年储汇代发工资情况表（汇总）.xls',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx', 'type': 'pd_data',
+          'data': {'s_row': 6, 's_col': 3, 's_sheel': '代发工资1', 'r_header': 2, 'r_row_len': 20, 'r_col': 'C:X', 'r_sheel': 0}},
+
+    422: {'model_file': f'{model_path_d2}邮储银行各镇街存贷款统计表（2020-11-30）.xlsx',
+          'source_file': f'{save_path_d2}各镇街统计工具202011.xlsx',
+          'save_file': f'{save_path_d2}邮储银行各镇街存贷款统计表（2020-11-30）.xlsx', 'type': 'openpyxl',
+          'data': {'s_row': 5, 's_col': 3, 's_sheel': '各镇街存贷款统计表', 'r_header': 0, 'r_row_len': 40, 'r_col': 'A:Z', 'r_sheel': '结果'}},
 }
 
 
@@ -134,6 +166,7 @@ def add_fixed_cols_rows(df, up_cols, add_col, fill_value, axis=1):
     增加列：在up_cols（字符串）列，后面增加固定的add_col（列list）列，,设置默认值为fill_value。注：列名重复会报错误
     增加行：在up_cols（数字）行，后面增加固定的add_col（数字）个数行，设置默认值为fill_value
     """
+    df = df.reset_index(drop=True)
     if axis == 1:
         df_columns = df.columns.tolist()
         print(df.columns)
@@ -156,7 +189,7 @@ def add_fixed_cols_rows(df, up_cols, add_col, fill_value, axis=1):
         df = df.sort_values(by='change')
         df = df.set_index('change')
         # df.drop(columns='change', inplace=True)
-        df.to_excel(test.format(aa='bbb'))
+    df = df.reset_index(drop=True)
     return df
 
 
@@ -190,15 +223,12 @@ def flag_no(i):
         df_s1['排名5'] = ''
         df_s1['排名6'] = ''
         df_s1['排名7'] = ''
-        # df.to_excel(test.format(aa=0))
-        # df1.to_excel(test.format(aa=1))
         df_s1["本年各项贷款"] = pd.to_numeric(df_s1["本年各项贷款"], errors='coerce')  # 字符转浮点类型
         df = df_s.join(df_s1)
         df['本年各项存'] = df['本月各项存'] + df['本年各项存']
         df['本年个人存款'] = df['本月个人'] + df['本年个人存款']
         df['本年单位存款'] = df['本月单位'] + df['本年单位存款']
         df['本年各项贷款'] = df['本月各项存'] + df['本年各项贷款']
-        df.to_excel(test.format(aa=3))
     elif i == 405:
         df = pd.read_excel(excel_dict[i]['source_file'], header=3, keep_default_na=False,
                            sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
@@ -223,21 +253,75 @@ def flag_no(i):
 
         # df.drop(columns=['机构代码', '各项贷款', '单位外币', '个人外币'], inplace=True)
 
-        df = df.reindex(columns=['个人存款', '上月余额', '本月新增', '排名1', '年初余额', '本年新增', '排名2', '单位存款', '单位上月余额', '本月增长', '排名3'],
-                        fill_value='')
+        df = df.reindex(columns=['个人存款', '上月余额', '本月新增', '排名1', '年初余额', '本年新增', '排名2', '单位存款', '单位上月余额', '本月增长', '排名3'], fill_value='')
         # df['排名1'] = df['个人存款'].apply(lambda x: x if x != '' or x != 0 else '')
         # df['排名2'] = df['单位存款'].apply(lambda x: x if x != '' or x != 0 else '')
 
-        # df.to_excel(test.format(aa=111))
         df = add_fixed_cols_rows(df, 20, 1, '', axis=0)
         # df = add_fixed_cols_rows(df, '本月新增', ['aa23', '本月232', '本月3333'], '', axis=1)
-        # df.to_excel(test.format(aa=222))
+
+    elif i == 407:
+        df_source = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
+                                  sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
+        col_name = ['审批信用笔数', '审批信用金额', '审批抵押笔数', '审批抵押金额', '审批小企业笔数', '审批小企业金额', '审批合计笔数', '审批合计金额', '通过信用笔数',
+                    '通过信用金额', '通过抵押笔数', '通过抵押金额', '通过小企业笔数', '通过小企业金额', '通过合计笔数', '通过合计金额']
+        df_source_a = pd.read_excel(excel_dict[i]['source_file_1'], header=19, keep_default_na=False,
+                                    sheet_name=data['s_sheel'], usecols='B:Q', nrows=data['r_row_len'])
+        df_source.columns = col_name
+        df_source_a.columns = col_name
+        df_sum = df_source + df_source_a
+        df = pd.concat([df_source, df_sum])
+        df = df.reset_index(drop=True)
+        df = add_fixed_cols_rows(df, 9, 5, '', axis=0)
+
+    elif i == 408:
+        df_source = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
+                                  sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
+        df_source_a = pd.read_excel(excel_dict[i]['source_file_1'], header=data['r_header'] - 1, keep_default_na=False,
+                                    sheet_name=data['s_sheel'], usecols='E,I,J,R', nrows=data['r_row_len'])
+        df_col_name = list(df_source.columns)
+        df_source = df_source.apply(pd.to_numeric, errors='coerce').fillna(0.0)  # 转换类型
+
+        for lv in df_col_name:
+            if '亿' in lv:
+                df_source[lv] = df_source[lv] * 10000
+
+        df_source.columns = ['库存张数', '库存金额', '贴现张数', '贴现金额', '收入']
+        df_source_a.columns = ['上月贴现金额', '累计数量', '累计金额', '收入累计金额']
+
+        col_name_all = ['贴现张数', '贴现金额', '本月排名', '上月', '环比', '本年贴现张数', '本年贴现金额', '本年排名', '去年', '同比', '库存张数', '库存金额', '收入', '本月收入排名', '本年收入']
+        df_source = df_source.reindex(columns=col_name_all, fill_value='')
+        df_source['上月'] = df_source_a['上月贴现金额']
+        df_source['本年贴现张数'] = df_source['贴现张数'] + df_source_a['累计数量']
+        df_source['本年贴现金额'] = df_source['贴现金额'] + df_source_a['累计金额']
+        df_source['本年收入'] = df_source['收入'] + df_source_a['收入累计金额']
+        df = df_source
+
+    elif i == 411:
+        df = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
+                           sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
+        df = df.loc[[0, 1, 2, 18, 19]]  # 只取这5行的值
+        df.to_excel(test.format(aa=333))
+        # input("#" * 18)
+
+    elif i == 422:
+        df = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
+                           sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
+        df.to_excel(test.format(aa=333))
+        input("#" * 18)
+
 
     else:
         df = pd.read_excel(source_file, header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'],
                            usecols=data['r_col'])
         df = df.loc[0:data['r_row_len'] - 1]
     return df
+
+
+"""
+    # df.to_excel(test.format(aa=333))
+    # input("#" * 18)
+"""
 
 
 def just_open(filename):
@@ -272,7 +356,7 @@ def r_s_excel(dict_val, df):
     print(f'--处理源文件文件为：{source_file}-----')
     print(f'--模板文件文件为：{model_file}-----')
     print(f'--保存文件为：{save_file}-----')
-    if type == 'openpyxl':
+    if type == 'openpyxl':  # 从源文件为公式的单元格中取值
         just_open(source_file)
         source_excel = openpyxl.load_workbook(source_file, data_only=True)
         model_excel = openpyxl.load_workbook(model_file, data_only=False)
@@ -313,7 +397,7 @@ def r_s_excel(dict_val, df):
 
 for i, v in excel_dict.items():
     # # if i < 100:
-    # if i != 406:
-    #     continue
+    if i != 422:
+        continue
     print(f'--处理序号为：{i}-----')
     r_s_excel(v, df=flag_no(i))
