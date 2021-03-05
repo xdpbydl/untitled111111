@@ -143,10 +143,12 @@ excel_dict = {
           'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx', 'type': 'pd_data',
           'data': {'s_row': 6, 's_col': 3, 's_sheel': '代发工资1', 'r_header': 2, 'r_row_len': 20, 'r_col': 'C:X', 'r_sheel': 0}},
 
-    422: {'model_file': f'{model_path_d2}邮储银行各镇街存贷款统计表（2020-11-30）.xlsx',
-          'source_file': f'{save_path_d2}各镇街统计工具202011.xlsx',
-          'save_file': f'{save_path_d2}邮储银行各镇街存贷款统计表（2020-11-30）.xlsx', 'type': 'openpyxl',
-          'data': {'s_row': 5, 's_col': 3, 's_sheel': '各镇街存贷款统计表', 'r_header': 0, 'r_row_len': 40, 'r_col': 'A:Z', 'r_sheel': '结果'}},
+    412: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{file_path_d4}2020年11月重点业务报表-业务类.xls',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx', 'type': 'pd_data', 'is_sort': ['R'],
+          'data': {'s_row': 4, 's_col': 6, 's_sheel': '银信通', 'r_header': 1, 'r_row_len': 42, 'r_col': 'B,D,F,H,J,L,N,P,R,T,V,X,Z',
+                   'r_sheel': '银信通1'}},
+
 }
 
 
@@ -163,23 +165,18 @@ def source_data(source_file, header, cols, txt_list):
 
 def add_fixed_cols_rows(df, up_cols, add_col, fill_value, axis=1):
     """
-    增加列：在up_cols（字符串）列，后面增加固定的add_col（列list）列，,设置默认值为fill_value。注：列名重复会报错误
-    增加行：在up_cols（数字）行，后面增加固定的add_col（数字）个数行，设置默认值为fill_value
+    axis == 1增加列：在up_cols（字符串）列，后面增加固定的add_col（列list）列，,设置默认值为fill_value。注：列名重复会报错误
+    axis == 0增加行：在up_cols（数字）行，后面增加固定的add_col（数字）个数行，设置默认值为fill_value
     """
     df = df.reset_index(drop=True)
     if axis == 1:
         df_columns = df.columns.tolist()
-        print(df.columns)
         for no, val in enumerate(add_col):
             df_columns.insert(df_columns.index(up_cols) + 1 + no, val)
-        print(df.columns.tolist())
-        print(df_columns)
-        print(df.index)
         df = df.reindex(columns=df_columns, fill_value=fill_value)
     elif axis == 0:
         df_list = df.index.tolist()
         df_len = len(df_list)
-        # df.to_excel(test.format(aa='aaa'))
         df['change'] = df_list
         df['change'] = df['change'].apply(lambda x: x + add_col if x >= up_cols else x)
         for i in range(add_col):
@@ -188,7 +185,6 @@ def add_fixed_cols_rows(df, up_cols, add_col, fill_value, axis=1):
             df.loc[df_len + i, ['change']] = up_cols + i
         df = df.sort_values(by='change')
         df = df.set_index('change')
-        # df.drop(columns='change', inplace=True)
     df = df.reset_index(drop=True)
     return df
 
@@ -199,7 +195,7 @@ def flag_no(i):
     """
     source_file = excel_dict[i]['source_file']
     data = excel_dict[i]['data']
-    if i == 201:  # openpyxl
+    if i in [201, 555]:  # openpyxl
         df = 0
     elif i == 202:
         df = source_data(source_file=source_file, header=data['r_header'], cols='指标代码',
@@ -249,7 +245,7 @@ def flag_no(i):
         sort_dict = {'个人存款': '排名1', '单位存款': '排名2', '各项贷款': '排名3'}
         for key, val in sort_dict.items():
             df[val] = df[key].rank(method='first', numeric_only=True, ascending=False)
-            df.loc[df[key] == 0, [val]] = ''
+            df.loc[df[key] == 0, [val]] = ''    # 排名源为0，排名置空
 
         # df.drop(columns=['机构代码', '各项贷款', '单位外币', '个人外币'], inplace=True)
 
@@ -304,12 +300,30 @@ def flag_no(i):
         df.to_excel(test.format(aa=333))
         # input("#" * 18)
 
-    elif i == 422:
-        df = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
-                           sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
-        df.to_excel(test.format(aa=333))
-        input("#" * 18)
+    elif i == 412:  # 缺，年初在网户数
+        df_source = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False,
+                                  sheet_name=data['r_sheel'], usecols=data['r_col'], nrows=data['r_row_len'])
+        df_model = pd.read_excel(excel_dict[i]['model_file'], header=2, keep_default_na=False,
+                                 sheet_name=data['s_sheel'], usecols='E', nrows=51)
+        df_source = df_source.fillna('')
+        df_model = df_model.fillna('')
+        df_model.columns = ['机构号']
+        df_source['排名'] = ''
+        df_source['年初在网户数'] = ''
+        df_source.drop(index=data['r_row_len']-2, inplace=True)
+        df_source.loc[data['r_row_len']-1, ['机构号']] = 1111  # 邮政小计，的'机构号' 为空，便于合平数据，要改名
+        df = pd.merge(df_model, df_source, on='机构号', how='left')
 
+        for val in df_source.columns:       # 取不为空的月份数据，来排名
+            if df.loc[0, [val]].values == '':
+                df['排名'] = df[mouth_col].rank(method='first', numeric_only=True, ascending=False)
+                df.loc[df[mouth_col] == '', ['排名']] = ''  # 排名源为0，排名置空
+                break
+            mouth_col = val
+
+        df.loc[50] = df_source.loc[41].tolist()     # 赋值，邮政小计 行数据
+        df.drop(columns=['机构号'], inplace=True)
+        df = df.fillna('')
 
     else:
         df = pd.read_excel(source_file, header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'],
@@ -338,7 +352,7 @@ def just_open(filename):
 def r_s_excel(dict_val, df):
     """
     从源文件 复制数据到 模板格式文件，再保存到结果文件
-    (source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_len, r_col, r_sheel, save_file, type, df)
+    (source_file, s_row, s_col, s_sheel, model_file, r_header, r_row_len, r_col, r_sheel, save_file, data_type, df)
     """
     source_file = dict_val['source_file']
     model_file = dict_val['model_file']
@@ -351,12 +365,12 @@ def r_s_excel(dict_val, df):
     r_row_len = dict_val['data']['r_row_len']
     r_col = dict_val['data']['r_col']
     r_sheel = dict_val['data']['r_sheel']
-    type = dict_val['type']
+    data_type = dict_val['type']
 
     print(f'--处理源文件文件为：{source_file}-----')
     print(f'--模板文件文件为：{model_file}-----')
     print(f'--保存文件为：{save_file}-----')
-    if type == 'openpyxl':  # 从源文件为公式的单元格中取值
+    if data_type == 'openpyxl':  # 从源文件为公式的单元格中取值
         just_open(source_file)
         source_excel = openpyxl.load_workbook(source_file, data_only=True)
         model_excel = openpyxl.load_workbook(model_file, data_only=False)
@@ -368,7 +382,7 @@ def r_s_excel(dict_val, df):
             for r in range(r_col[0], r_col[1]):  # 列
                 print(source_sheet.cell(row=i, column=r).value)
                 model_sheet.cell(row=i + dif_row, column=r + dif_col).value = source_sheet.cell(row=i, column=r).value
-    elif type == 'pd_data':
+    elif data_type == 'pd_data':
         df = df
         model_excel = openpyxl.load_workbook(model_file, data_only=False)
         sheet = model_excel[s_sheel]
@@ -397,7 +411,7 @@ def r_s_excel(dict_val, df):
 
 for i, v in excel_dict.items():
     # # if i < 100:
-    if i != 422:
+    if i not in [412]:
         continue
     print(f'--处理序号为：{i}-----')
     r_s_excel(v, df=flag_no(i))
