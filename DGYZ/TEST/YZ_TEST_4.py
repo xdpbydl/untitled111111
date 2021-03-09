@@ -149,6 +149,18 @@ excel_dict = {
           'data': {'s_row': 4, 's_col': 6, 's_sheel': '银信通', 'r_header': 1, 'r_row_len': 42, 'r_col': 'B,D,F,H,J,L,N,P,R,T,V,X,Z',
                    'r_sheel': '银信通1'}},
 
+    413: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{file_path_d4}2020年11月重点业务报表-业务类.xls',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx', 'type': 'pd_data', 'is_sort': ['R'],
+          'data': {'s_row': 5, 's_col': 6, 's_sheel': '手机银行', 'r_header': 1, 'r_row_len': 42, 'r_col': 'B, E, G, I, K, M, O, Q, S, U, W, Y, AA',
+                   'r_sheel': '手机银行1'}},
+
+    414: {'model_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx',
+          'source_file': f'{file_path_d4}2020年11月重点业务报表-业务类.xls',
+          'save_file': f'{save_path_d4}2020年11月金融统计信息（业务）.xlsx', 'type': 'pd_data', 'is_sort': ['R'],
+          'data': {'s_row': 5, 's_col': 6, 's_sheel': '个人网银', 'r_header': 1, 'r_row_len': 42, 'r_col': 'B, E, G, I, K, M, O, Q, S, U, W, Y, AA',
+                   'r_sheel': '个人网银1'}},
+
 }
 
 
@@ -245,7 +257,7 @@ def flag_no(i):
         sort_dict = {'个人存款': '排名1', '单位存款': '排名2', '各项贷款': '排名3'}
         for key, val in sort_dict.items():
             df[val] = df[key].rank(method='first', numeric_only=True, ascending=False)
-            df.loc[df[key] == 0, [val]] = ''    # 排名源为0，排名置空
+            df.loc[df[key] == 0, [val]] = ''  # 排名源为0，排名置空
 
         # df.drop(columns=['机构代码', '各项贷款', '单位外币', '个人外币'], inplace=True)
 
@@ -306,24 +318,87 @@ def flag_no(i):
         df_model = pd.read_excel(excel_dict[i]['model_file'], header=2, keep_default_na=False,
                                  sheet_name=data['s_sheel'], usecols='E', nrows=51)
         df_source = df_source.fillna('')
+
+        # 富华路，并入和大朗？
+        df_source.iloc[df_source[df_source.机构号 == 441901019].index[0], 1:] += df_source.iloc[df_source[df_source.机构号 == 441901321].index[0], 1:]
+
         df_model = df_model.fillna('')
         df_model.columns = ['机构号']
         df_source['排名'] = ''
         df_source['年初在网户数'] = ''
-        df_source.drop(index=data['r_row_len']-2, inplace=True)
-        df_source.loc[data['r_row_len']-1, ['机构号']] = 1111  # 邮政小计，的'机构号' 为空，便于合平数据，要改名
+        df_source.drop(index=data['r_row_len'] - 2, inplace=True)
+        df_source.loc[data['r_row_len'] - 1, ['机构号']] = 1111  # 邮政小计，的'机构号' 为空，便于合平数据，要改名
         df = pd.merge(df_model, df_source, on='机构号', how='left')
 
-        for val in df_source.columns:       # 取不为空的月份数据，来排名
+        for val in df_source.columns:  # 取不为空的月份数据，来排名
             if df.loc[0, [val]].values == '':
                 df['排名'] = df[mouth_col].rank(method='first', numeric_only=True, ascending=False)
                 df.loc[df[mouth_col] == '', ['排名']] = ''  # 排名源为0，排名置空
                 break
             mouth_col = val
 
-        df.loc[50] = df_source.loc[41].tolist()     # 赋值，邮政小计 行数据
+        df.loc[50] = df_source.loc[41].tolist()  # 赋值，邮政小计 行数据
         df.drop(columns=['机构号'], inplace=True)
         df = df.fillna('')
+
+    elif i == 413:  # 缺，年初在网户数
+        df_source = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'],
+                                  usecols=data['r_col'], nrows=data['r_row_len'])
+        df_model = pd.read_excel(excel_dict[i]['model_file'], header=3, keep_default_na=False,
+                                 sheet_name=data['s_sheel'], usecols='E', nrows=51)
+        df_source = df_source.fillna('')
+
+        # 富华路，并入和大朗？
+        df_source.iloc[df_source[df_source.机构号 == 441901019].index[0], 1:] += df_source.iloc[df_source[df_source.机构号 == 441901321].index[0], 1:]
+
+        df_model = df_model.fillna('')
+        df_model.columns = ['机构号']
+        df_source['排名'] = ''
+        df_source['年初在网户数'] = ''
+        df_source.drop(index=data['r_row_len'] - 2, inplace=True)
+        df_source.loc[data['r_row_len'] - 1, ['机构号']] = 1111  # 邮政小计，的'机构号' 为空，便于合平数据，要改名
+        df = pd.merge(df_model, df_source, on='机构号', how='left')
+
+        for val in df_source.columns:  # 取不为空的月份数据，来排名
+            if df.loc[0, [val]].values == '':
+                df['排名'] = df[mouth_col].rank(method='first', numeric_only=True, ascending=False)
+                df.loc[df[mouth_col] == '', ['排名']] = ''  # 排名源为0，排名置空
+                break
+            mouth_col = val
+
+        df.loc[50] = df_source.loc[41].tolist()  # 赋值，邮政小计 行数据
+        df.drop(columns=['机构号'], inplace=True)
+        df = df.fillna('')
+
+    elif i == 414:  # 缺，年初在网户数
+        df_source = pd.read_excel(excel_dict[i]['source_file'], header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'],
+                                  usecols=data['r_col'], nrows=data['r_row_len'])
+        df_model = pd.read_excel(excel_dict[i]['model_file'], header=3, keep_default_na=False,
+                                 sheet_name=data['s_sheel'], usecols='E', nrows=51)
+        df_source = df_source.fillna('')
+
+        # 富华路，并入和大朗？
+        df_source.iloc[df_source[df_source.机构号 == 441901019].index[0], 1:] += df_source.iloc[df_source[df_source.机构号 == 441901321].index[0], 1:]
+
+        df_model = df_model.fillna('')
+        df_model.columns = ['机构号']
+        df_source['排名'] = ''
+        df_source['年初在网户数'] = ''
+        df_source.drop(index=data['r_row_len'] - 2, inplace=True)
+        df_source.loc[data['r_row_len'] - 1, ['机构号']] = 1111  # 邮政小计，的'机构号' 为空，便于合平数据，要改名
+        df = pd.merge(df_model, df_source, on='机构号', how='left')
+
+        for val in df_source.columns:  # 取不为空的月份数据，来排名
+            if df.loc[0, [val]].values == '':
+                df['排名'] = df[mouth_col].rank(method='first', numeric_only=True, ascending=False)
+                df.loc[df[mouth_col] == '', ['排名']] = ''  # 排名源为0，排名置空
+                break
+            mouth_col = val
+
+        df.loc[50] = df_source.loc[41].tolist()  # 赋值，邮政小计 行数据
+        df.drop(columns=['机构号'], inplace=True)
+        df = df.fillna('')
+
 
     else:
         df = pd.read_excel(source_file, header=data['r_header'], keep_default_na=False, sheet_name=data['r_sheel'],
@@ -411,7 +486,9 @@ def r_s_excel(dict_val, df):
 
 for i, v in excel_dict.items():
     # # if i < 100:
-    if i not in [412]:
+    if i not in [400, 414]:
         continue
     print(f'--处理序号为：{i}-----')
+    for a in v:
+        a.get('')
     r_s_excel(v, df=flag_no(i))
