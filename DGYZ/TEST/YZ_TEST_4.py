@@ -485,10 +485,8 @@ def r_s_excel(dict_val, df):
 
 
 for i, v in excel_dict.items():
-    # # if i < 100:
-    if i not in [400, 414]:
-        continue
+    # # # if i < 100:
+    # if i not in [400, 414]:
+    #     continue
     print(f'--处理序号为：{i}-----')
-    for a in v:
-        a.get('')
     r_s_excel(v, df=flag_no(i))
