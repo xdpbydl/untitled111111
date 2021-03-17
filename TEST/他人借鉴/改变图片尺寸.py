@@ -3,6 +3,12 @@ import os, shutil
 
 
 def get_outfile(infile, outfile='', t_str='change'):
+    """
+    :param infile: 源照片文件
+    :param outfile: 目标目录
+    :param t_str: 目标目录下子目录
+    :return: none
+    """
     dir, suffix = os.path.split(infile)
     if outfile != '':
         dir = outfile
@@ -54,7 +60,7 @@ def resize(path, out_path='', factor=0.9):
             out.save(out_path_x)
             if 600 <= os.path.getsize(out_path_x) / 1024:
                 continue
-            return out_path_x
+            return
 
 
 # resize(r'E:\TEMP\6TEST\qqq.png')
