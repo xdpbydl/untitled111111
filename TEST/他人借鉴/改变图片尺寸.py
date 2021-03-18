@@ -4,10 +4,11 @@ import os, shutil
 
 def get_outfile(infile, outfile='', t_str='change'):
     """
+    根据源文件，输出 目标目录路径，及文件
     :param infile: 源照片文件
-    :param outfile: 目标目录
+    :param outfile: 目标目录路径
     :param t_str: 目标目录下子目录
-    :return: none
+    :return: outfile        标目录路径，及文件
     """
     dir, suffix = os.path.split(infile)
     if outfile != '':
