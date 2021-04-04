@@ -26,3 +26,4 @@ def chess_queen(m=8):
 
 
 chess_queen()
+
