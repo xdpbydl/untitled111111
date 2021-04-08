@@ -2,15 +2,18 @@ import pandas as pd
 import re
 import numpy as np
 
-songhuodan = r'E:\TEMP\02GR\export_soghuodan.xlsx'
-save_file = r'E:\TEMP\02GR\11.xlsx'
-save_guige = r'E:\TEMP\02GR\guige.xlsx'
 
-guige_file = r'E:\TEMP\02GR\清单_all.xls'
+file_path = 'E:\\TEMP\\6TEST\\GRWL\\'
+songhuodan = f'{file_path}export_soghuodan.xlsx'
+save_file = f'{file_path}11.xlsx'
+save_guige = f'{file_path}guige.xlsx'
+
+guige_file = f'{file_path}清单_all.xls'
 #  模版
-file2 = r'E:\TEMP\02GR\model\2020-7-11供应商分配第一批.xlsx'
+file2 = f'{file_path}model\\2020-7-11供应商分配第一批.xlsx'
 #  新的文件
-file3 = r'E:\TEMP\02GR\2020-7-11供应商分配第一批_new.xlsx'
+file3 = f'{file_path}2020-7-11供应商分配第一批_new.xlsx'
+
 
 df = pd.read_excel(songhuodan, index=False)
 #  删除无效列
@@ -77,6 +80,16 @@ def guige(x):
 
 
 guige_df["备注"] = guige_df["备注"].apply(guige)
+guige_df["规格"] = guige_df["规格"].apply(guige)
+
+# print(guige_df[["规格", "备注"]])
+guige_df["备注22"] = guige_df["规格"].where(guige_df["备注"] == '')
+df_other1 = guige_df[["规格", "备注", "备注22"]]
+
+df_other1.to_excel(f'{file_path}df_other2.xlsx')
+
+
+input('ssss'*8)
 # print("___________"*20)
 
 # print(str(guige_df["备注"]))

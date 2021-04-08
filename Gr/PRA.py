@@ -1,14 +1,17 @@
 import pandas as pd
 import numpy as np
-songhuodan = r'E:\TEMP\02GR\export_soghuodan.xlsx'
-save_file = r'E:\TEMP\02GR\11.xlsx'
-save_guige =  r'E:\TEMP\02GR\guige.xlsx'
+import re
 
-guige_file = r'E:\TEMP\02GR\清单900931335.xls'
+file_path = 'E:\\TEMP\\6TEST\\GRWL\\'
+songhuodan = f'{file_path}export_soghuodan.xlsx'
+save_file = f'{file_path}11.xlsx'
+save_guige = f'{file_path}guige.xlsx'
+
+guige_file = f'{file_path}清单_all.xls'
 #  模版
-file2 = r'E:\TEMP\02GR\model\2020-7-11供应商分配第一批.xlsx'
+file2 = f'{file_path}model\2020-7-11供应商分配第一批.xlsx'
 #  新的文件
-file3 = r'E:\TEMP\02GR\2020-7-11供应商分配第一批_new.xlsx'
+file3 = f'{file_path}2020-7-11供应商分配第一批_new.xlsx'
 
 
 df = pd.read_excel(songhuodan)
@@ -37,7 +40,7 @@ df1 = df.sort_values(by=['PO编号', '工号箱头分箱'], ascending=[True, Tru
 ############规格匹配############
 
 
-guige_df = pd.read_html(guige_file)
+guige_df = pd.read_excel(guige_file)
 
 guige_df = pd.DataFrame(guige_df[0])
 
