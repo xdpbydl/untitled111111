@@ -80,16 +80,14 @@ def guige(x):
 
 
 guige_df["备注"] = guige_df["备注"].apply(guige)
+###
 guige_df["规格"] = guige_df["规格"].apply(guige)
-
-# print(guige_df[["规格", "备注"]])
-guige_df["备注22"] = guige_df["规格"].where(guige_df["备注"] == '')
-df_other1 = guige_df[["规格", "备注", "备注22"]]
-
+guige_df["备注"] = guige_df["规格"].where(guige_df["备注"] == '', guige_df["备注"])
+df_other1 = guige_df[["规格", "备注"]]
 df_other1.to_excel(f'{file_path}df_other2.xlsx')
-
-
 input('ssss'*8)
+
+####
 # print("___________"*20)
 
 # print(str(guige_df["备注"]))
