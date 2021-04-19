@@ -78,14 +78,20 @@ def guige(x):
 
 # “规格”列部分可能为空，采用“备注”列，
 
-
-guige_df["备注"] = guige_df["备注"].apply(guige)
 ###
 guige_df["规格"] = guige_df["规格"].apply(guige)
-guige_df["备注"] = guige_df["规格"].where(guige_df["备注"] == '', guige_df["备注"])
-df_other1 = guige_df[["规格", "备注"]]
-df_other1.to_excel(f'{file_path}df_other2.xlsx')
-input('ssss'*8)
+# guige_df["备注"] = guige_df["规格"].where(guige_df["备注"] == '', guige_df["备注"])
+# guige_df["备注"].where(guige_df["备注"] != '', guige_df["规格"], inplace=True)    # where:备注不为空时，使用原值，为空时，使用规格。
+guige_df["备注"].mask(guige_df["备注"] == '# /', guige_df["规格"], inplace=True)     # mask:备注 为空时，使用规格,不为空时，使用原值。
+# guige_df["备注"] = guige_df["规格"].mask(guige_df["备注"] == '', 333)  # mask:guige_df["备注"]=当备注为空时，使用333替代；不为空时，还是备注的值
+# guige_df["备注"] = guige_df["规格"].where(guige_df["备注"] == '', 222) # where:guige_df["备注"]=当备注为空时，使用规格的值；不为空时，使用222替代
+
+
+guige_df["备注"] = guige_df["备注"].apply(guige)
+
+# df_other1 = guige_df[["规格", "备注"]]
+# df_other1.to_excel(f'{file_path}df_other2.xlsx')
+# input('ssss'*8)
 
 ####
 # print("___________"*20)
