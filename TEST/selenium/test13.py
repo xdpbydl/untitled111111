@@ -1,5 +1,5 @@
 
-# chrome.exe --remote-debugging-port=9222 --user-data-dir="D:\green\Chrom80\App"
+# chrome.exe --remote-debugging-port=9222 --user-data-dir="D:\green\Chrome80\App"
 
 
 # coding:utf-8
@@ -15,17 +15,22 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--no-sandbox')
 # 谷歌文档提到需要加上这个属性来规避bug
 chrome_options.add_argument('--disable-gpu')
-chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+# chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+
+# 禁止图片的加载，但不支持CMD启动的方式？
+prefs = {"profile.managed_default_content_settings.images": 2}
+chrome_options.add_experimental_option("prefs", prefs)
 
 driver = webdriver.Chrome(executable_path=r'D:\green\Chrome80\App\chromedriver.exe', chrome_options=chrome_options)
 driver.maximize_window()
 
-input('111'*18)
 
 
 driver.get("http://www.cnblogs.com/yoyoketang/")
 
 time.sleep(2)
+input('1'*18)
+
 # 定位首页管理按钮：id=blog_nav_contact
 js1 = 'document.getElementById("blog_nav_contact").click();'
 driver.execute_script(js1)
