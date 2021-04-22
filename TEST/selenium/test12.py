@@ -92,6 +92,7 @@ for m in range(51):
         wait = WebDriverWait(driver, 40, 1, ignored_exceptions=None)
         driver.find_element_by_css_selector('.fa_home').click()
         print('2' * 18)
+        # TODO:1、页面响应慢，导致下一步，卡住； 2、调用word插件、打开、粘贴、保存。
         try:
             wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, '.fa_home')))
         except:

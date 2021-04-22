@@ -1,5 +1,7 @@
 import win32com.client
 
+
+"""打开wordk,写入、粘贴内容，保存。"""
 word = win32com.client.Dispatch('Word.Application')
 word_file = r'E:\TEMP\6TEST\12.docx'
 try:
