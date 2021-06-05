@@ -15,7 +15,7 @@ chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument('--no-sandbox')
 # 谷歌文档提到需要加上这个属性来规避bug
 chrome_options.add_argument('--disable-gpu')
-# chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+# ie_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
 
 # 禁止图片的加载，但不支持CMD启动的方式？
 prefs = {"profile.managed_default_content_settings.images": 2}

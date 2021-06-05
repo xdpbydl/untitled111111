@@ -28,7 +28,7 @@ chrome_options.add_argument(
     'user-agent=:	Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 UBrowser/6.2.4098.3 Safari/537.36')
 chrome_options.add_experimental_option('excludeSwitches', ['enable-automation'])  # 以键值对的形式加入参数 ， 以开发者模式
 # 设置代理
-# chrome_options.add_argument("--proxy-server=http://127.0.0.1:8888")
+# ie_options.add_argument("--proxy-server=http://127.0.0.1:8888")
 # 一定要注意，=两边不能有空格，不能是这样--proxy-server = http://202.20.16.82:10152
 browser = webdriver.Chrome(chrome_options=chrome_options)
 

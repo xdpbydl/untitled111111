@@ -6,7 +6,7 @@ import time
 chrome_options = Options()
 chrome_options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
 # chrome_driver = r"D:\code\python\selenium_ui_auto\driver\chromedriver.exe"
-# driver = webdriver.Chrome(chrome_driver, chrome_options=chrome_options)
+# driver = webdriver.Chrome(chrome_driver, ie_options=ie_options)
 driver = webdriver.Chrome(chrome_options=chrome_options)
 
 sous = driver.find_element_by_id('kw')
