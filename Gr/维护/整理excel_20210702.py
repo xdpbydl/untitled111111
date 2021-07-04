@@ -46,21 +46,11 @@ guige_df = pd.read_excel(guige_file, index=False)
 
 # guige_df = pd.DataFrame(guige_df[0])
 
-guige_df.to_excel(f'{file_path}0704_11.xlsx')
+
 # 20210702 ，排除”物料号“为X，"图号"为FA开始  的数据
 guige_df = guige_df[~guige_df['物料号'].str.startswith('X')]
-guige_df.to_excel(f'{file_path}0704_12.xlsx')
 guige_df["图号"]=guige_df["图号"].astype(str)
-guige_df.to_excel(f'{file_path}0704_13.xlsx')
-# guige_df['图号'].fillna('@@@', inplace=True)
-# clean_z[clean_z==''] = '@@@'
-# guige_df['图号'] = clean_z
-
 guige_df = guige_df[~guige_df['图号'].str.startswith('F')]
-guige_df.to_excel(f'{file_path}0704_14.xlsx')
-
-# print(guige_df['物料号'])
-
 
 
 def guige(x):
