@@ -48,14 +48,31 @@ def kill_exe(exe_name):
     print("杀死进程{}".format(exe_name))
 
 
-def merge(model_file, soc_file, new_fle):
-    soc_file = Save_Format_xls(soc_file)
-    wb = openpyxl.load_workbook(soc_file)
+def merge(model_file, soc_file, new_fle, sheet=0, sheet_name='', data_only=False):
+    try:
+        soc_file = Save_Format_xls(soc_file)
+    except:
+        print(f"源文件{soc_file}不存在。")
+    wb = openpyxl.load_workbook(soc_file, data_only=data_only)
     new_wb = openpyxl.load_workbook(model_file)
-    soc_ws = wb.worksheets[0]
-    new_ws = new_wb.create_sheet(soc_ws.title)
-    for x in range(1, 51):
-        for y in range(1, 51):
+    soc_ws = wb.worksheets[sheet]
+
+    #     print(soc_ws.title)
+    #     soc_ws.title = sheet_name
+    #     print(soc_ws.title)
+    #     input()
+    # print(soc_ws.title)
+    # print(type(soc_ws.title))
+
+    # new_ws = new_wb.create_sheet(soc_ws.title)
+
+    if sheet_name != '':
+        new_ws = new_wb[sheet_name]
+    else:
+        new_ws = new_wb[soc_ws.title]
+
+    for x in range(1, soc_ws.max_row + 1):
+        for y in range(1, soc_ws.max_column + 1):
             new_ws.cell(row=x, column=y, value=soc_ws.cell(row=x, column=y).value)
             # print(soc_ws.cell(row=x, column=y).value)
     new_wb.save(new_fle)
@@ -72,8 +89,6 @@ if is_first:
     time.sleep(2)
     del_files(file_path)
 
+merge(file_model, file_AB, file_AB, sheet=1, sheet_name='-1', data_only=True)
 for n, i in enumerate(file_lists):
-    if n == 0:
-        merge(file_model, i, file_AB)
-    else:
-        merge(file_AB, i, file_AB)
+    merge(file_AB, i, file_AB)
