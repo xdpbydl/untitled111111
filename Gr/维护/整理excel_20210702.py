@@ -47,9 +47,9 @@ guige_df = pd.read_excel(guige_file, index=False)
 # guige_df = pd.DataFrame(guige_df[0])
 
 
-# 20210702 ，排除”物料号“为X，"图号"为FA开始  的数据
+# 20210702 ，排除”物料号“为X，"图号"为F开始  的数据
 guige_df = guige_df[~guige_df['物料号'].str.startswith('X')]
-guige_df["图号"]=guige_df["图号"].astype(str)
+guige_df["图号"] = guige_df["图号"].astype(str)
 guige_df = guige_df[~guige_df['图号'].str.startswith('F')]
 
 
