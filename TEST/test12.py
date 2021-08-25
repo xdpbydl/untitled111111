@@ -1,0 +1,150 @@
+import pandas as pd
+import re
+import numpy as np
+
+file_path = 'E:\\TEMP\\6TEST\\GRWL\\'
+songhuodan = f'{file_path}export_soghuodan.xlsx'
+save_file = f'{file_path}11.xlsx'
+save_guige = f'{file_path}guige.xlsx'
+
+guige_file = f'{file_path}清单_all.xls'
+#  模版
+file2 = f'{file_path}model\\2020-7-11供应商分配第一批.xlsx'
+#  新的文件
+file3 = f'{file_path}2020-7-11供应商分配第一批_new.xlsx'
+
+df = pd.read_excel(songhuodan)
+#  删除无效列
+df = df.loc[:, ~df.columns.str.contains('Unnamed')]
+
+index = [0, 1]
+
+df['选择'] = df.工号箱头分箱.str[:9]
+
+############整理excel############
+
+# print(df)
+#  删除两列
+
+df.drop(['箱头版本', '最新箱头版本'], axis=1, inplace=True)
+#  清除两列数据
+df['PO行号'] = ''
+df['PO数量'] = ''
+# print(df)
+#  按两列升序排序
+df1 = df.sort_values(by=['PO编号', '工号箱头分箱'], ascending=[True, True])
+
+############规格匹配############
+
+
+guige_df = pd.read_excel(guige_file, index=False)
+
+# guige_df = pd.DataFrame(guige_df[0])
+
+
+guige_df = guige_df[guige_df['物料号'].str.contains('R')]
+
+
+# print(guige_df)
+
+
+def guige(x):
+    #    x = str(x)
+    #    if x == r'备注':
+    #        pass
+    #    elif x == '':
+    #        return ''
+    #    else:
+    #        x_1 = x.split(r',')[0]
+    #        x_2 = x_1.split(r'，')[0]  # 分隔符,写一起报错
+    #        x_3 = x_2.split()[0]
+    #        return x_3
+    #
+    if x != '':
+        x1 = re.findall(r'\d{1,}×\d{1,}×\d{1,}', str(x))
+        if len(x1) == 0:
+            x1 = re.findall(r'\d{1,}×\d{1,}', str(x))
+            if len(x1) == 0:
+                return ''
+        return x1[0]
+    else:
+        return ''
+
+
+# “规格”列部分可能为空，采用“备注”列，
+
+
+guige_df["备注"] = guige_df["备注"].apply(guige)
+# print("___________"*20)
+
+# print(str(guige_df["备注"]))
+
+
+# 转换为字符串
+guige_df = guige_df.applymap(str)
+
+# 删除"备注" 为空的行  20201116
+guige_df = guige_df[guige_df["备注"] != '']
+
+guige_df["备注"] = guige_df["备注"] + '=' + guige_df["数量"]
+
+# print(str(guige_df["备注"]))
+guige_1 = guige_df[['工号', '分箱', '备注']]  # 2020-10-19   增加根据分箱号，决定规格
+
+# 2021-8-24（1/2） PO编号存在多个，不用合并，分行显示。
+# guige_2 = guige_1.groupby(['工号', '分箱'])['备注'].apply(lambda x: x.str.cat(sep=r',')).reset_index()  # 2020-10-19   增加根据分箱号，决定规格
+# guige_2.to_excel(save_guige, index=False)
+guige_1.to_excel(save_guige, index=False)
+
+# 匹配
+# print(df1)
+df1['分箱'] = df1['工号箱头分箱'].str[-1]  # 2020-10-19   增加根据分箱号，决定规格
+
+# 2021-8-24（2/2） PO编号存在多个，不用合并，分行显示。
+# df1 = pd.merge(df1, guige_2, how='left', left_on=['分箱', "选择"], right_on=['分箱', "工号"], left_index=False, right_index=False)
+df1 = pd.merge(df1, guige_1, how='left', left_on=['分箱', "选择"], right_on=['分箱', "工号"], left_index=False, right_index=False)
+
+df1['PO行号'] = df1['备注']
+df1.drop(['工号', '分箱', '备注'], axis=1, inplace=True)
+
+#
+# # 2021-08-23  修改，PO编号存在多个，分行显示
+# df_fenhang = pd.DataFrame()
+# # df_delnull = df1[df1["规格"] != '']
+# def po_no_fenhang(ghxtfx, guige_a):    #ghxtfx, pono = 工号箱头分箱, 规格
+#     pono_list = guige_a.slipt(',')
+#     len_no = len(pono_list)
+#     if len_no > 1:
+#         for n, i in enumerate(pono_list):
+#             # df_fenhang = df1[df1['工号箱头分箱'] == ghxtfx & df1['规格'] == guige_a]
+#             print('1111')
+#
+#             if n == 0:
+#                 # df1 = df1[~df1['工号箱头分箱'] == ghxtfx & df1['规格'] == guige_a]
+#                 print('2222')
+# df1.apply(po_no_fenhang, axis=0, args=(df1[['工号箱头分箱','规格']]))
+# df1 = pd.concat([df_fenhang, df1])    #合并
+# df1 = df1.sort_values(by=['PO编号', '工号箱头分箱'], ascending=[True, True])    #排序
+# # 2021-08-23
+
+
+df1.to_excel(save_file, index=False)
+
+############合成############
+
+
+# df1 = pd.read_excel(save_file, index=False)
+df2 = pd.read_excel(file2, index=False)
+
+# # 插入空行\文件名\行数
+line_no = len(df1)
+file_name = 'riqi' + '供应商分配_new'
+df2_no = len(df2)
+for i in range(5):  # 5行
+    df2.loc[df2_no + i] = ['' for n in range(21)]  # 21列
+df2.iloc[df2_no + 4, 1] = file_name
+df2.iloc[df2_no + 4, 2] = line_no
+
+df3 = df2.append(df1, ignore_index=True, sort=False)
+
+df3.to_excel(file3, index=False, header=False)

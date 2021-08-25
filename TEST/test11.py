@@ -98,16 +98,20 @@ guige_df["备注"] = guige_df["备注"]+'='+ guige_df["数量"]
 #print(str(guige_df["备注"]))
 guige_1 = guige_df[['工号', '分箱', '备注']]   # 2020-10-19   增加根据分箱号，决定规格
 
-
-guige_2=guige_1.groupby(['工号', '分箱'])['备注'].apply(lambda x:x.str.cat(sep=r',')).reset_index()         # 2020-10-19   增加根据分箱号，决定规格
-guige_2.to_excel(save_guige, index=False)
+# 2021-8-24（1/2） PO编号存在多个，不用合并，分行显示。
+# guige_2=guige_1.groupby(['工号', '分箱'])['备注'].apply(lambda x:x.str.cat(sep=r',')).reset_index()         # 2020-10-19   增加根据分箱号，决定规格
+# guige_2.to_excel(save_guige, index=False)
+guige_1.to_excel(save_guige, index=False)
 
 # 匹配
 # print(df1)
 df1['分箱'] = df1['工号箱头分箱'].str[-1]       # 2020-10-19   增加根据分箱号，决定规格
 
-df1 = pd.merge(df1,guige_2,how='left', left_on=['分箱', "选择"],right_on=['分箱', "工号"],left_index=False,right_index=False)
-# print(df1)
+# 2021-8-24（2/2） PO编号存在多个，不用合并，分行显示。
+# df1 = pd.merge(df1,guige_2,how='left', left_on=['分箱', "选择"],right_on=['分箱', "工号"],left_index=False,right_index=False)
+df1 = pd.merge(df1, guige_1,how='left', left_on=['分箱', "选择"],right_on=['分箱', "工号"],left_index=False,right_index=False)
+
+
 df1['PO行号'] =df1['备注']
 df1.drop(['工号','分箱', '备注'], axis=1, inplace=True)
 df1.to_excel(save_file, index=False)
@@ -125,7 +129,7 @@ df2 = pd.read_excel(file2, index=False)
 
 # # 插入空行\文件名\行数
 line_no = len(df1)
-file_name = riqi + '供应商分配_new'
+file_name = 'riqi' + '供应商分配_new'
 df2_no = len(df2)
 for i in range(5):      # 5行
     df2.loc[df2_no+i] = ['' for n in range(21)]   # 21列
