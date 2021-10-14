@@ -32,7 +32,7 @@ def resize(path, out_path='', factor=0.9):
     try:
         img = Image.open(path)
     except:
-        print(f"{'^'*10}{path},文件可能不为图片！{'^'*10}")
+        print(f"{'^' * 10}{path},文件可能不为图片！{'^' * 10}")
         return
     x, y = img.size
     while factor > 0:
@@ -40,12 +40,12 @@ def resize(path, out_path='', factor=0.9):
         factor -= 0.1
         # print(factor, x, y)
         if x < 200 or y < 200:
-            print(f"{'-'*10}{path},文件尺寸小于200！{'-'*10}")
+            print(f"{'-' * 10}{path},文件尺寸小于200！{'-' * 10}")
             out_path_a = get_outfile(path, out_path, t_str='small')
             shutil.copyfile(path, out_path_a)
             return
         elif 800 >= x > 200 and 800 >= y > 200 and 600 >= os.path.getsize(path) / 1024:
-            print(f"{'@'*10}{path},文件尺寸及文件大小正合适.{'@'*10}")
+            print(f"{'@' * 10}{path},文件尺寸及文件大小正合适.{'@' * 10}")
             # print(00 >= x > 200 , 800 >= y > 200 , 600 >= os.path.getsize(path) / 1024)
             # print(path, out_path_x)
             shutil.copyfile(path, out_path_x)
@@ -54,7 +54,7 @@ def resize(path, out_path='', factor=0.9):
             try:
                 out = img.resize((x_change, y_change), Image.ANTIALIAS)
             except:
-                print(f"{'='*10}{path},文件转换错误,请检查！！！{'='*10}")
+                print(f"{'=' * 10}{path},文件转换错误,请检查！！！{'=' * 10}")
                 out_path_b = get_outfile(path, out_path, t_str='ERROR')
                 shutil.copyfile(path, out_path_b)
                 return
@@ -65,10 +65,22 @@ def resize(path, out_path='', factor=0.9):
 
 
 # resize(r'E:\TEMP\6TEST\qqq.png')
-file_dir = r'D:\ZCXX\1.2方辰\3. 云中\2.1实施 过程\poto\初一级学生\初一2班'
-to_dir = r'E:\TEMP\Desktop\111'
+file_dir = r'E:\TEMP\6TEST\yz_temp\初一级学生信息及电子照片\初一电子照片信息\all'
+to_dir = r'E:\TEMP\6TEST\yz_temp\初一处理后'
+
+# for i in os.listdir(file_dir):
+#     # if os.path.isfile(os.path.join(file_dir, i)):   # 不遍历子目录
+#     #     resize(os.path.join(file_dir, i), to_dir)
 
 
-for i in os.listdir(file_dir):
-    if os.path.isfile(os.path.join(file_dir, i)):   # 不遍历子目录
-        resize(os.path.join(file_dir, i), to_dir)
+i = 0
+for (root, dirs, files) in os.walk(file_dir):
+    for filename in files:
+        # 遍历所有文件，包括子目录
+        # print(os.path.join(root, filename))
+        resize(os.path.join(root, filename), to_dir)
+        i += 1
+    print(i)
+    for dirc in dirs:
+        print(os.path.join(root, dirc))
+
