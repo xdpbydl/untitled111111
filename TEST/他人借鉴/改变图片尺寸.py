@@ -65,8 +65,8 @@ def resize(path, out_path='', factor=0.9):
 
 
 # resize(r'E:\TEMP\6TEST\qqq.png')
-file_dir = r'E:\TEMP\6TEST\yz_temp\初一级学生信息及电子照片\初一电子照片信息\all'
-to_dir = r'E:\TEMP\6TEST\yz_temp\初一处理后'
+file_dir = r'E:\TEMP\6TEST\yz_temp\21年9月新增老师'
+to_dir = r'E:\TEMP\6TEST\yz_temp\3老师及职工'
 
 # for i in os.listdir(file_dir):
 #     # if os.path.isfile(os.path.join(file_dir, i)):   # 不遍历子目录
