@@ -10,5 +10,5 @@ pro = ts.pro_api()
 pa = pro.stock_basic(ts_code='000001.SZ')
 # print(pa)
 riqi = '20211123'
-aa = pro.daily(ts_code='000625.SZ,600022.SH', start_date=riqi, end_date=riqi)
+aa = pro.daily(ts_code='000625.SZ', start_date=riqi, end_date=riqi)
 print(aa)
