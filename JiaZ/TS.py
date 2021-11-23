@@ -9,6 +9,6 @@ ts.set_token(my_token)
 pro = ts.pro_api()
 pa = pro.stock_basic(ts_code='000001.SZ')
 # print(pa)
-riqi = '20210930'
-aa = pro.daily(ts_code='000001.SZ,600022.SH', start_date=riqi, end_date=riqi)
+riqi = '20211123'
+aa = pro.daily(ts_code='000625.SZ,600022.SH', start_date=riqi, end_date=riqi)
 print(aa)
