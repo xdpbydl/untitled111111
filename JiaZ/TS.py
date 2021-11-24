@@ -14,10 +14,8 @@ pa = pro.stock_basic(ts_code=ts_code)
 # print(pa)
 riqi = '20211123'
 aa = pro.daily(ts_code='000625.SZ', start_date=riqi, end_date=riqi)
-print(aa)
-print(type(aa))
 
 # aa.to_excel(save_file, index=False, engine='openpyxl')
 # 实时的
 bb = ts.get_realtime_quotes(ts_code)
-print(bb)
+print(bb[['time', 'code', 'price']])
