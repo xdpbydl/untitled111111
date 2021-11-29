@@ -18,4 +18,10 @@ aa = pro.daily(ts_code='000625.SZ', start_date=riqi, end_date=riqi)
 # aa.to_excel(save_file, index=False, engine='openpyxl')
 # 实时的
 bb = ts.get_realtime_quotes(ts_code)
-print(bb[['time', 'code', 'price']])
+bb['price'] = bb['price'].astype('float')
+bb['pre_close'] = bb['pre_close'].astype('float')
+bb['zhang_fu'] = bb.apply(lambda x: (x['price'] - x['pre_close']) / x['pre_close'] * 100, axis=1).round(2)
+bb = bb[['time', 'code', 'zhang_fu', 'price', 'volume']]
+# bb.to_excel(save_file, index=False, engine='openpyxl')
+print(bb[['time', 'code', 'zhang_fu', 'price', 'volume']])
+
