@@ -8,20 +8,17 @@ def run(playwright: Playwright) -> None:
     # Open new page
     page = context.new_page()
 
-    # Go to https://192.168.0.160/portal/ui/login?service=https://192.168.0.160:443/portal/
-    page.goto("https://192.168.0.160/portal/ui/login?service=https://192.168.0.160:443/portal/")
-
-    # Go to https://192.168.0.160/portal/ui/login?service=https%3A%2F%2F192.168.0.160%3A443%2Fportal%2F
-    page.goto("https://192.168.0.160/portal/ui/login?service=https%3A%2F%2F192.168.0.160%3A443%2Fportal%2F")
+    # Go to
+    page.goto("https://192.168.0.160/")
 
     # Click [placeholder="请输入用户名"]
-    page.click("[placeholder=\"请输入用户名\"]")
+    # page.click("[placeholder=\"请输入用户名\"]")
 
     # Fill [placeholder="请输入用户名"]
     page.fill("[placeholder=\"请输入用户名\"]", "admin")
 
     # Press Tab
-    page.press("[placeholder=\"请输入用户名\"]", "Tab")
+    # page.press("[placeholder=\"请输入用户名\"]", "Tab")
 
     # Fill [placeholder="请输入密码"]
     page.fill("[placeholder=\"请输入密码\"]", "SuperSuper168!")
