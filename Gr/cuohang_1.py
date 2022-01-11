@@ -1,0 +1,192 @@
+import pandas as pd
+import re
+
+riqi = '2021-12-30'
+save_path = r'E:\TEMP\6TEST\GRWL\duichongkuai'
+
+songhuodan = save_path + '\\' + riqi.replace('-', '') + r'\export_soghuodan.xlsx'
+save_file = save_path + '\\' + riqi.replace('-', '') + r'\11.xlsx'
+save_guige = save_path + '\\' + riqi.replace('-', '') + r'\guige.xlsx'
+guige_file = save_path + '\\' + riqi.replace('-', '') + r'\清单_all.xls'
+
+#  模版
+file2 = save_path + r'\model\2020-7-11供应商分配第一批.xlsx'
+
+#  新的文件
+file3 = save_path + '''\\''' + riqi.replace('-', '') + '''\\''' + riqi.replace('-', '') + 'test111111.xlsx'
+
+df = pd.read_excel(songhuodan)
+#  删除无效列
+df = df.loc[:, ~df.columns.str.contains('Unnamed')]
+
+index = [0, 1]
+
+df['选择'] = df.工号箱头分箱.str[:9]
+
+############整理excel############
+
+# print(df)
+#  删除两列
+
+df.drop(['箱头版本', '最新箱头版本'], axis=1, inplace=True)
+#  清除两列数据
+df['PO行号'] = ''
+df['PO数量'] = ''
+# print(df)
+#  按两列升序排序
+df1 = df.sort_values(by=['PO编号', '工号箱头分箱'], ascending=[True, True])
+
+############规格匹配############
+
+
+guige_df = pd.read_excel(guige_file, index=False)
+
+# guige_df = pd.DataFrame(guige_df[0])
+
+
+# 20201126 ，不是只取R的物料
+# guige_df = guige_df[guige_df['物料号'].str.contains('R')]
+
+# 20210704 ，排除”物料号“为X，"图号"为F开始  的数据
+guige_df = guige_df[~guige_df['物料号'].str.startswith('X')]
+guige_df["图号"] = guige_df["图号"].astype(str)
+guige_df = guige_df[~guige_df['图号'].str.startswith('F')]
+
+
+def guige(x):
+    #    x = str(x)
+    #    if x == r'备注':
+    #        pass
+    #    elif x == '':
+    #        return ''
+    #    else:
+    #        x_1 = x.split(r',')[0]
+    #        x_2 = x_1.split(r'，')[0]  # 分隔符,写一起报错
+    #        x_3 = x_2.split()[0]
+    #        return x_3
+    #
+    if x != '':
+        x1 = re.findall(r'\d{1,}×\d{1,}×\d{1,}', str(x))
+        if len(x1) == 0:
+            x1 = re.findall(r'\d{1,}×\d{1,}', str(x))
+            if len(x1) == 0:
+                return ''
+        return x1[0]
+    else:
+        return ''
+
+
+# “规格”列部分可能为空，采用“备注”列，
+
+# 2021-07-04增加
+guige_df["规格"] = guige_df["规格"].apply(guige)
+guige_df["备注"] = guige_df["备注"].apply(guige)
+# 备注 为""时，使用规格,不为空时，使用原值。
+guige_df["备注"].mask(guige_df["备注"] == "", guige_df["规格"], inplace=True)
+
+# print(guige_df[guige_df["备注"]=="# /"])
+
+
+# 转换为字符串
+guige_df = guige_df.applymap(str)
+
+# 删除"备注" 为空的行  20201116
+guige_df = guige_df[guige_df["备注"] != '']
+
+guige_df["备注"] = guige_df["备注"] + '=' + guige_df["数量"]
+
+# print(str(guige_df["备注"]))
+guige_1 = guige_df[['工号', '分箱', '备注']]  # 2020-10-19   增加根据分箱号，决定规格
+
+# ###################
+# guige_df.to_excel(file3, index=False, header=False)
+# df_df = df['选择'].str.contains('21G069820')
+# print(len(df_df))
+
+# ###################
+
+guige_2 = guige_1.groupby(['工号', '分箱'])['备注'].apply(lambda x: x.str.cat(sep=r',')).reset_index()  # 2020-10-19   增加根据分箱号，决定规格
+guige_2.to_excel(save_guige, index=False)
+
+# 匹配
+# print(df1)
+df1['分箱'] = df1['工号箱头分箱'].str[-1]  # 2020-10-19   增加根据分箱号，决定规格
+
+df1 = pd.merge(df1, guige_2, how='left', left_on=['分箱', "选择"], right_on=['分箱', "工号"], left_index=False, right_index=False)
+# print(df1)
+df1['PO行号'] = df1['备注']
+df1.drop(['工号', '分箱', '备注'], axis=1, inplace=True)
+df1.to_excel(save_file, index=False)
+
+# # 2022-01-11 新增配重块到分配表
+wuliao_file = save_path + r'\model\物料编码.xlsx'
+wuliao_df = pd.read_excel(wuliao_file)
+qingdan_df = pd.read_excel(guige_file)
+# 取物料编码.xlsx中的配重块规格
+wuliao_df = wuliao_df[wuliao_df['备注'] == '配重块']
+wuliao_df['型号'] = wuliao_df['型号'].str.replace('*', '×')
+# print(wuliao_df)
+# input("2" * 18)
+# 送货单去重
+df['PO编号'].drop_duplicates(inplace=True)
+
+# df = df.groupby(by='PO编号')
+# print(df['PO编号'])
+# 清单_all 【物料名称】 选取’配重块‘
+qingdan_df = qingdan_df[qingdan_df['物料名称'] == '配重块']
+qingdan_df = pd.merge(qingdan_df, wuliao_df, how='left', left_on='物料号', right_on='物料编码', left_index=False, right_index=False)
+# print(qingdan_df[['PO号', '工号', '物料名称', '物料号']])
+print(qingdan_df[['PO号','物料名称','物料号','物料编码', '型号', '备注_y']])
+
+
+peichong_df = pd.DataFrame()
+
+
+for k, i in df['PO编号'].iteritems():
+    i_v = qingdan_df[qingdan_df['PO号'] == i]
+    if len(i_v) != 0:
+        peichong_df = peichong_df.append(i_v, ignore_index=True)
+
+peichong_df = peichong_df.applymap(str)
+peichong_df['型号'] = peichong_df['型号'] + '=' + peichong_df['数量']
+peichong_list = peichong_df[['PO号', '工号', '型号']].values.tolist()
+
+# print(peichong_df['型号'])
+input("-1" * 18)
+for k, i, g in peichong_list:
+    print(type(k), type(i), type(g))
+    print(df.dtypes)
+    k_i_g = df1[(df1['PO编号'] == k) & (df1['选择'] == i)]
+    if len(k_i_g) != 0:
+        k_i_g.loc[:, ['工号箱头分箱', '箱头描述', 'PO行号']] = '', '配重块', g
+        df1 = df1.append(k_i_g)
+
+
+    # input("**" * 18)
+print(len(df1))
+# print(peichong_list)
+
+input("-" * 18)
+# # 2022-01-11 新增配重块到分配表
+
+#  按两列升序排序
+df1 = df.sort_values(by=['选择', '工号箱头分箱'], ascending=[True, True])
+
+############合成############
+
+
+# df1 = pd.read_excel(save_file, index=False)
+df2 = pd.read_excel(file2, index=False)
+
+# # 插入空行\文件名\行数
+line_no = len(df1)
+file_name = riqi + '供应商分配_new'
+df2_no = len(df2)
+for i in range(5):  # 5行
+    df2.loc[df2_no + i] = ['' for n in range(21)]  # 21列
+df2.iloc[df2_no + 4, 1] = file_name
+df2.iloc[df2_no + 4, 2] = line_no
+
+df3 = df2.append(df1, ignore_index=True, sort=False)
+
+df3.to_excel(file3, index=False, header=False)
