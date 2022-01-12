@@ -118,59 +118,42 @@ df1['PO行号'] = df1['备注']
 df1.drop(['工号', '分箱', '备注'], axis=1, inplace=True)
 df1.to_excel(save_file, index=False)
 
-# # 2022-01-11 新增配重块到分配表
+# # 2022-01-11 # # 新增配重块到分配表
 wuliao_file = save_path + r'\model\物料编码.xlsx'
 wuliao_df = pd.read_excel(wuliao_file)
 qingdan_df = pd.read_excel(guige_file)
-# 取物料编码.xlsx中的配重块规格
+# 取‘物料编码.xlsx’中的配重块规格
 wuliao_df = wuliao_df[wuliao_df['备注'] == '配重块']
 wuliao_df['型号'] = wuliao_df['型号'].str.replace('*', '×')
-# print(wuliao_df)
-# input("2" * 18)
 # 送货单去重
 df['PO编号'].drop_duplicates(inplace=True)
-
-# df = df.groupby(by='PO编号')
-# print(df['PO编号'])
 # 清单_all 【物料名称】 选取’配重块‘
 qingdan_df = qingdan_df[qingdan_df['物料名称'] == '配重块']
 qingdan_df = pd.merge(qingdan_df, wuliao_df, how='left', left_on='物料号', right_on='物料编码', left_index=False, right_index=False)
-# print(qingdan_df[['PO号', '工号', '物料名称', '物料号']])
-print(qingdan_df[['PO号','物料名称','物料号','物料编码', '型号', '备注_y']])
-
-
 peichong_df = pd.DataFrame()
 
-
 for k, i in df['PO编号'].iteritems():
+    i_v = pd.DataFrame()
     i_v = qingdan_df[qingdan_df['PO号'] == i]
     if len(i_v) != 0:
         peichong_df = peichong_df.append(i_v, ignore_index=True)
 
-peichong_df = peichong_df.applymap(str)
-peichong_df['型号'] = peichong_df['型号'] + '=' + peichong_df['数量']
-peichong_list = peichong_df[['PO号', '工号', '型号']].values.tolist()
+peichong_df[['数量']] = peichong_df[['数量']].applymap(str)
+peichong_df['规格'] = peichong_df['型号'] + '=' + peichong_df['数量']
+peichong_list = peichong_df[['PO号', '工号', '规格']].values.tolist()
 
-# print(peichong_df['型号'])
-input("-1" * 18)
 for k, i, g in peichong_list:
-    print(type(k), type(i), type(g))
-    print(df.dtypes)
+    k_i_g = pd.DataFrame()
     k_i_g = df1[(df1['PO编号'] == k) & (df1['选择'] == i)]
     if len(k_i_g) != 0:
         k_i_g.loc[:, ['工号箱头分箱', '箱头描述', 'PO行号']] = '', '配重块', g
-        df1 = df1.append(k_i_g)
-
-
-    # input("**" * 18)
-print(len(df1))
-# print(peichong_list)
-
-input("-" * 18)
-# # 2022-01-11 新增配重块到分配表
+        df1 = df1.append(k_i_g, ignore_index=True, sort=False)
 
 #  按两列升序排序
-df1 = df.sort_values(by=['选择', '工号箱头分箱'], ascending=[True, True])
+df1 = df1.sort_values(by=['PO编号', '选择'], ascending=[True, True])
+# # 2022-01-11 # # 新增配重块到分配表
+
+
 
 ############合成############
 
@@ -186,7 +169,7 @@ for i in range(5):  # 5行
     df2.loc[df2_no + i] = ['' for n in range(21)]  # 21列
 df2.iloc[df2_no + 4, 1] = file_name
 df2.iloc[df2_no + 4, 2] = line_no
-
+print(len(df1))
 df3 = df2.append(df1, ignore_index=True, sort=False)
 
 df3.to_excel(file3, index=False, header=False)
