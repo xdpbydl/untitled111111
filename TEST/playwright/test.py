@@ -1,10 +1,15 @@
 from playwright.sync_api import Playwright, sync_playwright
 import time
 
-def run(playwright: Playwright) -> None:
-    browser = playwright.chromium.launch(headless=True)
-    context = browser.new_context()
 
+def run(playwright: Playwright) -> None:
+    browser = playwright.chromium.launch(headless=False)
+    context = browser.new_context()
+    cookies = [{'name': 'QCARJSESSIONID', 'value': 'BBmPcsfClCknfQX1cN2MLMgKXZGtFWqsBvjN9mbM9tmbL38hMmw4!1426878101', 'path': '/','domain': 'qcar.apiins.com', 'secure': False, 'httpOnly': True},
+               {'name': 'BIGipServercar_qcar_poool', 'value': '1191316140.16671.0000', 'path': '/', 'domain': 'qcar.apiins.com', 'secure': False,'httpOnly': False},
+               {'name': 'chinainsuranceJSESSIONID', 'value': 'rkgncsfG8pnrhh8x1CvNy46zHplyLkTjyv1LL2hk4wDrkD9Mjz9Y!2078734058', 'path': '/','domain': 'qcar.apiins.com', 'secure': False, 'httpOnly': True},
+               {'name': 'BIGipServercar_core_pool', 'value': '1191316140.17951.0000', 'path': '/', 'domain': 'qcar.apiins.com', 'secure': False,'httpOnly': False}]
+    context.add_cookies(cookies=cookies)
     # Open new page
     page = context.new_page()
 
@@ -36,12 +41,12 @@ def run(playwright: Playwright) -> None:
             try:
                 is_no = page.is_enabled("text=下一页 >")
             except:
-                print(f"{'-'*18}获取完成！{'-'*18}")
+                print(f"{'-' * 18}获取完成！{'-' * 18}")
 
             aa = page.query_selector_all(f"""div.{f}>h3>a""")
             for i in aa:
-                txt = i.inner_text()    # 返回str，获取a标签（你下面标签）的全部文本
-                txt2 = i.get_property('href')   # 获取 href 属性内容
+                txt = i.inner_text()  # 返回str，获取a标签（你下面标签）的全部文本
+                txt2 = i.get_property('href')  # 获取 href 属性内容
                 # txt = i.t
                 print(f"{n}---{txt},  url:{txt2}")
                 n += 1

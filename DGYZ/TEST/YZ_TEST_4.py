@@ -250,7 +250,7 @@ def flag_no(i):
                                  sheet_name=data['s_sheel'], usecols='C,E,L', nrows=36, skiprows=[24])
         df_source["各项贷款"] = pd.to_numeric(df_source["各项贷款"], errors='coerce')  # 字符转浮点类型
         df_source["个人外币"] = pd.to_numeric(df_source["个人外币"], errors='coerce')  # 字符转浮点类型
-        df = df_model.merge(df_source,,,,
+        df = df_model.merge(df_source)          # # 待确认
         # df['个人存款'] = df['个人外币']
         # df['单位存款'] = df['单位外币']
 

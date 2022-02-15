@@ -5,7 +5,7 @@ import time
 # print(ts.__version__)
 token_file = r'E:\JiaZhi\0.9 LH\token.xlsx'
 save_file = r'E:\JiaZhi\0.9 LH\save\23.xlsx'
-ts_code = ['000625', '000830']
+ts_code = ['000625']    # , '000830'
 
 df = pd.read_excel(token_file)
 my_token = df[df['平台'] == 'tushare']['token'].values[0]
