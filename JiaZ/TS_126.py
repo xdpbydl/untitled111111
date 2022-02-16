@@ -49,7 +49,7 @@ def processing_data(data):
 
 if __name__ == "__main__":
     while is_jy():
-        code = '1000830,1000625'
+        code = '1000625,1000830'
         data_d = processing_data(get_daily(code))
         for k, v in data_d.items():
             print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['volume'], ','))
