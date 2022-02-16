@@ -7,8 +7,6 @@ import time
 from datetime import datetime
 
 
-
-
 def get_daily(code):
     # 沪市前面加0，深市前面加1，比如0000001，是上证指数，1000001是中国平安
     # http://api.money.126.net/data/feed/1159949,1000625
@@ -20,6 +18,7 @@ def get_daily(code):
 
 def get_code():
     pass
+
 
 def is_jy():
     jy_date = [['9:25', '11:30'], ['13:00', '15:00']]
@@ -37,7 +36,6 @@ def is_jy():
     # pro = ts.pro_api()
     # d = datetime.today()
     # # print(pro.trade_cal(exchange='SSE'))
-
 
 
 def processing_data(data):
