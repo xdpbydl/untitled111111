@@ -7,10 +7,11 @@ import time
 from datetime import datetime
 
 
-# 沪市前面加0，深市前面加1，比如0000001，是上证指数，1000001是中国平安
-# http://api.money.126.net/data/feed/1159949,1000625
+
 
 def get_daily(code):
+    # 沪市前面加0，深市前面加1，比如0000001，是上证指数，1000001是中国平安
+    # http://api.money.126.net/data/feed/1159949,1000625
     url = f"http://api.money.126.net/data/feed/{code}"
     response = urllib.request.urlopen(url)  # 请求站点获得一个HTTPResponse对象
     data = response.read().decode('utf-8')
@@ -48,10 +49,12 @@ def processing_data(data):
 
 if __name__ == "__main__":
     while is_jy():
-        data_d = processing_data(get_daily('1000830,1000625'))
+        code = '1000830,1000625'
+        data_d = processing_data(get_daily(code))
         for k, v in data_d.items():
             print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['volume'], ','))
         time.sleep(10)
+
 ###获取历史数据###
 # 沪市前面加0，深市前面加1，比如0000001，是上证指数，1000001是中国平安
 # def get_daily(code, start='19900101', end=''):
