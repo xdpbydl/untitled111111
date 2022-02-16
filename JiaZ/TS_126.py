@@ -26,10 +26,13 @@ def is_jy():
     for i in jy_date:
         # 当前时间
         n_time = datetime.now()
+        w_d = n_time.isoweekday()
         # 范围时间
         d_time = datetime.strptime(str(datetime.now().date()) + i[0], '%Y-%m-%d%H:%M')
         d_time1 = datetime.strptime(str(datetime.now().date()) + i[1], '%Y-%m-%d%H:%M')
-        if n_time > d_time and n_time < d_time1:
+        if n_time.isoweekday() in (6, 7):   #
+            return 0
+        elif n_time > d_time and n_time < d_time1:
             return 1
         elif i == 1:
             return 0
