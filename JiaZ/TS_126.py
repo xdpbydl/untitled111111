@@ -21,7 +21,7 @@ def get_code():
 
 
 def is_jy():
-    jy_date = [['9:25', '11:30'], ['13:00', '15:00']]
+    jy_date = [['9:25', '11:30'], ['13:00', '15:01']]
     # 判断当前时间是否在范围时间内
     for i in jy_date:
         # 当前时间
@@ -49,12 +49,13 @@ def processing_data(data):
 
 
 if __name__ == "__main__":
-    while is_jy():
-        code = '1000625,1000830'
-        data_d = processing_data(get_daily(code))
-        for k, v in data_d.items():
-            print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['volume'], ','))
-        time.sleep(10)
+    while 1:
+        while is_jy():
+            code = '1000625,1000830'
+            data_d = processing_data(get_daily(code))
+            for k, v in data_d.items():
+                print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['volume'], ','))
+            time.sleep(10)
 
 ###获取历史数据###
 # 沪市前面加0，深市前面加1，比如0000001，是上证指数，1000001是中国平安
