@@ -21,7 +21,7 @@ def get_code():
 
 
 def is_jy():
-    jy_date = [['9:25', '11:31'], ['13:00', '15:01']]
+    jy_date = [['9:25', '11:31'], ['13:00', '13:01']]
     # 判断当前时间是否在范围时间内
     for i in jy_date:
         # 当前时间
@@ -30,7 +30,7 @@ def is_jy():
         # 范围时间
         d_time = datetime.strptime(str(datetime.now().date()) + i[0], '%Y-%m-%d%H:%M')
         d_time1 = datetime.strptime(str(datetime.now().date()) + i[1], '%Y-%m-%d%H:%M')
-        if n_time.isoweekday() in (6, 7):   #
+        if n_time.isoweekday() in (6, 7):  #
             return 0
         elif n_time > d_time and n_time < d_time1:
             return 1
@@ -54,7 +54,7 @@ if __name__ == "__main__":
             code = '1000625,1000830'
             data_d = processing_data(get_daily(code))
             for k, v in data_d.items():
-                print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['turnover']/100000000, '.5'))
+                print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['turnover'] / 10 ** 8, '.5'))
             time.sleep(10)
 
 ###获取历史数据###
