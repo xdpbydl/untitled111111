@@ -52,10 +52,13 @@ if __name__ == "__main__":
     while 1:
         while is_jy():
             code = '1000625,1000830'
-            data_d = processing_data(get_daily(code))
-            for k, v in data_d.items():
-                print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['turnover'] / 10 ** 8, '.5'))
-            time.sleep(10)
+            try:
+                data_d = processing_data(get_daily(code))
+                for k, v in data_d.items():
+                    print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['turnover'] / 10 ** 8, '.5'))
+                time.sleep(10)
+            except:
+                print('有错误！')
 
 ###获取历史数据###
 # 沪市前面加0，深市前面加1，比如0000001，是上证指数，1000001是中国平安
