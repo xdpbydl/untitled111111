@@ -51,7 +51,8 @@ def processing_data(data):
 if __name__ == "__main__":
     while 1:
         while is_jy():
-            code = '1000625'    # '1000625,1000830'
+            code = '1000625,0000001,1399001'    # '1000625,1000830'
+            print('')
             try:
                 data_d = processing_data(get_daily(code))
                 for k, v in data_d.items():
