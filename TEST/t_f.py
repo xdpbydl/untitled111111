@@ -20,6 +20,7 @@ df_gr.to_excel(save_file_1)
 # # 导出生成Excel文件名
 # z_Excelname = 'P934箱头指令明细箱头计划下达.xlsx'
 #
+pd.read_excel(save_file_1,header=False)
 # allxlsPlan = []
 #
 # # 判断是否有此字符内容
