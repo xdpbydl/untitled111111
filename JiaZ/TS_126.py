@@ -7,6 +7,8 @@ import time
 from datetime import datetime
 import configparser
 import os
+import codecs
+
 
 
 def get_daily(code):
@@ -23,7 +25,7 @@ def get_code():
 
 
 def is_jy():
-    jy_date = [['9:30', '11:31'], ['13:00', '18:01']]
+    jy_date = [['9:30', '11:35'], ['13:00', '17:01']]
     # 判断当前时间是否在范围时间内
     for i in jy_date:
         # 当前时间
@@ -51,29 +53,46 @@ def processing_data(data):
 
 
 if __name__ == "__main__":
-    # 获取配置文件
-    file = os.path.join(os.path.abspath('.'), 'config.ini')
-    config = configparser.ConfigParser()
-    config.read(file, encoding="utf8")
-    try:
-        j_code = config['system']['code']
-        j_time = config['system']['time']
-    except Exception as r:
-        print(f'config.ini文件错误！{r}')
-    j_time = int(j_time)
+
     while 1:
-        while is_jy():
+        if is_jy():
+
+            # 获取配置文件
+            file = os.path.join(os.path.abspath('.'), 'config.ini')
+            config = configparser.ConfigParser()
+            # config.read(file, encoding="utf-8")
+            config.read(file, encoding="utf-8-sig")
+            try:
+                j_code = config['system']['code']
+                j_time = config['system']['time']
+                j_hang = config['system']['hang']
+                j_hang_no = config['system']['hang_no']
+                j_time = int(j_time)
+                j_hang_no = int(j_hang_no)
+            except Exception as r:
+                print(f'config.ini文件加载错误！{r}')
+                break
+            # print(j_time)
             # j_code = '1000625,1000830,0000001,1399001'    # '1000625,1000830'
             # j_time = 3
-            print('')
             try:
                 data_d = processing_data(get_daily(j_code))
+                show_d = ''
                 for k, v in data_d.items():
-                    print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['turnover'] / 10 ** 8, '.5'))
-                time.sleep(3)
+                    # print(v['time'], v['symbol'], v['price'], format(v['percent'], '.2%'), format(v['turnover'] / 10 ** 8, '.5'))
+                    if j_hang == 'Y' or j_hang == 'y':
+                        show_d += f" {v['time']}\t{v['symbol']}\t{v['price']}\t{format(v['percent'], '.2%')}\t{format(v['turnover'] / 10 ** 8, '.5')}{chr(10)}"
+                    else:
+                        show_d += f" {v['time']}\t{v['symbol']}\t{v['price']}\t{format(v['percent'], '.2%')}\t{format(v['turnover'] / 10 ** 8, '.5')}{' ' * j_hang_no}"
+
+                print(f"\r{show_d}", end="")
+                if j_hang == 'Y' or j_hang == 'y':
+                    print('')
+                time.sleep(j_time)
             except Exception as r:
                 print(f'获取数据失败！{r}')
-
+        else:
+            print(f'\r非交易时间', end="")
 ###获取历史数据###
 # 沪市前面加0，深市前面加1，比如0000001，是上证指数，1000001是中国平安
 # def get_daily(code, start='19900101', end=''):
