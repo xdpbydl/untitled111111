@@ -1,14 +1,11 @@
-import pandas as pd
+# -*- coding : utf-8-*-
 import re
 import ast
 import urllib.request
-import tushare as ts
 import time
 from datetime import datetime
 import configparser
 import os
-import codecs
-
 
 
 def get_daily(code):
@@ -24,8 +21,10 @@ def get_code():
     pass
 
 
-def is_jy():
-    jy_date = [['9:30', '11:35'], ['13:00', '17:01']]
+def is_jy(j_debug):
+    if j_debug == 'Y' or j_debug == 'y':
+        return 1
+    jy_date = [['9:30', '11:35'], ['13:00', '15:33']]
     # 判断当前时间是否在范围时间内
     for i in jy_date:
         # 当前时间
@@ -55,26 +54,26 @@ def processing_data(data):
 if __name__ == "__main__":
 
     while 1:
-        if is_jy():
-
-            # 获取配置文件
-            file = os.path.join(os.path.abspath('.'), 'config.ini')
-            config = configparser.ConfigParser()
-            # config.read(file, encoding="utf-8")
-            config.read(file, encoding="utf-8-sig")
-            try:
-                j_code = config['system']['code']
-                j_time = config['system']['time']
-                j_hang = config['system']['hang']
-                j_hang_no = config['system']['hang_no']
-                j_time = int(j_time)
-                j_hang_no = int(j_hang_no)
-            except Exception as r:
-                print(f'config.ini文件加载错误！{r}')
-                break
-            # print(j_time)
-            # j_code = '1000625,1000830,0000001,1399001'    # '1000625,1000830'
-            # j_time = 3
+        # 获取配置文件
+        file = os.path.join(os.path.abspath('.'), 'config.ini')
+        config = configparser.ConfigParser()
+        # config.read(file, encoding="utf-8")
+        config.read(file, encoding="utf-8-sig")
+        try:
+            j_code = config['system']['code']
+            j_time = config['system']['time']
+            j_hang = config['system']['hang']
+            j_hang_no = config['system']['hang_no']
+            j_debug = config['system']['debug']
+            j_time = int(j_time)
+            j_hang_no = int(j_hang_no)
+        except Exception as r:
+            print(f'config.ini文件加载错误！{r}')
+            break
+        # print(j_time)
+        # j_code = '1000625,1000830,0000001,1399001'    # '1000625,1000830'
+        # j_time = 3
+        if is_jy(j_debug):
             try:
                 data_d = processing_data(get_daily(j_code))
                 show_d = ''
