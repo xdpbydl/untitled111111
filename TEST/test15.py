@@ -46,9 +46,10 @@ print(options)          # 结果 ['user_name', 'password']
 # 获取指定节点指定option的值
 name = config.get('user', 'user_name')
 print(name, type(name))            # 结果 'Mr,X' <class 'str'>
+
 port = config.getint('connect', 'port')
 print(port, type(port))           # 结果  4723 <class 'int'>
-
+input('--'*10)
 # 5. 检查section或option是否存在
 # ConfigParserObject.has_section(section)
 # ConfigParserObject.has_option(section, option)
