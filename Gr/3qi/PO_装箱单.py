@@ -38,7 +38,6 @@ tz_data = tz_df['工号-箱头-分箱']
 mx_df["分箱"] = mx_df['分箱'].apply(xt_chuli)
 mx_data = mx_df["工号"].map(str) + '-' + mx_df["箱号"].map(str) + '-' + mx_df["分箱"].map(str)
 
-
 # 采用 'PO号','PO行'查找差异
 # tz_df[['外购箱头PO', 'PO行']] = tz_df[['外购箱头PO', 'PO行']].astype('str')
 # mx_df[['PO号',	'PO行']] = mx_df[['PO号',	'PO行']].astype('str')
@@ -49,7 +48,7 @@ mx_data = mx_df["工号"].map(str) + '-' + mx_df["箱号"].map(str) + '-' + mx_d
 print(tz_data)
 print(mx_data)
 
-cy_data = pd.concat([tz_data, mx_data]).drop_duplicates(keep=False)
+chayi_data = pd.concat([tz_data, mx_data]).drop_duplicates(keep=False)
 tz_data.to_excel(r'E:\TEMP\6TEST\GRRPA\PO_\tz_箱头计划及台帐信息查询.xlsx')
 mx_data.to_excel(r'E:\TEMP\6TEST\GRRPA\PO_\mx_装箱清单明细_all.xlsx')
-print(len(cy_data))
+print(len(chayi_data))
