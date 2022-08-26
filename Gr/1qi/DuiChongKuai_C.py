@@ -88,8 +88,9 @@ def guige(x):
 # 2021-07-04增加
 guige_df["规格"] = guige_df["规格"].apply(guige)
 guige_df["备注"] = guige_df["备注"].apply(guige)
-# 备注 为""时，使用规格,不为空时，使用原值。
+# # 备注 为""时，使用规格,不为空时，使用原值。
 guige_df["备注"].mask(guige_df["备注"] == "", guige_df["规格"], inplace=True)
+# guige_df["备注"].mask(guige_df["备注"] == "", guige_df["规格"], inplace=True)
 
 # print(guige_df[guige_df["备注"]=="# /"])
 
