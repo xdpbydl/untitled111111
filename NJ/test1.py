@@ -3,15 +3,15 @@ import time, os
 import pandas as pd
 import configparser
 
-def run(playwright, url, user, pwd) -> None:
+def run(playwright: Playwright, url, user, pwd) -> None:
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
 
     # Open new page
-    page = context.new_page(url)
+    page = context.new_page()
 
     # Go to url
-    page.goto("")
+    page.goto(url)
 
     # Click [placeholder="手机号\/帐号"]
     page.locator("[placeholder=\"手机号\\/帐号\"]").click()
