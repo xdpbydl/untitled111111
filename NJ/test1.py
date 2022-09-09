@@ -40,7 +40,7 @@ def run(playwright: Playwright, url, user, pwd) -> None:
     for index, i in ss.iterrows():
         # Click text=新增
         print(i[['*姓名', '*性别', '*组织路径', '*证件号码', '手机号码']])
-        input('--' * 88)
+        # input('--' * 88)
         time.sleep(5)
         page.frame_locator("iframe").nth(1).locator("text=新增").click()
 
@@ -67,14 +67,14 @@ def run(playwright: Playwright, url, user, pwd) -> None:
 
         # Click #F_FirstTime
         page.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("#F_FirstTime").click()
-        page.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("#F_FirstTime").fill(i['2022-09-09'])
+        page.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("#F_FirstTime").fill('2022-09-09')
 
         # # Click text=确定
         # page.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("text=确定").click()
 
         # Click #F_EndTime
         page.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("#F_EndTime").click()
-        page.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("#F_EndTime").fill(i['2022-09-09'])
+        page.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("#F_EndTime").fill('2022-09-09')
 
         # # Click text=2022年
         # page.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("text=2022年").click()
