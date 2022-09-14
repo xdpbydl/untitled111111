@@ -56,3 +56,11 @@ if len(chayi_data):
     chayi_data = pd.DataFrame(chayi_data)
     chayi_data.columns = ['工号-箱头-分箱']
     chayi_data.to_excel(r'E:\TEMP\6TEST\GRRPA\PO_\台账与清单差异的工号-箱头-分箱.xlsx', index=False)
+
+# 根据箱名分组
+grouped = mx_df.groupby('箱名')
+for k, v in grouped:
+    if '重' in str(k):  # 排除xls格式文件
+        continue
+    v.to_excel(f'E:\TEMP\\6TEST\GRRPA\PO_\分类_{k}.xlsx', index=False)
+
