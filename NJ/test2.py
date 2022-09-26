@@ -1,6 +1,7 @@
 from playwright.sync_api import Playwright, sync_playwright
 import cv2 as cv
-import random, os, configparser, base64
+import random, os, configparser, base64, time, hashlib
+from zeep import Client
 
 
 def targetx():
@@ -75,6 +76,7 @@ def run(playwright: Playwright) -> None:
         user = config['set']['user']
         pwd = config['set']['pwd']
         jk_url = config['jiekou']['jk_url']
+        xt_key = config['jiekou']['xt_key']
         # j_hang_no = config['system']['hang_no']
         # j_debug = config['system']['debug']
         # j_hang_no = int(j_hang_no)
@@ -85,6 +87,11 @@ def run(playwright: Playwright) -> None:
     context = browser.new_context()
     # Open new page
     page = context.new_page()
+
+    # chromium = playwright.chromium
+    # browser = chromium.connect_over_cdp('http://localhost:12345/')
+    # page = browser.contexts[0].pages[0]
+
     # # 关闭Webdriver属性
     js = """Object.defineProperties(navigator, {webdriver:{get:()=>undefined}});"""
     page.add_init_script(js)
@@ -92,6 +99,7 @@ def run(playwright: Playwright) -> None:
     page.goto("http://39.103.140.108:8089/login")
     print(page.title())
     # Fill [placeholder="账号"]
+
     page.wait_for_timeout(1000)
     page.locator("[placeholder=\"账号\"]").fill(user)
     # Fill [placeholder="密码"]
@@ -106,7 +114,8 @@ def run(playwright: Playwright) -> None:
     page.locator("button:has-text(\"登 录\")").click()
     page.wait_for_timeout(1000)
     # Click text=向右滑动完成验证
-    # time.sleep(8)
+    time.sleep(8)
+
     def login():
         dt = '//*[@id="app"]/div/div[2]/div[2]/form/div[4]/div/div[2]/div/div[1]/div/img'
         dt_text = page.get_attribute(dt, 'src').replace('data:image/png;base64,', '')
@@ -121,7 +130,8 @@ def run(playwright: Playwright) -> None:
         # img = cv.imread("max.png", flags=1)  # flags=1 读取彩色图像(BGR)
         element = page.query_selector('//*[@id="app"]/div/div[2]/div[2]/form/div[4]/div/div[2]/div/div[2]/div/div')  # xpath 滑块小元素
         box = element.bounding_box()
-        page.locator(xt).click()
+        # 点击导致被检测到？？
+        # page.locator(xt).click()
         page.wait_for_timeout(2000)
 
         x = int(box["x"] + box["width"] / 2)
@@ -152,7 +162,6 @@ def run(playwright: Playwright) -> None:
         # 元素是否存在
         page.wait_for_timeout(3000)
         is_ok = page.is_visible("text=南京催化剂智能安全系统")
-        print(is_ok)
         if is_ok:
             break
     # input('11' * 88)
@@ -162,12 +171,34 @@ def run(playwright: Playwright) -> None:
     page1 = popup_info.value
     # Click text=塔机监测
     page1.locator("text=塔机监测").click()
-    page1.url
     print(page1.url)
+
+
+    # 传入webservice
+    now_time = time.time()
+    # 毫秒级
+    now_time = str(int(round(now_time * 1000)))
+    token = hashlib.sha256((now_time + xt_key).encode('utf-8')).hexdigest()
+
+    def request_webservice(wsdl, token, timekey, url):
+        client = Client(wsdl)
+        s1 = client.bind('WebService1', 'WebService1Soap')
+        s = s1.ResetTowerUrl(token, timekey, url)
+        return s
+
+    request_webservice(jk_url, token, now_time, page1.url)
+
+
+
 
     context.close()
     browser.close()
 
 
+
+
+
 with sync_playwright() as playwright:
-    run(playwright)
+    url =  run(playwright)
+
+

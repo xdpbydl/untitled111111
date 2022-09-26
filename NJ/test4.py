@@ -1,4 +1,7 @@
 import cv2 as cv
+from playwright.sync_api import Playwright, sync_playwright
+import random, os, configparser, base64, time, hashlib
+from zeep import Client
 
 
 def get_distance(bg_img_path, slider_img_path):
@@ -29,4 +32,37 @@ def get_distance(bg_img_path, slider_img_path):
     return top_left
 
 
-get_distance('max.png', 'xiaotu.png')
+# get_distance('max.png', 'xiaotu.png')
+def run(playwright: Playwright) -> None:
+    chromium = playwright.chromium
+    browser = chromium.connect_over_cdp('http://localhost:12345/')
+    page = browser.contexts[0].pages[0]
+    print(page.url)
+    page.locator('''//*[@id="hotsearch-refresh-btn"]/span''').click()
+
+
+# with sync_playwright() as playwright:
+#     run(playwright)
+
+
+now_time = time.time()
+xt_key = '9c7e6cf9a1f64fe6b16146c954f27d96'
+# 毫秒级
+now_time = str(int(round(now_time * 1000)))
+token = hashlib.sha256((now_time + xt_key).encode('utf-8')).hexdigest()
+print(now_time, token)
+wsdl='http://192.168.0.167:8090/webservice1.asmx?wsdl'
+url = 'http://39.103.140.108:8777/view/691?id=691&configId=5069&userId=329264033140805&userType=1&token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImMwYzIzYWFmLWE1OTktNDA0OS04YTZlLTFiNzAyYmZiN2M1MiJ9.2zV8HDE3XSNklFfrkfPI9Mi3mzOTP0F3nPAEk6VfIwzV6DF6YGIxZ8tUNpuQsJRIjJUnE7UQMCGr2ex8RwcA8A&see=view&title=%25E5%258D%2597%25E4%25BA%25AC%25E5%2582%25AC%25E5%258C%2596%25E5%2589%2582%25E6%2599%25BA%25E8%2583%25BD%25E5%25AE%2589%25E5%2585%25A8%25E7%25B3%25BB%25E7%25BB%259F&menuId=329264033140805'
+
+def request_webservice(wsdl, token, timekey, url):
+    client = Client(wsdl)
+    s1 = client.bind('WebService1', 'WebService1Soap')
+    s = s1.ResetTowerUrl(token, timekey, url)
+    return s
+
+request_webservice(wsdl, token, now_time, url)
+
+input()
+# < token > string < / token >
+# < timekey > string < / timekey >
+# < url > string < / url >
