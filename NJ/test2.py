@@ -77,13 +77,14 @@ def run(playwright: Playwright) -> None:
         pwd = config['set']['pwd']
         jk_url = config['jiekou']['jk_url']
         xt_key = config['jiekou']['xt_key']
-        # j_hang_no = config['system']['hang_no']
+        sep_time = config['jiekou']['sep_time']
+        sep_time = float(sep_time)
         # j_debug = config['system']['debug']
-        # j_hang_no = int(j_hang_no)
+        # j_hang_no = int(j_hang_no)fl
     except Exception as r:
         print(f'config.ini文件加载错误！{r}')
 
-    browser = playwright.chromium.launch(headless=False)
+    browser = playwright.chromium.launch(headless=True)
     context = browser.new_context()
     # Open new page
     page = context.new_page()
@@ -174,7 +175,7 @@ def run(playwright: Playwright) -> None:
     print(page1.url)
 
 
-    # 传入webservice
+    # page1.url， 传入webservice
     now_time = time.time()
     # 毫秒级
     now_time = str(int(round(now_time * 1000)))
@@ -193,12 +194,20 @@ def run(playwright: Playwright) -> None:
 
     context.close()
     browser.close()
+    print(f'等待运行……，等待{sep_time}小时。')
+    time.sleep(int(sep_time*3600))
+    print('--'*88)
+
 
 
 
 
 
 with sync_playwright() as playwright:
-    url =  run(playwright)
-
+    while 1:
+        try:
+            run(playwright)
+        except  Exception as r:
+            print(f'运行错误{r},间隔4小时再次运行。')
+            time.sleep(int(4 * 3600))
 
