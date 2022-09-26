@@ -6,10 +6,10 @@ def get_newfile(gv_File_Path, f_name, new_path):
     old_bak = f'{gv_File_Path}model\\bak\\{f_name}{riqi}'
 
     def get_file_time(filename):
-        # mtime = time.ctime(os.path.getmtime(filename))
-        # ctime = time.ctime(os.path.getctime(filename))
-        mtime = os.path.getmtime(filename)
-        ctime = os.path.getctime(filename)
+        mtime = time.ctime(os.path.getmtime(filename))
+        ctime = time.ctime(os.path.getctime(filename))
+        # mtime = os.path.getmtime(filename)
+        # ctime = os.path.getctime(filename)
         return [ctime, mtime]
 
     def GetMD5FromLocalFile(filename):
