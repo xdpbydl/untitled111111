@@ -1,6 +1,6 @@
+import random, os, configparser, base64, time, hashlib
 from playwright.sync_api import Playwright, sync_playwright
 import cv2 as cv
-import random, os, configparser, base64, time, hashlib
 from zeep import Client
 
 
@@ -79,12 +79,13 @@ def run(playwright: Playwright) -> None:
         xt_key = config['jiekou']['xt_key']
         sep_time = config['jiekou']['sep_time']
         sep_time = float(sep_time)
+        chrome_path = config['set']['chrome_path']
         # j_debug = config['system']['debug']
         # j_hang_no = int(j_hang_no)fl
     except Exception as r:
         print(f'config.ini文件加载错误！{r}')
 
-    browser = playwright.chromium.launch(headless=True)
+    browser = playwright.chromium.launch(executable_path=chrome_path, headless=True)
     context = browser.new_context()
     # Open new page
     page = context.new_page()

@@ -2,7 +2,41 @@ import cv2 as cv
 from playwright.sync_api import Playwright, sync_playwright
 import random, os, configparser, base64, time, hashlib
 from zeep import Client
+def run1(playwright: Playwright) -> None:
+    # 获取配置文件
+    file = os.path.join(os.path.abspath('.'), 'config.ini')
+    config = configparser.ConfigParser()
+    # config.read(file, encoding="utf-8")
+    config.read(file, encoding="utf-8-sig")
+    try:
+        user = config['set']['user']
+        pwd = config['set']['pwd']
+        jk_url = config['jiekou']['jk_url']
+        xt_key = config['jiekou']['xt_key']
+        sep_time = config['jiekou']['sep_time']
+        sep_time = float(sep_time)
+        chrome_path = config['set']['chrome_path']
+        # j_debug = config['system']['debug']
+        # j_hang_no = int(j_hang_no)fl
+    except Exception as r:
+        print(f'config.ini文件加载错误！{r}')
 
+    # browser = playwright.chromium.launch(executable_path=chrome_path, headless=True)
+    # context = browser.new_context()
+    # # Open new page
+    # page = context.new_page()
+
+    # browser = playwright.chromium.connect_over_cdp("http://localhost:12345")
+    # default_context = browser.contexts[0]
+    # page = default_context.pages[0]
+
+    # chromium = playwright.chromium
+    # browser = chromium.connect_over_cdp('http://localhost:12345', timeout=120000)
+    # page = browser.contexts[2].pages[2]
+    # print(page)
+    #
+    # print(page.url)
+    # input()
 
 def get_distance(bg_img_path, slider_img_path):
     """获取滑块移动距离"""
@@ -35,34 +69,66 @@ def get_distance(bg_img_path, slider_img_path):
 # get_distance('max.png', 'xiaotu.png')
 def run(playwright: Playwright) -> None:
     chromium = playwright.chromium
-    browser = chromium.connect_over_cdp('http://localhost:12345/')
+    browser = chromium.connect_over_cdp('http://localhost:12345', timeout=60000)
+    # browser = chromium.connect_over_cdp('http://114.132.51.65:12345', timeout=60000)
     page = browser.contexts[0].pages[0]
+    # print([i for i in browser.contexts[0].pages])
     print(page.url)
-    page.locator('''//*[@id="hotsearch-refresh-btn"]/span''').click()
+    # page.goto("http://www.baidu.com")
+    # # page.locator('''//*[@id="hotsearch-refresh-btn"]/span''').click()
+    # page.locator("#kw").fill('shoushou')
+    # page.locator("#su").click()
+    # page.goto("http://www.163.com")
+    # mod_news_tab > div > div.tab_panel.tab_panel_yaowen >  #mod_news_tab > div > div.tab_panel.local_tab_news.show_local_tab.current > ul:nth-child(5)
+    ul = '//*[@id="mod_news_tab"]/div/div[2]/ul'
+    p_all = page.query_selector_all(ul)
+    # for i in p_all:
+    #     print(i.text_content())
+    # print(len(p_all), p_all)
+    # p_all = page.click("div.tab_panel.local_tab_news.show_local_tab.current:has(.cm_ul_round)")
+    # # print(len(p_all))
+    # print( p_all)
+
+    for i in range(len(p_all)):
+
+        p_all_2 = page.query_selector_all(f'{ul}[{i+1}]/li')
+        print()
+        for m in range(len(p_all_2)):
+            ul_1 = f'{ul}[{i + 1}]/li[{m+1}]/a'
+            print(ul_1)
+            n_url = page.get_attribute(ul_1, 'href')  # 获取元素值
+            n_txt = page.text_content(ul_1)   # 获取文本
+            print(n_url, n_txt)
+    input()
+"""
+//*[@id="mod_news_tab"]/div/div[2]/ul[1]/li[1]
+//*[@id="mod_news_tab"]/div/div[2]/ul[1]/li[2]/a
+//*[@id="mod_news_tab"]/div/div[2]/ul[2]/li[1]/a
+//*[@id="mod_news_tab"]/div/div[1]/div[1]/div[1]/ul[1]
+//*[@id="mod_news_tab"]/div/div[1]/div[1]/div[1]/ul[1]/li[1]
+"""
+with sync_playwright() as playwright:
+    run(playwright)
 
 
-# with sync_playwright() as playwright:
-#     run(playwright)
+# now_time = time.time()
+# xt_key = '9c7e6cf9a1f64fe6b16146c954f27d96'
+# # 毫秒级
+# now_time = str(int(round(now_time * 1000)))
+# token = hashlib.sha256((now_time + xt_key).encode('utf-8')).hexdigest()
+# print(now_time, token)
+# wsdl='http://192.168.0.167:8090/webservice1.asmx?wsdl'
+# url = 'http://39.103.140.108:8777/view/691?id=691&configId=5069&userId=329264033140805&userType=1&token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImMwYzIzYWFmLWE1OTktNDA0OS04YTZlLTFiNzAyYmZiN2M1MiJ9.2zV8HDE3XSNklFfrkfPI9Mi3mzOTP0F3nPAEk6VfIwzV6DF6YGIxZ8tUNpuQsJRIjJUnE7UQMCGr2ex8RwcA8A&see=view&title=%25E5%258D%2597%25E4%25BA%25AC%25E5%2582%25AC%25E5%258C%2596%25E5%2589%2582%25E6%2599%25BA%25E8%2583%25BD%25E5%25AE%2589%25E5%2585%25A8%25E7%25B3%25BB%25E7%25BB%259F&menuId=329264033140805'
+#
+# def request_webservice(wsdl, token, timekey, url):
+#     client = Client(wsdl)
+#     s1 = client.bind('WebService1', 'WebService1Soap')
+#     s = s1.ResetTowerUrl(token, timekey, url)
+#     return s
+#
+# request_webservice(wsdl, token, now_time, url)
 
 
-now_time = time.time()
-xt_key = '9c7e6cf9a1f64fe6b16146c954f27d96'
-# 毫秒级
-now_time = str(int(round(now_time * 1000)))
-token = hashlib.sha256((now_time + xt_key).encode('utf-8')).hexdigest()
-print(now_time, token)
-wsdl='http://192.168.0.167:8090/webservice1.asmx?wsdl'
-url = 'http://39.103.140.108:8777/view/691?id=691&configId=5069&userId=329264033140805&userType=1&token=eyJhbGciOiJIUzUxMiJ9.eyJsb2dpbl91c2VyX2tleSI6ImMwYzIzYWFmLWE1OTktNDA0OS04YTZlLTFiNzAyYmZiN2M1MiJ9.2zV8HDE3XSNklFfrkfPI9Mi3mzOTP0F3nPAEk6VfIwzV6DF6YGIxZ8tUNpuQsJRIjJUnE7UQMCGr2ex8RwcA8A&see=view&title=%25E5%258D%2597%25E4%25BA%25AC%25E5%2582%25AC%25E5%258C%2596%25E5%2589%2582%25E6%2599%25BA%25E8%2583%25BD%25E5%25AE%2589%25E5%2585%25A8%25E7%25B3%25BB%25E7%25BB%259F&menuId=329264033140805'
-
-def request_webservice(wsdl, token, timekey, url):
-    client = Client(wsdl)
-    s1 = client.bind('WebService1', 'WebService1Soap')
-    s = s1.ResetTowerUrl(token, timekey, url)
-    return s
-
-request_webservice(wsdl, token, now_time, url)
-
-input()
 # < token > string < / token >
 # < timekey > string < / timekey >
 # < url > string < / url >
