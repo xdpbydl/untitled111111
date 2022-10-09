@@ -11,7 +11,10 @@ def run(playwright: Playwright, url, user, pwd) -> None:
     page = context.new_page()
 
     # Go to url
-    page.goto(url)
+    try:
+        page.goto(url)
+    except:
+        pass
 
     # Click [placeholder="手机号\/帐号"]
     page.locator("[placeholder=\"手机号\\/帐号\"]").click()

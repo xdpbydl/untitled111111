@@ -99,7 +99,7 @@ def run(playwright: Playwright) -> None:
             n_url = page.get_attribute(ul_1, 'href')  # 获取元素值
             n_txt = page.text_content(ul_1)   # 获取文本
             print(n_url, n_txt)
-    input()
+    input('---')
 """
 //*[@id="mod_news_tab"]/div/div[2]/ul[1]/li[1]
 //*[@id="mod_news_tab"]/div/div[2]/ul[1]/li[2]/a
