@@ -5,7 +5,7 @@ e9_file = r'E:\TEMP\6TEST\GRRPA\采购订单行明细_导入E9.xlsx'
 file = r'E:\TEMP\6TEST\GRRPA\\'
 
 excel_name = {1: '1.1.1 A03架机梁.xlsx', 2: '1.1.2 D02钢丝绳.xlsx', 3: '1.1.3 D10油压缓冲器.xlsx', 4: '1.1.4 D05对重块_B07配重块.xlsx', 20: '1.2 包装类.xlsx',
-              30: '1.3 缓冲器_安全钳_.xlsx', 99: '9.9 其他未归类的.xlsx'}
+              30: '1.3 缓冲器_安全钳_.xlsx', 99: '9.9 其他未归类的.xlsx', 40: '1.4 机加工散件.xlsx', 0: '0.TEST.xlsx'}     # 20221010 1    增加 机加工散件
 
 
 df = pd.read_excel(mingxi_file)
@@ -55,13 +55,25 @@ df_DB.to_excel(f'{file}{excel_name[4]}', index=False)
 df_baoz = df[df['物料'].str.startswith('X')]
 df_baoz.to_excel(f'{file}{excel_name[20]}', index=False)
 
+
+# 20221010 2/3    增加 机加工散件
+ld_fl_T = pd.merge(df, dzh_df, how='left', left_on='物料', right_on='明细物料')
+df_jjgsj_ld = ld_fl_T[ld_fl_T['分类'] == '机加工散件']
+df_jjgsj_ld.drop(['明细物料', '分类'], axis=1, inplace=True)
+ld_fl.to_excel(f'{file}{excel_name[0]}', index=False)
+if len(df_jjgsj_ld) !=0:
+    df_jjgsj_ld.to_excel(f'{file}{excel_name[40]}', index=False)
+else:
+    print('机加工散件, 数据为空。')
+
+# 20221010 3/3    增加 机加工散件
 # 其他未归类的
-df_99 = pd.concat([df_A03, df_D02, df_D10, df_DB, df_baoz, df_huanc, df]).drop_duplicates(keep=False, ignore_index=True)
+df_99 = pd.concat([df_A03, df_D02, df_D10, df_DB, df_baoz, df_huanc, df, df_jjgsj_ld]).drop_duplicates(keep=False, ignore_index=True)
 if len(df_99) != 0:
     df_99.to_excel(f'{file}{excel_name[99]}', index=False)
 else:
     print('没有未归类的数据。')
-print([len(i) for i in [df_A03, df_D02, df_D10, df_DB, df_baoz, df_huanc, df_99, df]])
+print([len(i) for i in [df_A03, df_D02, df_D10, df_DB, df_baoz, df_huanc, df_99, df, df_jjgsj_ld]])
 
 # 处理导入的文件
 df.insert(0, '客户', value='日立电梯（中国）有限公司广州工厂')

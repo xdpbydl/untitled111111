@@ -80,12 +80,17 @@ def run(playwright: Playwright) -> None:
         sep_time = config['jiekou']['sep_time']
         sep_time = float(sep_time)
         chrome_path = config['set']['chrome_path']
+
+        #安全系统的用户、密码
+        aq_user = config['set']['aq_user']
+        aq_pwd = config['set']['aq_pwd']
+        aq_url = config['set']['aq_url']
         # j_debug = config['system']['debug']
         # j_hang_no = int(j_hang_no)fl
     except Exception as r:
         print(f'config.ini文件加载错误！{r}')
 
-    browser = playwright.chromium.launch(executable_path=chrome_path, headless=True)
+    browser = playwright.chromium.launch(executable_path=chrome_path, headless=False)
     context = browser.new_context()
     # Open new page
     page = context.new_page()
@@ -108,9 +113,7 @@ def run(playwright: Playwright) -> None:
     page.wait_for_timeout(1000)
     page.locator("[placeholder=\"密码\"]").click()
     page.locator("[placeholder=\"密码\"]").fill(pwd)
-    # Click text=数字看板
-    page.wait_for_timeout(1000)
-    page.locator("text=数字看板").click()
+
     # Click button:has-text("登 录")
     page.wait_for_timeout(2000)
     page.locator("button:has-text(\"登 录\")").click()
@@ -164,16 +167,59 @@ def run(playwright: Playwright) -> None:
         # 元素是否存在
         page.wait_for_timeout(3000)
         is_ok = page.is_visible("text=南京催化剂智能安全系统")
+        # input("1"*88)
         if is_ok:
             break
-    # input('11' * 88)
 
-    with page.expect_popup() as popup_info:
+    with page.expect_navigation():
         page.locator("text=南京催化剂智能安全系统").click()
+
+    # # # 点击，数字工地 文本
+    page.locator("text=数字工地").click()
+    # #
+    # # 点击，数据看板 文本
+    page.locator("text=数据看板").click()
+
+    # 点击，查看
+    with page.expect_popup() as popup_info:
+        page.click('''xpath=//*[@id="app"]/div/div[2]/section/div/div[1]/div/div[2]/div/div/div[3]/table/tbody/tr[5]/td[7]/div/button[1]/span''')
+
+    # 点击，塔机检测
     page1 = popup_info.value
-    # Click text=塔机监测
-    page1.locator("text=塔机监测").click()
-    print(page1.url)
+    page1.click('''xpath=//*[@id="container"]/div[1]/div[2]/ul/li[2]/a''')
+    p_url = page1.url
+    print(f"获取地址成功：{page1.url}")
+
+    page1.goto(aq_url)
+    # Click [placeholder="手机号\/帐号"]
+    page1.locator("[placeholder=\"手机号\\/帐号\"]").fill(aq_user)
+    # Press Tab
+    page1.locator("[placeholder=\"手机号\\/帐号\"]").press("Tab")
+    # Fill [placeholder="密码"]
+    page1.locator("[placeholder=\"密码\"]").fill(aq_pwd)
+    # Press Enter
+    # with page1.expect_navigation(url="https://chjapp.com:7777/Home/Index"):
+    with page1.expect_navigation():
+        page1.locator("[placeholder=\"密码\"]").press("Enter")
+    # Click [id="\32 "]
+    page1.locator("[id=\"\\32 \"]").click()
+    # Click text=系统配置
+    page1.locator("text=系统配置").click()
+    # Click text=塔机监测URL
+    page1.frame_locator("iframe").nth(1).locator("text=塔机监测URL").click()
+    # Click text=编辑
+    page1.frame_locator("iframe").nth(1).locator("text=编辑").click()
+    # input('1'*88)
+    # Click textarea >> nth=3
+    page1.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("textarea").nth(3).click()
+    # Press a with modifiers
+    page1.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("textarea").nth(3).press("Control+a")
+    # Fill textarea >> nth=3
+    page1.frame_locator("iframe[name=\"layui-layer-iframe1\"]").locator("textarea").nth(3).fill(p_url)
+    # Click a:has-text("确认")
+    page1.locator("a:has-text(\"确认\")").click()
+    print(r"设置地址成功。")
+
 
 
     # page1.url， 传入webservice
@@ -183,12 +229,15 @@ def run(playwright: Playwright) -> None:
     token = hashlib.sha256((now_time + xt_key).encode('utf-8')).hexdigest()
 
     def request_webservice(wsdl, token, timekey, url):
+        """
+        实际部署时失效，
+        """
         client = Client(wsdl)
         s1 = client.bind('WebService1', 'WebService1Soap')
         s = s1.ResetTowerUrl(token, timekey, url)
         return s
 
-    request_webservice(jk_url, token, now_time, page1.url)
+    # request_webservice(jk_url, token, now_time, page.url)
 
 
 
