@@ -8,7 +8,9 @@ def run(playwright: Playwright) -> None:
     print(page1.url)
     #调用已打开的网页，进入chrome安装目录，在CMD执行以下命令行
     # .\chrome.exe --remote-debugging-port=12345 -–incognito -–start-maximized --user-data-dir="C:\selenium\chrome" --new-window https://www.baidu.com
-    #
+    # 录制脚本命令
+    # python -m playwright codegen
+
     # browser = playwright.chromium.launch(headless=False)
     # context = browser.new_context()
     # # Open new page

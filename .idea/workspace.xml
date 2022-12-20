@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="415ce1d2-45b0-4d49-bfee-beef34a3947a" name="默认的" comment="ZCXX_T~">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GET_T/NJ_TEST.py" beforeDir="false" afterPath="$PROJECT_DIR$/GET_T/NJ_TEST.py" afterDir="false" />
     </list>
     <list id="4ec4af9d-1aef-4ac3-a3d9-23d8209a4152" name="not_update" comment="">
@@ -625,14 +626,7 @@
       <workItem from="1669776759522" duration="1339000" />
       <workItem from="1670206560102" duration="599000" />
       <workItem from="1671440889876" duration="2900000" />
-      <workItem from="1671499281571" duration="10728000" />
-    </task>
-    <task id="LOCAL-00060" summary="ZCXX_T~">
-      <created>1641905987258</created>
-      <option name="number" value="00060" />
-      <option name="presentableId" value="LOCAL-00060" />
-      <option name="project" value="LOCAL" />
-      <updated>1641905987258</updated>
+      <workItem from="1671499281571" duration="11116000" />
     </task>
     <task id="LOCAL-00061" summary="ZCXX_T~">
       <created>1641954901697</created>
@@ -970,7 +964,14 @@
       <option name="project" value="LOCAL" />
       <updated>1671510347454</updated>
     </task>
-    <option name="localTasksCounter" value="109" />
+    <task id="LOCAL-00109" summary="ZCXX_T~">
+      <created>1671510373497</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1671510373497</updated>
+    </task>
+    <option name="localTasksCounter" value="110" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
