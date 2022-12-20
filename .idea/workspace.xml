@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="415ce1d2-45b0-4d49-bfee-beef34a3947a" name="默认的" comment="ZCXX_T~">
-      <change afterPath="$PROJECT_DIR$/GET_T/NJ_TEST.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/TEST/test17.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Gr/3qi/采购订单行.py" beforeDir="false" afterPath="$PROJECT_DIR$/Gr/3qi/采购订单行.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NJ/get_url.py" beforeDir="false" afterPath="$PROJECT_DIR$/NJ/get_url.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TEST/测试函数.py" beforeDir="false" afterPath="$PROJECT_DIR$/TEST/测试函数.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GET_T/NJ_TEST.py" beforeDir="false" afterPath="$PROJECT_DIR$/GET_T/NJ_TEST.py" afterDir="false" />
     </list>
     <list id="4ec4af9d-1aef-4ac3-a3d9-23d8209a4152" name="not_update" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
@@ -630,14 +625,7 @@
       <workItem from="1669776759522" duration="1339000" />
       <workItem from="1670206560102" duration="599000" />
       <workItem from="1671440889876" duration="2900000" />
-      <workItem from="1671499281571" duration="10693000" />
-    </task>
-    <task id="LOCAL-00059" summary="ZCXX_T~">
-      <created>1639280029917</created>
-      <option name="number" value="00059" />
-      <option name="presentableId" value="LOCAL-00059" />
-      <option name="project" value="LOCAL" />
-      <updated>1639280029918</updated>
+      <workItem from="1671499281571" duration="10728000" />
     </task>
     <task id="LOCAL-00060" summary="ZCXX_T~">
       <created>1641905987258</created>
@@ -975,7 +963,14 @@
       <option name="project" value="LOCAL" />
       <updated>1665306232158</updated>
     </task>
-    <option name="localTasksCounter" value="108" />
+    <task id="LOCAL-00108" summary="ZCXX_T~">
+      <created>1671510347454</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1671510347454</updated>
+    </task>
+    <option name="localTasksCounter" value="109" />
     <servers />
   </component>
   <component name="TimeTrackingManager">

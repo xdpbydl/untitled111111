@@ -17,11 +17,11 @@ def run(playwright: Playwright) -> None:
     # Go to https://chjapp.com:7777/
     page1.goto("https://chjapp.com:7777/")
     # Click [placeholder="手机号\/帐号"]
-    page1.locator("[placeholder=\"手机号\\/帐号\"]").fill("system")
+    page1.locator("[placeholder=\"手机号\\/帐号\"]").fill("")
     # Press Tab
-    page1.locator("[placeholder=\"手机号\\/帐号\"]").press("Tab")
+    page1.locator("[placeholder=\"手机号\\/帐号\"]").press("")
     # Fill [placeholder="密码"]
-    page1.locator("[placeholder=\"密码\"]").fill("Pass123!")
+    page1.locator("[placeholder=\"密码\"]").fill("!")
     # Press Enter
     # with page1.expect_navigation(url="https://chjapp.com:7777/Home/Index"):
     with page1.expect_navigation():
